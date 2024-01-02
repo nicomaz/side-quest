@@ -12,7 +12,7 @@ import {
   signInWithPhoneNumber,
   signUpWithPhoneNumber,
 } from "firebase/auth";
-import { auth } from "../firebaseConfig";
+import { auth, RecaptchaVerifier } from "../firebaseConfig";
 import { useNavigation } from "@react-navigation/native/";
 
 const Login = () => {
@@ -58,7 +58,7 @@ const Login = () => {
     <SafeAreaView>
       <KeyboardAvoidingView>
         <View>
-          <TextInput
+          <PhoneInput
             placeholder="Phone Number"
             value={phoneNumber}
             onChangeText={(text) => setPhoneNumber(text)}
