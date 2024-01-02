@@ -1,80 +1,86 @@
+import * as React from "react";
+import { Text, View, TextInput, Button, TouchableOpacity } from "react-native";
 import {
-  Text,
-  View,
-  KeyboardAvoidingView,
-  TextInput,
-  TouchableOpacity,
-  SafeAreaView,
-} from "react-native";
-import React, { useEffect, useState } from "react";
-import {
-  onAuthStateChanged,
-  signInWithPhoneNumber,
-  signUpWithPhoneNumber,
-} from "firebase/auth";
-import { auth, RecaptchaVerifier } from "../firebaseConfig";
-import { useNavigation } from "@react-navigation/native/";
+  FirebaseRecaptchaVerifierModal,
+  FirebaseRecaptchaBanner,
+} from "expo-firebase-recaptcha";
+import { PhoneAuthProvider, signInWithCredential } from "firebase/auth";
+import { app, auth } from "../firebaseConfig";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { useRef, useState } from "react";
 
-const Login = () => {
-  const [phoneNumber, setPhoneNumber] = useState(null);
-  const navigation = useNavigation();
-  auth.languageCode = "it";
-
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        navigation.replace("home");
-      }
-    });
-    return () => unsubscribe();
-  }, [navigation]);
-
-  const handlePhoneSignup = () => {
-    signUpWithPhoneNumber(auth, phoneNumber)
-      .then((confirmationResult) => {
-        const user = confirmationResult.user;
-        console.log(`registered with ${user.phoneNumber}`);
-      })
-      .catch((err) => {
-        alert(err.message);
-      });
-  };
-
-  const handlePhoneLogin = () => {
-    console.log(phoneNumber);
-    signInWithPhoneNumber(auth, phoneNumber)
-      .then((confirmationResult) => {
-     
-        const user = confirmationResult.user;
-        console.log(`logged in as ${user.phoneNumber}`);
-      })
-      .catch((err) => {
-        console.log(err);
-        alert(err.message);
-      });
-  };
+export default function App() {
+  const recaptchaVerifier = useRef(null);
+  const [phoneNumber, setPhoneNumber] = useState();
+  const [verificationId, setVerificationId] = useState();
+  const [verificationCode, setVerificationCode] = useState();
+  const [message, showMessage] = useState();
+  const attemptInvisibleVerification = false;
 
   return (
     <SafeAreaView>
-      <KeyboardAvoidingView>
-        <View>
-          <PhoneInput
-            placeholder="Phone Number"
-            value={phoneNumber}
-            onChangeText={(text) => setPhoneNumber(text)}
-          />
-        </View>
-        <View>
-          <TouchableOpacity onPress={handlePhoneLogin} id="sign-in">
-            <Text>Log in</Text>
+      <View>
+        <FirebaseRecaptchaVerifierModal
+          ref={recaptchaVerifier}
+          firebaseConfig={app.options}
+        />
+        <Text>Enter phone number</Text>
+        <TextInput
+          placeholder="phone number"
+          autoFocus
+          autoCompleteType="tel"
+          keyboardType="phone-pad"
+          textContentType="telephoneNumber"
+          onChangeText={(phoneNumber) => setPhoneNumber(phoneNumber)}
+        />
+        <Button
+          title="Send Verification Code"
+          disabled={!phoneNumber}
+          onPress={async () => {
+            try {
+              const phoneProvider = new PhoneAuthProvider(auth);
+              const verificationId = await phoneProvider.verifyPhoneNumber(
+                phoneNumber,
+                recaptchaVerifier.current
+              );
+              setVerificationId(verificationId);
+              showMessage({
+                text: "Verification code has been sent to your phone.",
+              });
+            } catch (err) {
+              showMessage({ text: `Error: ${err.message}` });
+            }
+          }}
+        />
+        <Text>Enter Verification code</Text>
+        <TextInput
+          editable={!!verificationId}
+          placeholder="123456"
+          onChangeText={setVerificationCode}
+        />
+        <Button
+          title="Confirm Verification Code"
+          disabled={!verificationId}
+          onPress={async () => {
+            try {
+              const credential = PhoneAuthProvider.credential(
+                verificationId,
+                verificationCode
+              );
+              await signInWithCredential(auth, credential);
+              showMessage({ text: "Phone authentication successful 👍" });
+            } catch (err) {
+              showMessage({ text: `Error: ${err.message}` });
+            }
+          }}
+        />
+        {message ? (
+          <TouchableOpacity onPress={() => showMessage(undefined)}>
+            <Text>{message.text}</Text>
           </TouchableOpacity>
-          {/* <TouchableOpacity onPress={handlePhoneSignup}>
-            <Text>Sign up</Text>
-          </TouchableOpacity> */}
-        </View>
-      </KeyboardAvoidingView>
+        ) : undefined}
+        {attemptInvisibleVerification && <FirebaseRecaptchaBanner />}
+      </View>
     </SafeAreaView>
   );
-};
-
-export default Login;
+}
