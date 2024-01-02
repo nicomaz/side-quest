@@ -25,6 +25,12 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "8ee8ecd9-a2f5-43bf-aef8-fb077933c4b5"
+      }
+    },
+    "owner": "nicomaz"
   }
 }
