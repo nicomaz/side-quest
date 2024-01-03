@@ -1,6 +1,7 @@
 import { View, TextInput, Button} from 'react-native'
 import React, { useState } from 'react'
 import {db} from '../firebaseConfig'
+import { setDoc, doc } from 'firebase/firestore'
 
 import {useNavigation} from '@react-navigation/native'
 
@@ -15,8 +16,8 @@ const UserNameInputPage = ({route}) => {
                 username: username,
                 mobileNumber: mobileNumber
             })
-            navigation.navigate('home')
-        } catch (error) {
+            navigation.navigate('Logout')
+        } catch (error) { console.error ('Error saving username:', error)
 
         }
     }
