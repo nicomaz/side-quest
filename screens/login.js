@@ -28,6 +28,7 @@ export default function Login() {
         recaptchaVerifier.current
       );
       setVerificationId(verificationId);
+      setError(false);
       await showMessage({
         text: "please check your messages",
       });
@@ -74,8 +75,6 @@ export default function Login() {
             <Text className="text-base font-bold">Send</Text>
           </TouchableOpacity>
         </View>
-        {error && message && <Text>{message.text}</Text>}
-
         <View className="mx-16">
           {attemptInvisibleVerification && !isVisible && (
             <FirebaseRecaptchaBanner />
@@ -91,6 +90,7 @@ export default function Login() {
           setIsVisible={setIsVisible}
           message={message}
         />
+        {error && message ? <Text>{message.text}</Text> : null}
       </View>
     </SafeAreaView>
   );
