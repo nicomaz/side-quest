@@ -1,24 +1,24 @@
 import { View, TextInput, Button} from 'react-native'
 import React, { useState } from 'react'
 import {db} from '../firebaseConfig'
+
 import {useNavigation} from '@react-navigation/native'
 
 const UserNameInputPage = ({route}) => {
     const [username, setUsername] = useState('')
     const navigation = useNavigation()
 
-    const saveUsername = () => {
+    const saveUsername = async () => {
         const { mobileNumber } = route.params
+        try {
+            await setDoc(doc(db, 'usernames', mobileNumber), {
+                username: username,
+                mobileNumber: mobileNumber
+            })
+            navigation.navigate('home')
+        } catch (error) {
 
-        db.firestore.collection('usernames').doc(mobileNumber).set({
-            username: username,
-            mobileNumber: mobileNumber,
-        })
-        .then(() => {
-            //navigate to home page
-        })
-        .catch(error => {
-        })
+        }
     }
 
 return (
