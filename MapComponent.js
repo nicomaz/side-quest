@@ -42,16 +42,24 @@ const Map = () => {
             title="Your Location"
             description="You are here!"
           />
+          <Marker 
+            coordinate={{
+              latitude: 51.505554,
+              longitude: -0.075278
+            }}
+            />
           <MapViewDirections
             origin={{
               latitude: location.coords.latitude,
               longitude: location.coords.longitude,
             }}
-            destination={{ latitude: 51.4808, longitude: -0.1227 }}
+            destination={{ latitude: 51.505554, longitude: -0.075278 }}
             apikey="AIzaSyDfMw0j4oBjMtX2Ja5MMCAfYmdW1SAji0A"
             mode="WALKING"
+            strokeWidth={2}
+            strokeColor="#d86429"
           />
-        </MapView>
+          </MapView>
       ) : (
         <MapView
           style={styles.map}
