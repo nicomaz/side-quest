@@ -10,14 +10,13 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useRef, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 
-export default function App() {
+export default function Login() {
   const recaptchaVerifier = useRef(null);
   const [phoneNumber, setPhoneNumber] = useState();
   const [verificationId, setVerificationId] = useState();
   const [verificationCode, setVerificationCode] = useState();
   const [message, showMessage] = useState();
   const attemptInvisibleVerification = false;
-
   const navigation = useNavigation();
 
   return (
@@ -74,7 +73,9 @@ export default function App() {
               showMessage({ text: "Phone authentication successful 👍" });
               navigation.navigate("UserNameInputPage", {
                 mobileNumber: phoneNumber,
-              })
+              });
+              //TODO - can pass user details here
+              navigation.navigate("QuestList");
             } catch (err) {
               showMessage({ text: `Error: ${err.message}` });
             }
