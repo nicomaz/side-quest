@@ -1,10 +1,13 @@
 import { View, Text } from 'react-native'
-import React from 'react'
+import React, { useContext } from 'react'
+import { UserContext } from '../userContext'
 
-const Header = () => {
+const Header = (props) => {
+  const { username } = useContext(UserContext);
   return (
     <View>
-      <Text>Header</Text>
+      <Text>{props.name}</Text>
+      <Text>Hello {username}</Text>
     </View>
   )
 }
