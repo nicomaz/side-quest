@@ -114,11 +114,13 @@ const Map = () => {
 };
 const styles = StyleSheet.create({
   mapContainer: {
-    height: '50%',
+    height: '100%',
     width: "100%",
   },
   map: {
     flex: 1,
+    height: '100%',
+    width: "100%",
   },
 });
 export default Map;

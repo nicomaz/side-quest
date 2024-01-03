@@ -7,10 +7,10 @@ export default function Example() {
   return (
     <View
       style={{
-        flex: 1,
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: "transparent"
+        backgroundColor: "transparent",
+        height: '10%'
       }}
     >
       <Button title="OPEN BOTTOM SHEET" onPress={() => refRBSheet.current.open()} />
@@ -19,6 +19,7 @@ export default function Example() {
         closeOnDragDown={true}
         closeOnPressMask={false}
         height={500}
+
         customStyles={{
           wrapper: {
             backgroundColor: "transparent"
