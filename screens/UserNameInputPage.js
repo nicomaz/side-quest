@@ -16,7 +16,7 @@ const UserNameInputPage = ({route}) => {
                 username: username,
                 mobileNumber: mobileNumber
             })
-            navigation.navigate('Logout')
+            navigation.navigate("QuestList")
         } catch (error) { console.error ('Error saving username:', error) //change this to an alert at some point
 
         }

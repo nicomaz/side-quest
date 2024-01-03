@@ -75,7 +75,7 @@ export default function Login() {
                 mobileNumber: phoneNumber,
               });
               //TODO - can pass user details here
-              navigation.navigate("QuestList");
+              
             } catch (err) {
               showMessage({ text: `Error: ${err.message}` });
             }
