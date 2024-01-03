@@ -3,17 +3,37 @@ import { View, Text, StyleSheet } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import * as Location from "expo-location";
 import MapViewDirections from "react-native-maps-directions";
+import Example from "./BottomSheet";
 
-const dummyQuestList = {
-  quests: [
-    {name: 'hyde park',
+const dummyQuest = {
+    name: 'hyde park',
     description: 'dhbrfurhbfhj',
     location: {
       latitude: 51.5074,
       longitude: 0.1641}
-    }
-  ]
 }
+const dummyLocations = [
+  {
+    name: 'The Ritz',
+    description: 'dhbrfurhbfhj',
+    location: {
+      latitude: 51.5071,
+      longitude: 0.1416}
+  },
+  {
+    name: 'The London Eye',
+    description: 'dhbrfurhbfhj',
+    location: {
+      latitude: 51.503399,
+      longitude: -0.119519}
+  },
+  {name: 'hyde park',
+  description: 'dhbrfurhbfhj',
+  location: {
+    latitude: 51.5074,
+    longitude: 0.1641}
+}
+]
 
 const Map = () => {
 
@@ -37,7 +57,7 @@ const Map = () => {
           },
           (userLocation) => {
             setCurrentLocation(userLocation);
-            setQuestDestination(dummyQuestList[quests].location)
+            setQuestDestination(dummyQuest.location)
           }
         );
         return () => locationSubscription.remove();
@@ -61,10 +81,9 @@ const Map = () => {
           followsUserLocation={true}
           showsMyLocationButton={true}
         >
-          <Marker 
-            coordinate={questDestination}
-            title={dummyquest.name}
-            />
+          {dummyLocations.map((questMarker) => {
+            return <Marker key={questMarker.name} coordinate={questMarker.location} title={questMarker.name} />
+          })}
           <MapViewDirections
             origin={{
               latitude: currentLocation.coords.latitude,
@@ -89,6 +108,7 @@ const Map = () => {
         >
         </MapView>
       )}
+      <Example />
     </View>
   );
 };
