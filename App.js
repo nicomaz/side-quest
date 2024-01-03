@@ -1,5 +1,3 @@
-import { StatusBar } from "expo-status-bar";
-import { Text, View } from "react-native";
 import Login from "./screens/Login";
 import Logout from "./screens/Logout";
 import "react-native-gesture-handler";
@@ -15,11 +13,19 @@ export default function App() {
       <Stack.Navigator>
         <Stack.Screen
           options={{ headerShown: false }}
-          name="Login"
+          name="Sidequest"
           component={Login}
         />
-        <Stack.Screen name="Logout" component={Logout} />
-        <Stack.Screen name="UserNameInputPage" component={UserNameInputPage} />
+        <Stack.Screen
+          options={{ headerShown: false }}
+          name="Logout"
+          component={Logout}
+        />
+        <Stack.Screen
+          options={{ headerShown: false }}
+          name="UserNameInputPage"
+          component={UserNameInputPage}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
