@@ -71,8 +71,11 @@ export default function Login() {
               );
               await signInWithCredential(auth, credential);
               showMessage({ text: "Phone authentication successful 👍" });
+              navigation.navigate("UserNameInputPage", {
+                mobileNumber: phoneNumber,
+              });
               //TODO - can pass user details here
-              navigation.navigate("QuestList")
+              navigation.navigate("QuestList");
             } catch (err) {
               showMessage({ text: `Error: ${err.message}` });
             }

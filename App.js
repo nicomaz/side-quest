@@ -5,6 +5,7 @@ import Logout from "./screens/logout";
 import "react-native-gesture-handler";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import UserNameInputPage from "./screens/UserNameInputPage";
 import * as React from "react";
 import QuestList from "./Components/QuestList";
 import SingleQuest from "./Components/SingleQuest";
@@ -22,6 +23,7 @@ export default function App() {
           component={Login}
         />
         <Stack.Screen name="Logout" component={Logout} />
+        <Stack.Screen name="UserNameInputPage" component={UserNameInputPage} />
         <Stack.Screen name="QuestList" component={QuestList} />
         <Stack.Screen name="SingleQuest" component={SingleQuest} />
       </Stack.Navigator>
