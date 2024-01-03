@@ -53,9 +53,17 @@ const Map = () => {
           />
         </MapView>
       ) : (
-        <Text>Loading location...</Text>
+        <MapView
+          style={styles.map}
+          initialRegion={{
+            latitude: 51.4808,
+            longitude: -0.1227,
+            latitudeDelta: 0.0922,
+            longitudeDelta: 0.0421,
+          }}
+        >
+        </MapView>
       )}
-      {errorMsg && <Text>{errorMsg}</Text>}
     </View>
   );
 };
