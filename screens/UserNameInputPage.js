@@ -17,7 +17,7 @@ const UserNameInputPage = ({route}) => {
                 mobileNumber: mobileNumber
             })
             navigation.navigate('Logout')
-        } catch (error) { console.error ('Error saving username:', error)
+        } catch (error) { console.error ('Error saving username:', error) //change this to an alert at some point
 
         }
     }
