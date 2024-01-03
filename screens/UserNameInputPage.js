@@ -1,36 +1,38 @@
-import { View, TextInput, Button } from "react-native";
-import React, { useState } from "react";
-import { db } from "../firebaseConfig";
-import { useNavigation } from "@react-navigation/native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { View, TextInput, Button} from 'react-native'
+import React, { useState } from 'react'
+import {db} from '../firebaseConfig'
 
-const UserNameInputPage = ({ route }) => {
-  const [username, setUsername] = useState("");
-  const navigation = useNavigation();
+import {useNavigation} from '@react-navigation/native'
 
-  const saveUsername = async () => {
-    const { mobileNumber } = route.params;
-    try {
-      await setDoc(doc(db, "usernames", mobileNumber), {
-        username: username,
-        mobileNumber: mobileNumber,
-      });
-      navigation.navigate("home");
-    } catch (error) {}
-  };
+const UserNameInputPage = ({route}) => {
+    const [username, setUsername] = useState('')
+    const navigation = useNavigation()
 
-  return (
-    <SafeAreaView>
-      <View>
+    const saveUsername = async () => {
+        const { mobileNumber } = route.params
+        try {
+            await setDoc(doc(db, 'usernames', mobileNumber), {
+                username: username,
+                mobileNumber: mobileNumber
+            })
+            navigation.navigate('home')
+        } catch (error) {
+
+        }
+    }
+
+return (
+    <View>
         <TextInput
-          placeholder="please enter your username"
-          value={username}
-          onChangeText={(text) => setUsername(text)}
+        placeholder="please enter your username"
+        value={username}
+        onChangeText={text => setUsername(text)}
         />
-        <Button title="save username and continue" onPress={saveUsername} />
-      </View>
-    </SafeAreaView>
-  );
-};
+        <Button title='save username and continue' onPress={saveUsername}/>
+    </View>
+)
+}
 
-export default UserNameInputPage;
+
+
+export default UserNameInputPage

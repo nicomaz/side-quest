@@ -3,7 +3,7 @@ import {
   FirebaseRecaptchaVerifierModal,
   FirebaseRecaptchaBanner,
 } from "expo-firebase-recaptcha";
-import { PhoneAuthProvider, signInWithCredential } from "firebase/auth";
+import { PhoneAuthProvider } from "firebase/auth";
 import { app, auth } from "../firebaseConfig";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useRef, useState } from "react";
@@ -16,6 +16,7 @@ export default function Login() {
   const [verificationCode, setVerificationCode] = useState();
   const [message, showMessage] = useState();
   const attemptInvisibleVerification = true;
+  const [error, setError] = useState(false);
 
   const [isVisible, setIsVisible] = useState(false);
 
@@ -28,11 +29,12 @@ export default function Login() {
       );
       setVerificationId(verificationId);
       await showMessage({
-        text: "Check your messages! A verification code has been sent",
+        text: "please check your messages",
       });
       setIsVisible(true);
     } catch (err) {
-      showMessage({ text: `Error: ${err.message}` });
+      showMessage({ text: `Invalid phone number, please try again` });
+      setError(true);
     }
   }
 
@@ -53,7 +55,7 @@ export default function Login() {
         <Text className="text-xl text-center tracking-tighter font-bold text-[#d86429]">
           <Text className="text-black font-medium">Your</Text> Phone Number
         </Text>
-        <Text className="text-[#706e69]">ps. include your area code!</Text>
+        <Text className="text-[#706e69]">ps. include your country code!</Text>
         <View className="flex flex-row text-base justify-between p-2 mb-3 bg-[#ffe2d4] focus:bg-[#ffb087] w-8/12">
           <TextInput
             className="text-center text-base items-center justify-center pb-2"
@@ -66,12 +68,14 @@ export default function Login() {
           />
           <TouchableOpacity
             className="items-center justify-center text-base text-center"
-            disabled={!phoneNumber}
+            disabled={!phoneNumber && !error}
             onPress={() => sendVerificationCode()}
           >
             <Text className="text-base font-bold">Send</Text>
           </TouchableOpacity>
         </View>
+        {error && message && <Text>{message.text}</Text>}
+
         <View className="mx-16">
           {attemptInvisibleVerification && !isVisible && (
             <FirebaseRecaptchaBanner />
@@ -85,6 +89,7 @@ export default function Login() {
           showMessage={showMessage}
           phoneNumber={phoneNumber}
           setIsVisible={setIsVisible}
+          message={message}
         />
       </View>
     </SafeAreaView>
