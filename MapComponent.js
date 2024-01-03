@@ -5,22 +5,29 @@ import * as Location from "expo-location";
 import MapViewDirections from "react-native-maps-directions";
 const Map = () => {
   const [location, setLocation] = useState(null);
-  const [errorMsg, setErrorMsg] = useState(null);
   useEffect(() => {
-    Location.requestForegroundPermissionsAsync()
-      .then(({ status }) => {
-        if (status !== "granted") {
-          setErrorMsg("Permission to access location was denied");
-          return Promise.reject("Permission denied");
+    (async () => {
+      try {
+        const { status } = await Location.requestForegroundPermissionsAsync();
+        if (status !== 'granted') {
+          console.log('Permission to access location was denied');
+          return;
         }
-        return Location.getCurrentPositionAsync({});
-      })
-      .then((userLocation) => {
-        setLocation(userLocation);
-      })
-      .catch((error) => {
+        const locationSubscription = await Location.watchPositionAsync(
+          {
+            accuracy: Location.Accuracy.Highest,
+            timeInterval: 1000,
+            distanceInterval: 1,
+          },
+          (userLocation) => {
+            setLocation(userLocation);
+          }
+        );
+        return () => locationSubscription.remove();
+      } catch (error) {
         console.error(error);
-      });
+      }
+    })();
   }, []);
   return (
     <View style={{ flex: 1 }}>
@@ -28,20 +35,15 @@ const Map = () => {
         <MapView
           style={styles.map}
           initialRegion={{
-            latitude: location.coords.latitude,
-            longitude: location.coords.longitude,
+            latitude: 51.5072,
+            longitude: 0.1276,
             latitudeDelta: 0.0922,
             longitudeDelta: 0.0421,
           }}
+          showsUserLocation={true}
+          followsUserLocation={true}
+          showsMyLocationButton={true}
         >
-          <Marker
-            coordinate={{
-              latitude: location.coords.latitude,
-              longitude: location.coords.longitude,
-            }}
-            title="Your Location"
-            description="You are here!"
-          />
           <Marker 
             coordinate={{
               latitude: 51.505554,
@@ -76,9 +78,12 @@ const Map = () => {
   );
 };
 const styles = StyleSheet.create({
+  mapContainer: {
+    height: '50%',
+    width: "100%",
+  },
   map: {
-    height: "100%",
-    width: '100%'
+    flex: 1,
   },
 });
 export default Map;
