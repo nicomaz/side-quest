@@ -88,5 +88,4 @@ const styles = StyleSheet.create({
 });
 export default Map;
 
-// look at markers- figure out routing
 //figure out how to make the red modal for quest info, and how to link it to markers
