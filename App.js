@@ -4,7 +4,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import * as React from "react";
 
-import Nav from "./Nav";
+import Nav from "./Components/Nav";
 import SingleQuest from "./screens/SingleQuest";
 
 export default function App() {

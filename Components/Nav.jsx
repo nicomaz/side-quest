@@ -1,9 +1,9 @@
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import React from "react";
-import QuestList from "./Components/QuestList";
-import Profile from "./screens/Profile";
-import Header from "./Components/Header";
-import Map from "./Components/MapComponent";
+import QuestList from "./QuestList";
+import Profile from "../screens/Profile";
+import Header from "./Header";
+import Map from "./MapComponent";
 
 function DrawerNavigation() {
   const Drawer = createDrawerNavigator();
