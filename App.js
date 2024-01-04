@@ -7,6 +7,7 @@ import * as React from "react";
 import QuestList from "./Components/QuestList";
 import SingleQuest from "./Components/SingleQuest";
 import Header from "./Components/Header";
+import Map from "./screens/MapComponent";
 
 export default function App() {
   const Stack = createNativeStackNavigator();
@@ -30,6 +31,7 @@ export default function App() {
           component={QuestList}
         />
         <Stack.Screen name="SingleQuest" component={SingleQuest} />
+        <Stack.Screen name="MapComponent" component={Map} />
       </Stack.Navigator>
     </NavigationContainer>
   );
