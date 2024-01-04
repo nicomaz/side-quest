@@ -15,7 +15,9 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "googleServicesFile": "./GoogleService-Info.plist",
+      "bundleIdentifier": "com.ctrlfreaks.sidequest"
     },
     "android": {
       "adaptiveIcon": {
@@ -26,7 +28,9 @@
         "googleMaps": {
           "apiKey": "AIzaSyDfMw0j4oBjMtX2Ja5MMCAfYmdW1SAji0A"
         }
-      }
+      },
+      "googleServicesFile": "./google-services.json",
+      "package": "com.ctrlfreaks.sidequest"
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -45,6 +49,16 @@
         "projectId": "8ee8ecd9-a2f5-43bf-aef8-fb077933c4b5"
       }
     },
-    "owner": "nicomaz"
+    "owner": "ctrlfreaks",
+    "plugins": [
+      [
+        "expo-build-properties",
+        {
+          "ios": {
+            "useFrameworks": "static"
+          }
+        }
+      ]
+    ]
   }
 }
