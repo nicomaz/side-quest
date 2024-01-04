@@ -2,8 +2,9 @@
 module.exports = {
   content: [
     "./App.{js,jsx,ts,tsx}",
-    "./SIDE-QUEST/**/*.{js,jsx,ts,tsx}",
-    "./Components/**/*.{js,jsx,ts,tsx}"
+    "./side-quest/**/*.{js,jsx,ts,tsx}",
+    "./screens/**/*.{js,jsx,ts,tsx}",
+    "./Components/**/*.{js,jsx,ts,tsx}",
   ],
   theme: {
     extend: {},
