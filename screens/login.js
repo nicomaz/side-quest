@@ -1,14 +1,14 @@
-import * as React from "react";
-import { Text, View, TextInput, Button, TouchableOpacity } from "react-native";
+import { Text, View, TextInput, TouchableOpacity, Image } from "react-native";
 import {
   FirebaseRecaptchaVerifierModal,
   FirebaseRecaptchaBanner,
 } from "expo-firebase-recaptcha";
-import { PhoneAuthProvider, signInWithCredential } from "firebase/auth";
+import { PhoneAuthProvider } from "firebase/auth";
 import { app, auth } from "../firebaseConfig";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useRef, useState } from "react";
-import { useNavigation } from "@react-navigation/native";
+import VerifyCode from "../Components/VerifyCode";
+import UsernameInput from "../Components/UsernameInput";
 
 export default function Login() {
   const recaptchaVerifier = useRef(null);
@@ -16,77 +16,89 @@ export default function Login() {
   const [verificationId, setVerificationId] = useState();
   const [verificationCode, setVerificationCode] = useState();
   const [message, showMessage] = useState();
-  const attemptInvisibleVerification = false;
-  const navigation = useNavigation();
+  const [isVerified, setIsVerified] = useState(false);
+  const attemptInvisibleVerification = true;
+  const [error, setError] = useState(false);
+
+  const [isVisible, setIsVisible] = useState(false);
+
+  async function sendVerificationCode() {
+    try {
+      const phoneProvider = new PhoneAuthProvider(auth);
+      const verificationId = await phoneProvider.verifyPhoneNumber(
+        phoneNumber,
+        recaptchaVerifier.current
+      );
+      setVerificationId(verificationId);
+      setError(false);
+      await showMessage({
+        text: "please check your messages",
+      });
+      setIsVisible(true);
+    } catch (err) {
+      showMessage({ text: `Invalid phone number, please try again` });
+      setError(true);
+    }
+  }
 
   return (
     <SafeAreaView>
-      <View>
+      <View className="items-center justify-center py-20">
         <FirebaseRecaptchaVerifierModal
           ref={recaptchaVerifier}
           firebaseConfig={app.options}
+          attemptInvisibleVerification={true | false}
         />
-        <Text>Enter phone number</Text>
-        <TextInput
-          placeholder="phone number"
-          autoFocus
-          autoCompleteType="tel"
-          keyboardType="phone-pad"
-          textContentType="telephoneNumber"
-          onChangeText={(phoneNumber) => setPhoneNumber(phoneNumber)}
-        />
-        <Button
-          title="Send Verification Code"
-          disabled={!phoneNumber}
-          onPress={async () => {
-            try {
-              const phoneProvider = new PhoneAuthProvider(auth);
-              const verificationId = await phoneProvider.verifyPhoneNumber(
-                phoneNumber,
-                recaptchaVerifier.current
-              );
-              setVerificationId(verificationId);
-              showMessage({
-                text: "Verification code has been sent to your phone.",
-              });
-            } catch (err) {
-              showMessage({ text: `Error: ${err.message}` });
-            }
-          }}
-        />
-        <Text>Enter Verification code</Text>
-        <TextInput
-          editable={!!verificationId}
-          placeholder="123456"
-          onChangeText={setVerificationCode}
-        />
-        <Button
-          title="Confirm Verification Code"
-          disabled={!verificationId}
-          onPress={async () => {
-            try {
-              const credential = PhoneAuthProvider.credential(
-                verificationId,
-                verificationCode
-              );
-              await signInWithCredential(auth, credential);
-              showMessage({ text: "Phone authentication successful 👍" });
-              navigation.navigate("UserNameInputPage", {
-                mobileNumber: phoneNumber,
-              });
-              //TODO - can pass user details here
-              navigation.navigate("QuestList");
-            } catch (err) {
-              showMessage({ text: `Error: ${err.message}` });
-            }
-          }}
-        />
-        {message ? (
-          <TouchableOpacity onPress={() => showMessage(undefined)}>
-            <Text>{message.text}</Text>
+        <View>
+          <Text className="text-2xl mb-12 tracking-widest font-medium text-center shadow">
+            Welcome to {"\n"}
+            <Text className="text-3xl tracking-tighter font-bold text-[#d86429]">
+              SideQuest
+            </Text>
+          </Text>
+        </View>
+        <Text className="text-xl text-center tracking-tighter font-bold text-[#d86429]">
+          <Text className="text-black font-medium">Your</Text> Phone Number
+        </Text>
+        <Text className="text-[#706e69]">ps. include your country code!</Text>
+        <View className="flex flex-row text-base justify-between p-2 mb-3 bg-[#ffe2d4] focus:bg-[#ffb087] w-8/12">
+          <TextInput
+            className="text-center text-base items-center justify-center pb-2"
+            placeholder="+441231231233"
+            placeholderTextColor="#8C8984"
+            autoCompleteType="tel"
+            keyboardType="phone-pad"
+            textContentType="telephoneNumber"
+            onChangeText={(phoneNumber) => setPhoneNumber(phoneNumber)}
+          />
+          <TouchableOpacity
+            className="items-center justify-center text-base text-center"
+            disabled={!phoneNumber && !error}
+            onPress={() => sendVerificationCode()}
+          >
+            <Text className="text-base font-bold">Send</Text>
           </TouchableOpacity>
-        ) : undefined}
-        {attemptInvisibleVerification && <FirebaseRecaptchaBanner />}
+        </View>
+        <View className="mx-16">
+          {attemptInvisibleVerification && !isVisible && (
+            <FirebaseRecaptchaBanner />
+          )}
+        </View>
+        {verificationId && (
+          <VerifyCode
+            isVisible={isVisible}
+            verificationId={verificationId}
+            setVerificationCode={setVerificationCode}
+            verificationCode={verificationCode}
+            showMessage={showMessage}
+            phoneNumber={phoneNumber}
+            setIsVisible={setIsVisible}
+            message={message}
+            setIsVerified={setIsVerified}
+          />
+        )}
+        {isVerified && <UsernameInput isVerified={isVerified} />}
+        {error && message ? <Text>{message.text}</Text> : null}
       </View>
     </SafeAreaView>
   );
