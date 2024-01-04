@@ -2,36 +2,22 @@ import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
 
-const QuestCard = (props) => {
+const QuestCard = ({ quest, questions }) => {
   const navigation = useNavigation();
   return (
-    <View style={styles.container}>
-      <View style={styles.categoryContainer}>
-        <TouchableOpacity
-          style={styles.category}
-          onPress={() => navigation.navigate("SingleQuest", {props})}
-        >
-          <Text style={styles.categoryTitle}>{props.title}</Text>
-        </TouchableOpacity>
-      </View>
-    </View>
+    <TouchableOpacity
+      style={styles.quest}
+      onPress={() => navigation.navigate("SingleQuest", { questId: quest.questId, questions })}
+    >
+      <Text style={styles.questTitle}>{quest.title}</Text>
+    </TouchableOpacity>
   );
 };
 
 export default QuestCard;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  categoryContainer: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: 50,
-  },
-  category: {
+  quest: {
     width: 150,
     height: 150,
     margin: 10,
@@ -42,9 +28,9 @@ const styles = StyleSheet.create({
     shadowRadius: 5,
     elevation: 5,
     justifyContent: "center",
-    alignItems: "center",
+    alignSelf: "center",
   },
-  categoryTitle: {
+  questTitle: {
     fontSize: 20,
     fontWeight: "bold",
     textAlign: "center",

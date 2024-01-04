@@ -31,9 +31,10 @@ export default function Example() {
             backgroundColor: "#000",
           },
         }}
-      ><QuestList/></RBSheet>
-
-      {/* quest card component goes here */}
+      >
+        {/* placeholder for now - actual quest card component goes here */}
+        <QuestList />
+      </RBSheet>
     </View>
   );
 }

@@ -7,29 +7,48 @@ import {
   Alert,
 } from "react-native";
 import React, { useState, useEffect } from "react";
-import MultipleChoice from "../Components/MultipleChoice";
+import MultipleChoice from "./MultipleChoice";
+import TextEntry from "./TextEntry";
 
+//TODO - quest completion, landmarks?
 const SingleQuest = ({ route }) => {
-  const [questions, setQuestions] = useState([]);
+  const [questionsArray, setQuestionsArray] = useState([]);
+  const [filteredQuestionsArray, setFilteredQuestionsArray] = useState([]);
   const [selectedOptions, setSelectedOptions] = useState({});
   const [score, setScore] = useState(0);
   const [showResults, setShowResults] = useState(false);
-  const { props } = route.params;
+  //TODO - could be more dynamic
+  const [givenAnswer, setGivenAnswer] = useState("");
+  const { questions } = route.params;
+  const { questId } = route.params;
 
   //TODO - get questions from firebase
   const getQuestions = () => {
     setSelectedOptions({});
+    setGivenAnswer("");
     setShowResults(false);
-    setQuestions([props]);
+    setQuestionsArray(questions);
+    const filteredArr = [];
+    for (let i = 0; i < questions.length; i++) {
+      if (questions[i].questId === questId) {
+        filteredArr.push(questions[i]);
+      }
+    }
+    setFilteredQuestionsArray(filteredArr);
   };
 
   const handleSubmit = () => {
     let correctAnswers = 0;
     //TODO - will need logic here for other question types
-    questions.forEach((question, index) => {
+    filteredQuestionsArray.forEach((question, index) => {
       if (
         question.type === "multiple choice" &&
         question.options[selectedOptions[index] - 1] === question.correctAnswer
+      ) {
+        correctAnswers++;
+      } else if (
+        question.type === "text input" &&
+        givenAnswer === question.correctAnswer
       ) {
         correctAnswers++;
       }
@@ -45,20 +64,28 @@ const SingleQuest = ({ route }) => {
   return (
     <View style={styles.container}>
       <FlatList
-        data={questions}
+        data={filteredQuestionsArray}
         keyExtractor={(item, index) => index.toString()}
         renderItem={({ item, index }) => (
           <View style={styles.questionContainer}>
-            <Text style={styles.question}>{item.text}</Text>
-
-            {/* TODO - conditional rendering based on question type here -> map thru questions and sort by type */}
-            <MultipleChoice
-              item={item}
-              index={index}
-              selectedOptions={selectedOptions}
-              setSelectedOptions={setSelectedOptions}
-              showResults={showResults}
-            />
+            {/* TODO - better conditional rendering based on question type */}
+            {item.type === "multiple choice" ? (
+              <MultipleChoice
+                item={item}
+                index={index}
+                selectedOptions={selectedOptions}
+                setSelectedOptions={setSelectedOptions}
+                showResults={showResults}
+              />
+            ) : (
+              <TextEntry
+                item={item}
+                index={index}
+                givenAnswer={givenAnswer}
+                setGivenAnswer={setGivenAnswer}
+                showResults={showResults}
+              />
+            )}
           </View>
         )}
       />
@@ -72,7 +99,7 @@ const SingleQuest = ({ route }) => {
       {showResults && (
         <View style={styles.result}>
           <Text style={styles.resultText}>
-            You scored {score} out of {questions.length}
+            You scored {score} out of {filteredQuestionsArray.length}
           </Text>
           <TouchableOpacity
             style={styles.tryAgainButton}
@@ -108,11 +135,6 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 5,
-  },
-  question: {
-    fontSize: 20,
-    fontWeight: "bold",
-    marginVertical: 10,
   },
   submitButton: {
     backgroundColor: "blue",
