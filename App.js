@@ -8,30 +8,41 @@ import QuestList from "./Components/QuestList";
 import SingleQuest from "./Components/SingleQuest";
 import Header from "./Components/Header";
 import Home from "./screens/Home";
+import { auth } from "./firebaseConfig";
 
 export default function App() {
   const Stack = createNativeStackNavigator();
+  const user = auth.currentUser;
 
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen
-          options={{ headerShown: false }}
-          name="Sidequest"
-          component={Login}
-        />
-        <Stack.Screen
-          options={{ headerShown: false }}
-          name="Logout"
-          component={Logout}
-        />
-        <Stack.Screen
-          options={{ headerTitle: () => <Header name="questlist" /> }}
-          name="QuestList"
-          component={QuestList}
-        />
-        <Stack.Screen name="SingleQuest" component={SingleQuest} />
-        <Stack.Screen name="Home" component={Home} />
+        {!user ? (
+          <>
+            <Stack.Screen
+              options={{ headerShown: false }}
+              name="Sidequest"
+              component={Login}
+            />
+            <Stack.Screen name="Home" component={Home} />
+          </>
+        ) : (
+          <>
+            <Stack.Screen name="Home" component={Home} />
+            <Stack.Screen
+              options={{ headerShown: false }}
+              name="Logout"
+              component={Logout}
+            />
+            <Stack.Screen
+              options={{ headerTitle: () => <Header name="questlist" /> }}
+              name="QuestList"
+              component={QuestList}
+            />
+            <Stack.Screen name="SingleQuest" component={SingleQuest} />
+            <Stack.Screen name="Home" component={Home} />
+          </>
+        )}
       </Stack.Navigator>
     </NavigationContainer>
   );
