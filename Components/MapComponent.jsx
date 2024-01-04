@@ -1,53 +1,55 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import * as Location from "expo-location";
 import MapViewDirections from "react-native-maps-directions";
-import Example from "../BottomSheet";
+import Example from "./BottomSheet";
 
 const dummyQuest = {
-    name: 'The London Eye',
-    description: 'dhbrfurhbfhj',
-    location: {
-      latitude: 51.503399,
-      longitude: -0.119519}
-}
+  name: "The London Eye",
+  description: "dhbrfurhbfhj",
+  location: {
+    latitude: 51.503399,
+    longitude: -0.119519,
+  },
+};
 const dummyLocations = [
   {
-    name: 'The Ritz',
-    description: 'dhbrfurhbfhj',
+    name: "The Ritz",
+    description: "dhbrfurhbfhj",
     location: {
       latitude: 51.5071,
-      longitude: 0.1416}
+      longitude: 0.1416,
+    },
   },
   {
-    name: 'hyde park',
-  description: 'dhbrfurhbfhj',
-  location: {
-    latitude: 51.5074,
-    longitude: 0.1641}
+    name: "hyde park",
+    description: "dhbrfurhbfhj",
+    location: {
+      latitude: 51.5074,
+      longitude: 0.1641,
+    },
   },
   {
-    name: 'The London Eye',
-    description: 'dhbrfurhbfhj',
+    name: "The London Eye",
+    description: "dhbrfurhbfhj",
     location: {
       latitude: 51.503399,
-      longitude: -0.119519}
-  }
-]
+      longitude: -0.119519,
+    },
+  },
+];
 
 const Map = () => {
-
   const [currentLocation, setCurrentLocation] = useState(null);
-  const [questDestination, setQuestDestination] = useState(null)
-
+  const [questDestination, setQuestDestination] = useState(null);
 
   useEffect(() => {
     (async () => {
       try {
         const { status } = await Location.requestForegroundPermissionsAsync();
-        if (status !== 'granted') {
-          console.log('Permission to access location was denied');
+        if (status !== "granted") {
+          console.log("Permission to access location was denied");
           return;
         }
         const locationSubscription = await Location.watchPositionAsync(
@@ -58,7 +60,7 @@ const Map = () => {
           },
           (userLocation) => {
             setCurrentLocation(userLocation);
-            setQuestDestination(dummyQuest.location)
+            setQuestDestination(dummyQuest.location);
           }
         );
         return () => locationSubscription.remove();
@@ -83,7 +85,13 @@ const Map = () => {
           showsMyLocationButton={true}
         >
           {dummyLocations.map((questMarker) => {
-            return <Marker key={questMarker.name} coordinate={questMarker.location} title={questMarker.name} />
+            return (
+              <Marker
+                key={questMarker.name}
+                coordinate={questMarker.location}
+                title={questMarker.name}
+              />
+            );
           })}
           <MapViewDirections
             origin={{
@@ -96,7 +104,7 @@ const Map = () => {
             strokeWidth={2}
             strokeColor="#d86429"
           />
-          </MapView>
+        </MapView>
       ) : (
         <MapView
           style={styles.map}
@@ -106,8 +114,7 @@ const Map = () => {
             latitudeDelta: 0.0922,
             longitudeDelta: 0.0421,
           }}
-        >
-        </MapView>
+        ></MapView>
       )}
       <Example />
     </View>
@@ -115,16 +122,16 @@ const Map = () => {
 };
 const styles = StyleSheet.create({
   mapContainer: {
-    height: '100%',
+    height: "100%",
     width: "100%",
   },
   map: {
     flex: 1,
-    height: '100%',
+    height: "100%",
     width: "100%",
   },
 });
 export default Map;
 
 //figure out how to make the red modal for quest info, and how to link it to markers
-//styling for 
+//styling for

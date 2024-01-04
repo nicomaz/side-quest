@@ -1,4 +1,4 @@
-import { View, TextInput, Button, Text, TouchableOpacity } from "react-native";
+import { View, TextInput, Text, TouchableOpacity } from "react-native";
 import React, { useState } from "react";
 import { auth, db } from "../firebaseConfig";
 import { setDoc, doc } from "firebase/firestore";
@@ -19,7 +19,7 @@ const UsernameInput = () => {
         mobileNumber: user.phoneNumber,
       });
       await updateProfile(user, { displayName: username });
-      navigation.navigate("QuestList");
+      navigation.navigate("Home");
     } catch (error) {
       console.error("Error saving username:", error); //change this to an alert at some point
     }
