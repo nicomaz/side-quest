@@ -7,8 +7,8 @@ import {
   Alert,
 } from "react-native";
 import React, { useState, useEffect } from "react";
-import MultipleChoice from "./MultipleChoice";
-import TextEntry from "./TextEntry";
+import MultipleChoice from "../Components/MultipleChoice";
+import TextEntry from "../Components/TextEntry";
 
 //TODO - quest completion, landmarks?
 const SingleQuest = ({ route }) => {
