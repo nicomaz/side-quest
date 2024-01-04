@@ -8,6 +8,7 @@ import { updateProfile } from "firebase/auth";
 
 const UsernameInput = () => {
   const user = auth.currentUser;
+  console.log(auth.currentUser)
 
   const [username, setUsername] = useState("");
   const navigation = useNavigation();
