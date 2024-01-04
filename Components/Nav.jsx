@@ -11,9 +11,13 @@ function DrawerNavigation() {
     <Drawer.Navigator>
       <>
         <Drawer.Screen
-          options={{ headerTitle: () => <Header name="Home" /> }}
           name="Map"
           component={Map}
+          options={{
+            headerStyle: { backgroundColor: "#f0ad4e" },
+            headerTitle: () => <Header name="Home" />
+          }}
+
         />
         <Drawer.Screen name="Profile" component={Profile} />
         <Drawer.Screen name="Quests" component={QuestList} />
