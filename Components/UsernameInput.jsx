@@ -4,9 +4,9 @@ import { auth, db } from "../firebaseConfig";
 import { setDoc, doc } from "firebase/firestore";
 import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { updateProfile } from "firebase/auth";
 
-const UsernameInput = ({ isVerified }) => {
-  //  const { setUser } = useContext(UserContext);
+const UsernameInput = () => {
   const user = auth.currentUser;
 
   const [username, setUsername] = useState("");
@@ -14,11 +14,11 @@ const UsernameInput = ({ isVerified }) => {
 
   const saveUsername = async () => {
     try {
-      await setDoc(doc(db, "usernames", mobileNumber), {
+      await setDoc(doc(db, "usernames", user.phoneNumber), {
         username: username,
         mobileNumber: user.phoneNumber,
       });
-      setUser(username);
+      await updateProfile(user, { displayName: username });
       navigation.navigate("QuestList");
     } catch (error) {
       console.error("Error saving username:", error); //change this to an alert at some point

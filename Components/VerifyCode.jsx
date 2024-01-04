@@ -1,7 +1,7 @@
 import { Text, TextInput, Modal, View, TouchableOpacity } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import { PhoneAuthProvider, signInWithCredential } from "firebase/auth";
-import { app, auth } from "../firebaseConfig";
+import { auth } from "../firebaseConfig";
 
 export default function VerifyCode({
   verificationId,

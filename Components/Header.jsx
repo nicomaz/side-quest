@@ -1,15 +1,16 @@
-import { View, Text } from 'react-native'
-import React, { useContext } from 'react'
-import { UserContext } from '../userContext'
+import { View, Text } from "react-native";
+import React, { useContext } from "react";
+import { UserContext } from "../userContext";
+import {auth} from "../firebaseConfig.js"
 
 const Header = (props) => {
-  const { username } = useContext(UserContext);
+  const user = auth.currentUser;
   return (
     <View>
       <Text>{props.name}</Text>
-      <Text>Hello {username}</Text>
+      <Text>Hello {user.displayName}</Text>
     </View>
-  )
-}
+  );
+};
 
-export default Header
+export default Header;
