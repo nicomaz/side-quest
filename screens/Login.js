@@ -47,7 +47,6 @@ export default function Login() {
         <FirebaseRecaptchaVerifierModal
           ref={recaptchaVerifier}
           firebaseConfig={app.options}
-          attemptInvisibleVerification={true | false}
         />
         <View>
           <Text className="text-2xl mb-12 tracking-widest font-medium text-center shadow">
