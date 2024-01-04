@@ -1,4 +1,4 @@
-import { Text, View, TextInput, TouchableOpacity } from "react-native";
+import { Text, View, TextInput, TouchableOpacity, Image } from "react-native";
 import {
   FirebaseRecaptchaVerifierModal,
   FirebaseRecaptchaBanner,
@@ -49,12 +49,14 @@ export default function Login() {
           firebaseConfig={app.options}
           attemptInvisibleVerification={true | false}
         />
-        <Text className="text-2xl mb-12 tracking-widest font-medium text-center shadow">
-          Welcome to {"\n"}
-          <Text className="text-3xl tracking-tighter font-bold text-[#d86429]">
-            SideQuest
+        <View>
+          <Text className="text-2xl mb-12 tracking-widest font-medium text-center shadow">
+            Welcome to {"\n"}
+            <Text className="text-3xl tracking-tighter font-bold text-[#d86429]">
+              SideQuest
+            </Text>
           </Text>
-        </Text>
+        </View>
         <Text className="text-xl text-center tracking-tighter font-bold text-[#d86429]">
           <Text className="text-black font-medium">Your</Text> Phone Number
         </Text>
