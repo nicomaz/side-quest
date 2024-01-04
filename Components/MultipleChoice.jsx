@@ -24,6 +24,7 @@ const MultipleChoice = ({
 
   return (
     <>
+      <Text style={styles.question}>{item.text}</Text>
       <TouchableOpacity
         style={[
           styles.option,
@@ -106,5 +107,10 @@ const styles = StyleSheet.create({
   },
   wrongOption: {
     backgroundColor: "red",
+  },
+  question: {
+    fontSize: 20,
+    fontWeight: "bold",
+    marginVertical: 10,
   },
 });

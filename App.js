@@ -23,9 +23,9 @@ export default function App() {
           component={Login}
         />
         <Stack.Screen name="Logout" component={Logout} />
-        <Stack.Screen name="UserNameInputPage" component={UserNameInputPage} />
         <Stack.Screen name="QuestList" component={QuestList} />
         <Stack.Screen name="SingleQuest" component={SingleQuest} />
+        <Stack.Screen name="UserNameInputPage" component={UserNameInputPage} />
       </Stack.Navigator>
     </NavigationContainer>
   );
