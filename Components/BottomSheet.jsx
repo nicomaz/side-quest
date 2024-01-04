@@ -1,6 +1,7 @@
 import React, { useRef } from "react";
 import { View, Button, Text } from "react-native";
 import RBSheet from "react-native-raw-bottom-sheet";
+import QuestList from "./QuestList";
 
 export default function Example() {
   const refRBSheet = useRef();
@@ -30,7 +31,7 @@ export default function Example() {
             backgroundColor: "#000",
           },
         }}
-      ></RBSheet>
+      ><QuestList/></RBSheet>
 
       {/* quest card component goes here */}
     </View>

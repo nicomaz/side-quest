@@ -1,7 +1,7 @@
 import { Text, TextInput, Modal, View, TouchableOpacity } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import { PhoneAuthProvider, signInWithCredential } from "firebase/auth";
-import { auth } from "../firebaseConfig";
+import { app, auth } from "../firebaseConfig";
 
 export default function VerifyCode({
   verificationId,
@@ -23,13 +23,12 @@ export default function VerifyCode({
     }
   }
 
+
   return (
     <SafeAreaProvider>
       <SafeAreaView>
         <View className="py-3 mx-auto items-center w-9/12 h-28  rounded-lg">
-          <Text className="text-xl text-center tracking-tighter font-bold text-[#d86429]">
-            <Text className="text-black font-medium">Verification</Text> Code
-          </Text>
+          <Text className="text-xl font-medium mt-1">Verification Code</Text>
           <Text className="text-[#706e69]">please check your messages</Text>
 
           <View className="flex flex-row justify-between text-base bg-[#ffe2d4] focus:bg-[#ffb087] p-2">

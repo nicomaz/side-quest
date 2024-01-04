@@ -7,7 +7,7 @@ import {
   Alert,
 } from "react-native";
 import React, { useState, useEffect } from "react";
-import MultipleChoice from "./MultipleChoice";
+import MultipleChoice from "../Components/MultipleChoice";
 
 const SingleQuest = ({ route }) => {
   const [questions, setQuestions] = useState([]);
@@ -25,10 +25,11 @@ const SingleQuest = ({ route }) => {
 
   const handleSubmit = () => {
     let correctAnswers = 0;
-    //TODO - will need logic here for other question types 
+    //TODO - will need logic here for other question types
     questions.forEach((question, index) => {
       if (
-        question.type === "multiple choice" && question.options[selectedOptions[index] - 1] === question.correctAnswer
+        question.type === "multiple choice" &&
+        question.options[selectedOptions[index] - 1] === question.correctAnswer
       ) {
         correctAnswers++;
       }
@@ -49,10 +50,15 @@ const SingleQuest = ({ route }) => {
         renderItem={({ item, index }) => (
           <View style={styles.questionContainer}>
             <Text style={styles.question}>{item.text}</Text>
-            
-            {/* TODO - conditional rendering based on question type here -> map thru questions and sort by type */}
-            <MultipleChoice item={item} index={index} selectedOptions={selectedOptions} setSelectedOptions={setSelectedOptions} showResults={showResults}/>
 
+            {/* TODO - conditional rendering based on question type here -> map thru questions and sort by type */}
+            <MultipleChoice
+              item={item}
+              index={index}
+              selectedOptions={selectedOptions}
+              setSelectedOptions={setSelectedOptions}
+              showResults={showResults}
+            />
           </View>
         )}
       />

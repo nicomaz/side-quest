@@ -5,8 +5,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import * as React from "react";
 
 import Nav from "./Nav";
-import Home from "./screens/Home";
-import Map from "./Components/MapComponent";
+import SingleQuest from "./screens/SingleQuest";
 
 export default function App() {
   const Stack = createNativeStackNavigator();
@@ -20,6 +19,7 @@ export default function App() {
             component={Nav}
             options={{ headerShown: false }}
           />
+          <Stack.Screen name="SingleQuest" component={SingleQuest} />
         </>
       </Stack.Navigator>
     </NavigationContainer>
