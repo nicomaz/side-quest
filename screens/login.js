@@ -8,6 +8,7 @@ import { app, auth } from "../firebaseConfig";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useRef, useState } from "react";
 import VerifyCode from "../Components/VerifyCode";
+import UsernameInput from "../Components/UsernameInput";
 
 export default function Login() {
   const recaptchaVerifier = useRef(null);
@@ -15,6 +16,7 @@ export default function Login() {
   const [verificationId, setVerificationId] = useState();
   const [verificationCode, setVerificationCode] = useState();
   const [message, showMessage] = useState();
+  const [isVerified, setIsVerified] = useState(false);
   const attemptInvisibleVerification = true;
   const [error, setError] = useState(false);
 
@@ -47,7 +49,7 @@ export default function Login() {
           firebaseConfig={app.options}
           attemptInvisibleVerification={true | false}
         />
-        <Text className="text-2xl mb-20 tracking-widest font-medium text-center">
+        <Text className="text-2xl mb-12 tracking-widest font-medium text-center shadow">
           Welcome to {"\n"}
           <Text className="text-3xl tracking-tighter font-bold text-[#d86429]">
             SideQuest
@@ -60,7 +62,7 @@ export default function Login() {
         <View className="flex flex-row text-base justify-between p-2 mb-3 bg-[#ffe2d4] focus:bg-[#ffb087] w-8/12">
           <TextInput
             className="text-center text-base items-center justify-center pb-2"
-            placeholder="+44 123 123 1233"
+            placeholder="+441231231233"
             placeholderTextColor="#8C8984"
             autoCompleteType="tel"
             keyboardType="phone-pad"
@@ -80,16 +82,20 @@ export default function Login() {
             <FirebaseRecaptchaBanner />
           )}
         </View>
-        <VerifyCode
-          isVisible={isVisible}
-          verificationId={verificationId}
-          setVerificationCode={setVerificationCode}
-          verificationCode={verificationCode}
-          showMessage={showMessage}
-          phoneNumber={phoneNumber}
-          setIsVisible={setIsVisible}
-          message={message}
-        />
+        {verificationId && (
+          <VerifyCode
+            isVisible={isVisible}
+            verificationId={verificationId}
+            setVerificationCode={setVerificationCode}
+            verificationCode={verificationCode}
+            showMessage={showMessage}
+            phoneNumber={phoneNumber}
+            setIsVisible={setIsVisible}
+            message={message}
+            setIsVerified={setIsVerified}
+          />
+        )}
+        {isVerified && <UsernameInput isVerified={isVerified} />}
         {error && message ? <Text>{message.text}</Text> : null}
       </View>
     </SafeAreaView>

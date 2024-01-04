@@ -3,12 +3,10 @@ import Logout from "./screens/Logout";
 import "react-native-gesture-handler";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import UserNameInputPage from "./screens/UserNameInputPage";
 import * as React from "react";
 import QuestList from "./Components/QuestList";
 import SingleQuest from "./Components/SingleQuest";
-import Header from './Components/Header'
-import { UserProvider } from "./userContext";
+import Header from "./Components/Header";
 
 export default function App() {
   const Stack = createNativeStackNavigator();
@@ -27,12 +25,11 @@ export default function App() {
           component={Logout}
         />
         <Stack.Screen
-          options={{ headerShown: false }}
-          name="UserNameInputPage"
-          component={UserNameInputPage}
+          options={{ headerTitle: () => <Header name="questlist" /> }}
+          name="QuestList"
+          component={QuestList}
         />
-        <Stack.Screen options={{ headerTitle: () => <Header name="questlist" /> }} name="QuestList" component={QuestList} />
-          <Stack.Screen name="SingleQuest" component={SingleQuest} />
+        <Stack.Screen name="SingleQuest" component={SingleQuest} />
       </Stack.Navigator>
     </NavigationContainer>
   );
