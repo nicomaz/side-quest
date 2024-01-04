@@ -19,7 +19,7 @@ const UsernameInput = () => {
         mobileNumber: user.phoneNumber,
       });
       await updateProfile(user, { displayName: username });
-      navigation.navigate("Home");
+      navigation.navigate("Nav");
     } catch (error) {
       console.error("Error saving username:", error); //change this to an alert at some point
     }

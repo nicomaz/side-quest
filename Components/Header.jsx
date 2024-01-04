@@ -15,28 +15,27 @@ const Header = (props) => {
 
 const styles = StyleSheet.create({
   header: {
-    width: '100%',
-    height: '120%',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#48821c'
+    width: "100%",
+    height: "120%",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#48821c",
   },
   headerText: {
-    fontWeight: 'bold',
+    fontWeight: "bold",
     fontSize: 28,
-    color: '#de6429',
+    color: "#de6429",
     letterSpacing: 1,
   },
   pageName: {
-    position: 'absolute',
-    left: 16
+    position: "absolute",
+    left: 16,
   },
   user: {
-    position: 'absolute',
-    right: 50
-  }
-})
-
+    position: "absolute",
+    right: 50,
+  },
+});
 
 export default Header;
