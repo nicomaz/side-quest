@@ -1,7 +1,6 @@
 import { View, Text } from "react-native";
-import React, { useContext } from "react";
-import { UserContext } from "../userContext";
-import {auth} from "../firebaseConfig.js"
+import React from "react";
+import { auth } from "../firebaseConfig.js";
 
 const Header = (props) => {
   const user = auth.currentUser;
