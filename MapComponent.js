@@ -6,11 +6,11 @@ import MapViewDirections from "react-native-maps-directions";
 import Example from "./BottomSheet";
 
 const dummyQuest = {
-    name: 'hyde park',
+    name: 'The London Eye',
     description: 'dhbrfurhbfhj',
     location: {
-      latitude: 51.5074,
-      longitude: 0.1641}
+      latitude: 51.503399,
+      longitude: -0.119519}
 }
 const dummyLocations = [
   {
@@ -21,18 +21,19 @@ const dummyLocations = [
       longitude: 0.1416}
   },
   {
+    name: 'hyde park',
+  description: 'dhbrfurhbfhj',
+  location: {
+    latitude: 51.5074,
+    longitude: 0.1641}
+  },
+  {
     name: 'The London Eye',
     description: 'dhbrfurhbfhj',
     location: {
       latitude: 51.503399,
       longitude: -0.119519}
-  },
-  {name: 'hyde park',
-  description: 'dhbrfurhbfhj',
-  location: {
-    latitude: 51.5074,
-    longitude: 0.1641}
-}
+  }
 ]
 
 const Map = () => {
@@ -126,3 +127,4 @@ const styles = StyleSheet.create({
 export default Map;
 
 //figure out how to make the red modal for quest info, and how to link it to markers
+//styling for 
