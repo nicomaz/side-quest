@@ -1,15 +1,12 @@
-import { StatusBar } from "expo-status-bar";
-import { Text, View } from "react-native";
-import Login from "./screens/login";
-import Logout from "./screens/logout";
+import Login from "./screens/Login";
+import Logout from "./screens/Logout";
 import "react-native-gesture-handler";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import UserNameInputPage from "./screens/UserNameInputPage";
 import * as React from "react";
 import QuestList from "./Components/QuestList";
 import SingleQuest from "./Components/SingleQuest";
-import SignIn from "./Components/SignIn";
+import Header from "./Components/Header";
 import Map from "./screens/MapComponent";
 
 export default function App() {
@@ -20,12 +17,19 @@ export default function App() {
       <Stack.Navigator>
         <Stack.Screen
           options={{ headerShown: false }}
-          name="Login"
+          name="Sidequest"
           component={Login}
         />
-        <Stack.Screen name="Logout" component={Logout} />
-        <Stack.Screen name="UserNameInputPage" component={UserNameInputPage} />
-        <Stack.Screen name="QuestList" component={QuestList} />
+        <Stack.Screen
+          options={{ headerShown: false }}
+          name="Logout"
+          component={Logout}
+        />
+        <Stack.Screen
+          options={{ headerTitle: () => <Header name="questlist" /> }}
+          name="QuestList"
+          component={QuestList}
+        />
         <Stack.Screen name="SingleQuest" component={SingleQuest} />
         <Stack.Screen name="MapComponent" component={Map} />
       </Stack.Navigator>
