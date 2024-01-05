@@ -61,23 +61,20 @@ const Map = () => {
 
   const auth = getAuth(app)
   const user = auth.currentUser
-  console.log(user)
   async function getUser () {
     const docRef = doc(db, "users", user.phoneNumber);
     const docSnap = await getDoc(docRef);
     setCurrentQuest(docSnap.data().currentQuest);
-    console.log(docSnap.data(), '<===')
   }
   async function getLocation() {
     const questsRef = collection(db, "quests");
     const q = query(questsRef, where("questId", "==", currentQuest));
     const querySnapshot = await getDocs(q);
     querySnapshot.forEach((doc) => {
-      console.log(doc.data().location);
       setQuestDestination(doc.data().location);
     });
   }
-  
+
 
   useEffect(() => {
     (async () => {
