@@ -1,15 +1,28 @@
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, Button } from "react-native";
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
 
-const QuestCard = ({ quest, questions }) => {
+const QuestCard = ({ quest, questions, onStartQuest }) => {
   const navigation = useNavigation();
   return (
-    <TouchableOpacity
-      style={styles.quest}
-      onPress={() => navigation.navigate("SingleQuest", { questId: quest.questId, questions })}
-    >
+    <TouchableOpacity style={styles.quest}>
       <Text style={styles.questTitle}>{quest.title}</Text>
+      <View style={styles.buttonContainer}>
+        <Button
+          title="Start Quest"
+          onPress={() => onStartQuest(quest)}
+          disabled={!quest.isActive}
+        />
+        <Button
+          title="Details"
+          onPress={() =>
+            navigation.navigate("SingleQuest", {
+              questId: quest.questId,
+              questions,
+            })
+          }
+        />
+      </View>
     </TouchableOpacity>
   );
 };

@@ -12,6 +12,7 @@ import {
   doc,
   getDoc,
   getDocs,
+  updateDoc,
   query,
   where,
 } from "firebase/firestore";
@@ -116,6 +117,13 @@ const Map = () => {
       setSelectedMarker(pressedMarker.name);
     }
   };
+
+  const startQuest = async (quest) => {
+    await updateDoc(doc(db, 'users', user.phoneNumber), { currentQuest: quest.questId})
+    setQuestDestination(quest.location)
+    setCurrentQuest(quest)
+    refRBSheet.current.close()
+  }
 
   return (
     <View style={{ flex: 1 }}>

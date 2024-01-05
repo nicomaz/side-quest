@@ -4,7 +4,7 @@ import QuestCard from "./QuestCard";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from '../firebaseConfig';
 
-const QuestList = () => {
+const QuestList = ({onStartQuest}) => {
   const [quests, setQuests] = useState([]);
   const [questions, setQuestions] = useState([]);
 
@@ -34,7 +34,7 @@ const QuestList = () => {
           data={quests}
           keyExtractor={(quest) => quest.questId}
           renderItem={({ item }) => (
-            <QuestCard quest={item} questions={questions} />
+            <QuestCard quest={item} questions={questions} onStartQuest={onStartQuest}/>
           )}
         />
       </View>
