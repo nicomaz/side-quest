@@ -5,6 +5,16 @@ import * as Location from "expo-location";
 import MapViewDirections from "react-native-maps-directions";
 import Example from "./BottomSheet";
 import mapStyle from "../assets/MapStyle";
+import { applyActionCode, getAuth } from "firebase/auth"
+import {app, db } from "../firebaseConfig"
+import {
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  query,
+  where,
+} from "firebase/firestore";
 
 const dummyQuest = {
   name: "The London Eye",
@@ -41,10 +51,32 @@ const dummyLocations = [
   },
 ];
 
+
+
 const Map = () => {
   const [currentLocation, setCurrentLocation] = useState(null);
   const [questDestination, setQuestDestination] = useState(null);
   const [selectedMarker, setSelectedMarker] = useState(null);
+  const [currentQuest, setCurrentQuest] = useState(null)
+
+  const auth = getAuth(app)
+  const user = auth.currentUser
+  console.log(user)
+  async function getUser () {
+    const docRef = doc(db, "users", user.phoneNumber);
+    const docSnap = await getDoc(docRef);
+    setCurrentQuest(docSnap.data().currentQuest);
+    console.log(docSnap.data(), '<===')
+  }
+  async function getLocation() {
+    const questsRef = collection(db, "quests");
+    const q = query(questsRef, where("questId", "==", currentQuest));
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((doc) => {
+      console.log(doc.data().location);
+      setQuestDestination(doc.data().location);
+    });
+  }
 
   useEffect(() => {
     (async () => {
@@ -54,6 +86,7 @@ const Map = () => {
           console.log("Permission to access location was denied");
           return;
         }
+        getUser()
         const locationSubscription = await Location.watchPositionAsync(
           {
             accuracy: Location.Accuracy.Highest,
@@ -62,7 +95,7 @@ const Map = () => {
           },
           (userLocation) => {
             setCurrentLocation(userLocation);
-            setQuestDestination(dummyQuest.location);
+            getLocation()
           }
         );
         return () => locationSubscription.remove();
