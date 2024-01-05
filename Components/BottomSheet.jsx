@@ -4,7 +4,10 @@ import RBSheet from "react-native-raw-bottom-sheet";
 import QuestList from "./QuestList";
 import IndividualQuestCard from "./IndividualQuestCard";
 
-export default function Example({selectedMarker, selectedMarker}) {
+export default function Example({ selectedMarker, setSelectedMarker }) {
+  function handleOnClose (){
+    setSelectedMarker(null)
+  }
   const refRBSheet = useRef();
   return (
     <View
@@ -24,6 +27,7 @@ export default function Example({selectedMarker, selectedMarker}) {
         closeOnDragDown={true}
         closeOnPressMask={false}
         height={500}
+        onClose={handleOnClose}
         customStyles={{
           wrapper: {
             backgroundColor: "transparent",
@@ -34,8 +38,7 @@ export default function Example({selectedMarker, selectedMarker}) {
         }}
       >
         {/* placeholder for now - actual quest card component goes here */}
-        {selectedMarker ? <IndividualQuestCard/> : <QuestList/>}
-
+        {selectedMarker ? <IndividualQuestCard /> : <QuestList />}
       </RBSheet>
     </View>
   );
