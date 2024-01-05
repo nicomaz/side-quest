@@ -1,7 +1,14 @@
-import { Text, TextInput, Modal, View, TouchableOpacity } from "react-native";
+import {
+  Text,
+  TextInput,
+  Modal,
+  View,
+  TouchableOpacity,
+  KeyboardAvoidingView,
+} from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import { PhoneAuthProvider, signInWithCredential } from "firebase/auth";
-import { app, auth } from "../firebaseConfig";
+import { auth } from "../firebaseConfig";
 
 export default function VerifyCode({
   verificationId,
@@ -23,7 +30,6 @@ export default function VerifyCode({
     }
   }
 
-
   return (
     <SafeAreaProvider>
       <SafeAreaView>
@@ -36,6 +42,8 @@ export default function VerifyCode({
               className="text-left text-base items-center justify-center pb-2 w-44"
               placeholderTextColor="#8C8984"
               editable={!!verificationId}
+              keyboardType="phone-pad"
+              autoFocus
               placeholder="Your Verification Code"
               onChangeText={setVerificationCode}
             />
@@ -52,3 +60,5 @@ export default function VerifyCode({
     </SafeAreaProvider>
   );
 }
+
+// +1 345 678 9034

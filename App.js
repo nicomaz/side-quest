@@ -15,7 +15,11 @@ export default function App() {
       <Stack.Navigator>
         <>
           <Stack.Screen name="SplashScreen" component={SplashScreen} />
-          <Stack.Screen name="Login" component={Login} />
+          <Stack.Screen
+            name="Login"
+            component={Login}
+            options={{ headerShown: false }}
+          />
           <Stack.Screen
             name="Nav"
             component={Nav}

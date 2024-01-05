@@ -18,7 +18,7 @@ export default function SideQuestSplashScreen() {
     async function prepare() {
       try {
         await onAuthStateChanged(auth, (user) => {
-          if (user) {
+          if (user && user.displayName) {
             navigation.navigate("Nav");
           } else {
             navigation.navigate("Login");

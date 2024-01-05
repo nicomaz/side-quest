@@ -1,9 +1,16 @@
-import { Text, View, TextInput, TouchableOpacity, Image } from "react-native";
+import {
+  Text,
+  View,
+  TextInput,
+  TouchableOpacity,
+  Image,
+  KeyboardAvoidingView,
+} from "react-native";
 import {
   FirebaseRecaptchaVerifierModal,
   FirebaseRecaptchaBanner,
 } from "expo-firebase-recaptcha";
-import { PhoneAuthProvider } from "firebase/auth";
+import { PhoneAuthProvider, getAuth } from "firebase/auth";
 import { app, auth } from "../firebaseConfig";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useRef, useState } from "react";
@@ -21,6 +28,9 @@ export default function Login() {
   const [error, setError] = useState(false);
 
   const [isVisible, setIsVisible] = useState(false);
+
+  const auth = getAuth(app);
+  const user = auth.currentUser;
 
   async function sendVerificationCode() {
     try {
@@ -43,7 +53,10 @@ export default function Login() {
 
   return (
     <SafeAreaView>
-      <View className="items-center justify-center py-20">
+      <View
+        behavior={Platform.OS === "ios" ? "padding" : "position"}
+        className="items-center justify-center py-20"
+      >
         <FirebaseRecaptchaVerifierModal
           ref={recaptchaVerifier}
           firebaseConfig={app.options}
@@ -67,6 +80,7 @@ export default function Login() {
             placeholderTextColor="#8C8984"
             autoCompleteType="tel"
             keyboardType="phone-pad"
+            autoFocus
             textContentType="telephoneNumber"
             onChangeText={(phoneNumber) => setPhoneNumber(phoneNumber)}
           />
@@ -96,9 +110,12 @@ export default function Login() {
             setIsVerified={setIsVerified}
           />
         )}
-        {isVerified && <UsernameInput isVerified={isVerified} />}
+        {isVerified && !user.displayName && (
+          <UsernameInput isVerified={isVerified} />
+        )}
         {error && message ? <Text>{message.text}</Text> : null}
       </View>
     </SafeAreaView>
   );
 }
+// +1 345-234-3333
