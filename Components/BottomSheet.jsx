@@ -2,8 +2,9 @@ import React, { useRef } from "react";
 import { View, Button, Text } from "react-native";
 import RBSheet from "react-native-raw-bottom-sheet";
 import QuestList from "./QuestList";
+import QuestCard from "./QuestCard";
 
-export default function Example() {
+export default function Example(selectedMarker) {
   const refRBSheet = useRef();
   return (
     <View
@@ -33,7 +34,8 @@ export default function Example() {
         }}
       >
         {/* placeholder for now - actual quest card component goes here */}
-        <QuestList />
+       
+        <QuestList  selectedMarker={selectedMarker}/>
       </RBSheet>
     </View>
   );

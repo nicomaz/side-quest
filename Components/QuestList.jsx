@@ -72,7 +72,11 @@ const questions = [
   },
 ];
 
-const QuestList = () => {
+const QuestList = (selectedMarker) => {
+ 
+   console.log(selectedMarker)
+
+
   return (
     <View style={styles.container}>
       <View style={styles.questContainer}>

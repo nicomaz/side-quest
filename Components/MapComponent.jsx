@@ -43,6 +43,7 @@ const dummyLocations = [
 const Map = () => {
   const [currentLocation, setCurrentLocation] = useState(null);
   const [questDestination, setQuestDestination] = useState(null);
+  const [selectedMarker, setSelectedMarker] = useState(null)
 
   useEffect(() => {
     (async () => {
@@ -69,6 +70,12 @@ const Map = () => {
       }
     })();
   }, []);
+
+  const handlePress = (e) => {
+   
+    setSelectedMarker(e.nativeEvent.coordinate)
+  };
+
   return (
     <View style={{ flex: 1 }}>
       {currentLocation ? (
@@ -90,6 +97,7 @@ const Map = () => {
                 key={questMarker.name}
                 coordinate={questMarker.location}
                 title={questMarker.name}
+                onPress={handlePress}
               />
             );
           })}
@@ -116,7 +124,7 @@ const Map = () => {
           }}
         ></MapView>
       )}
-      <Example />
+      <Example selectedMarker={selectedMarker} />
     </View>
   );
 };
