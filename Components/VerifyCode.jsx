@@ -9,6 +9,7 @@ import {
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import { PhoneAuthProvider, signInWithCredential } from "firebase/auth";
 import { auth } from "../firebaseConfig";
+import { useNavigation } from "@react-navigation/native";
 
 export default function VerifyCode({
   verificationId,
@@ -17,6 +18,8 @@ export default function VerifyCode({
   showMessage,
   setIsVerified,
 }) {
+  const navigation = useNavigation();
+
   async function confirmVerificationCode() {
     try {
       const credential = PhoneAuthProvider.credential(
@@ -25,6 +28,7 @@ export default function VerifyCode({
       );
       await signInWithCredential(auth, credential);
       setIsVerified(true);
+      navigation.navigate("Home");
     } catch (err) {
       showMessage({ text: `Error: ${err.message}` });
     }

@@ -5,8 +5,8 @@ import * as Location from "expo-location";
 import MapViewDirections from "react-native-maps-directions";
 import Example from "./BottomSheet";
 import mapStyle from "../assets/MapStyle";
-import { applyActionCode, getAuth } from "firebase/auth"
-import {app, db } from "../firebaseConfig"
+import { applyActionCode, getAuth } from "firebase/auth";
+import { app, db } from "../firebaseConfig";
 import {
   collection,
   doc,
@@ -46,34 +46,34 @@ const dummyLocations = [
     description: "dhbrfurhbfhj",
     location: {
       latitude: 51.5117,
-      longitude: 0.1240,
+      longitude: 0.124,
     },
   },
 ];
-
-
 
 const Map = () => {
   const [currentLocation, setCurrentLocation] = useState(null);
   const [questDestination, setQuestDestination] = useState(null);
   const [selectedMarker, setSelectedMarker] = useState(null);
-  const [currentQuest, setCurrentQuest] = useState(null)
+  const [currentQuest, setCurrentQuest] = useState(null);
+  const [render, setRender] = useState(null);
 
-  const auth = getAuth(app)
-  const user = auth.currentUser
-  console.log(user)
-  async function getUser () {
+  const auth = getAuth(app);
+  const user = auth.currentUser;
+
+  async function getUser() {
     const docRef = doc(db, "users", user.phoneNumber);
     const docSnap = await getDoc(docRef);
-    setCurrentQuest(docSnap.data().currentQuest);
-    console.log(docSnap.data(), '<===')
+    const data = await docSnap.data().currentQuest;
+    setCurrentQuest(data);
   }
+
   async function getLocation() {
     const questsRef = collection(db, "quests");
     const q = query(questsRef, where("questId", "==", currentQuest));
     const querySnapshot = await getDocs(q);
+    setRender(true);
     querySnapshot.forEach((doc) => {
-      console.log(doc.data().location);
       setQuestDestination(doc.data().location);
     });
   }
@@ -86,7 +86,7 @@ const Map = () => {
           console.log("Permission to access location was denied");
           return;
         }
-        getUser()
+        await getUser();
         const locationSubscription = await Location.watchPositionAsync(
           {
             accuracy: Location.Accuracy.Highest,
@@ -95,7 +95,7 @@ const Map = () => {
           },
           (userLocation) => {
             setCurrentLocation(userLocation);
-            getLocation()
+            getLocation();
           }
         );
         return () => locationSubscription.remove();
@@ -103,7 +103,7 @@ const Map = () => {
         console.error(error);
       }
     })();
-  }, []);
+  }, [render]);
 
   const handlePress = (e) => {
     const pressedMarker = dummyLocations.find(
@@ -167,7 +167,10 @@ const Map = () => {
           }}
         ></MapView>
       )}
-      <Example selectedMarker={selectedMarker} setSelectedMarker={setSelectedMarker} />
+      <Example
+        selectedMarker={selectedMarker}
+        setSelectedMarker={setSelectedMarker}
+      />
     </View>
   );
 };
