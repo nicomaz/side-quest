@@ -50,6 +50,7 @@ export default function Login() {
       <KeyboardAwareScrollView
         resetScrollToCoords={{ x: 0, y: 0 }}
         scrollEnabled={false}
+        enableOnAndroid={true}
       >
         <View className="items-center justify-center my-8">
           <FirebaseRecaptchaVerifierModal

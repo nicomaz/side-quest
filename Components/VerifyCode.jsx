@@ -60,5 +60,3 @@ export default function VerifyCode({
     </SafeAreaProvider>
   );
 }
-
-// +1 345 678 9034
