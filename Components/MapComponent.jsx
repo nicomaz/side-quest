@@ -1,9 +1,20 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet } from "react-native";
-import MapView, { Marker } from "react-native-maps";
+import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import * as Location from "expo-location";
 import MapViewDirections from "react-native-maps-directions";
 import Example from "./BottomSheet";
+import mapStyle from "../assets/MapStyle";
+import { applyActionCode, getAuth } from "firebase/auth"
+import {app, db } from "../firebaseConfig"
+import {
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  query,
+  where,
+} from "firebase/firestore";
 
 const dummyQuest = {
   name: "The London Eye",
@@ -15,34 +26,57 @@ const dummyQuest = {
 };
 const dummyLocations = [
   {
-    name: "The Ritz",
+    name: "Great Fire Quest",
     description: "dhbrfurhbfhj",
     location: {
-      latitude: 51.5071,
-      longitude: 0.1416,
+      latitude: 51.5101,
+      longitude: 0.0859,
     },
   },
   {
-    name: "hyde park",
+    name: "Tower Bridge Quest",
     description: "dhbrfurhbfhj",
     location: {
-      latitude: 51.5074,
-      longitude: 0.1641,
+      latitude: 51.5055,
+      longitude: 0.0754,
     },
   },
   {
-    name: "The London Eye",
+    name: "Covent Garden Quest",
     description: "dhbrfurhbfhj",
     location: {
-      latitude: 51.503399,
-      longitude: -0.119519,
+      latitude: 51.5117,
+      longitude: 0.1240,
     },
   },
 ];
 
+
+
 const Map = () => {
   const [currentLocation, setCurrentLocation] = useState(null);
   const [questDestination, setQuestDestination] = useState(null);
+  const [selectedMarker, setSelectedMarker] = useState(null);
+  const [currentQuest, setCurrentQuest] = useState(null)
+
+  const auth = getAuth(app)
+  const user = auth.currentUser
+  console.log(user)
+  async function getUser () {
+    const docRef = doc(db, "users", user.phoneNumber);
+    const docSnap = await getDoc(docRef);
+    setCurrentQuest(docSnap.data().currentQuest);
+    console.log(docSnap.data(), '<===')
+  }
+  async function getLocation() {
+    const questsRef = collection(db, "quests");
+    const q = query(questsRef, where("questId", "==", currentQuest));
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((doc) => {
+      console.log(doc.data().location);
+      setQuestDestination(doc.data().location);
+    });
+  }
 
   useEffect(() => {
     (async () => {
@@ -52,6 +86,7 @@ const Map = () => {
           console.log("Permission to access location was denied");
           return;
         }
+        getUser()
         const locationSubscription = await Location.watchPositionAsync(
           {
             accuracy: Location.Accuracy.Highest,
@@ -60,7 +95,7 @@ const Map = () => {
           },
           (userLocation) => {
             setCurrentLocation(userLocation);
-            setQuestDestination(dummyQuest.location);
+            getLocation()
           }
         );
         return () => locationSubscription.remove();
@@ -69,11 +104,26 @@ const Map = () => {
       }
     })();
   }, []);
+
+  const handlePress = (e) => {
+    const pressedMarker = dummyLocations.find(
+      (marker) =>
+        marker.location.latitude === e.nativeEvent.coordinate.latitude &&
+        marker.location.longitude === e.nativeEvent.coordinate.longitude
+    );
+    if (pressedMarker) {
+      console.log("Pressed Marker Title:", pressedMarker.name);
+      setSelectedMarker(pressedMarker.name);
+    }
+  };
+
   return (
     <View style={{ flex: 1 }}>
       {currentLocation ? (
         <MapView
+          provider={PROVIDER_GOOGLE}
           style={styles.map}
+          customMapStyle={mapStyle}
           initialRegion={{
             latitude: 51.5072,
             longitude: 0.1276,
@@ -90,6 +140,7 @@ const Map = () => {
                 key={questMarker.name}
                 coordinate={questMarker.location}
                 title={questMarker.name}
+                onPress={handlePress}
               />
             );
           })}
@@ -116,7 +167,7 @@ const Map = () => {
           }}
         ></MapView>
       )}
-      <Example />
+      <Example selectedMarker={selectedMarker} setSelectedMarker={setSelectedMarker} />
     </View>
   );
 };
@@ -134,4 +185,5 @@ const styles = StyleSheet.create({
 export default Map;
 
 //figure out how to make the red modal for quest info, and how to link it to markers
-//styling for
+
+//51.511087475628955, -0.08601434783572807
