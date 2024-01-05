@@ -21,7 +21,7 @@ import {
 const Map = () => {
   const [currentLocation, setCurrentLocation] = useState(null);
   const [questLocations, setQuestLocations] = useState([])
-  const [questDestination, setQuestDestination] = useState(null);
+  const [questDestination, setQuestDestination] = useState({"latitude": 51.5138, "longitude": -0.0984});
   const [selectedMarker, setSelectedMarker] = useState(null);
   const [currentQuest, setCurrentQuest] = useState(null)
 
@@ -169,6 +169,5 @@ const styles = StyleSheet.create({
 });
 export default Map;
 
-//figure out how to make the red modal for quest info, and how to link it to markers
 
 //51.511087475628955, -0.08601434783572807
