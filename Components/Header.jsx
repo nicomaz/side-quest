@@ -1,9 +1,12 @@
 import { View, Text, StyleSheet } from "react-native";
 import React from "react";
-import { auth } from "../firebaseConfig.js";
+import { getAuth } from "firebase/auth";
+import { app } from "../firebaseConfig";
 
 const Header = (props) => {
+  const auth = getAuth(app);
   const user = auth.currentUser;
+
   return (
     <View style={styles.header}>
       <Text style={styles.pageName}>{props.name}</Text>
