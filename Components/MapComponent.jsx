@@ -5,8 +5,8 @@ import * as Location from "expo-location";
 import MapViewDirections from "react-native-maps-directions";
 import Example from "./BottomSheet";
 import mapStyle from "../assets/MapStyle";
-import { applyActionCode, getAuth } from "firebase/auth"
-import {app, db } from "../firebaseConfig"
+import { applyActionCode, getAuth } from "firebase/auth";
+import { app, db } from "../firebaseConfig";
 import {
   collection,
   doc,
@@ -17,12 +17,15 @@ import {
 } from "firebase/firestore";
 
 
+
 const Map = () => {
   const [currentLocation, setCurrentLocation] = useState(null);
   const [questLocations, setQuestLocations] = useState([])
   const [questDestination, setQuestDestination] = useState({"latitude": 51.5138, "longitude": -0.0984});
   const [selectedMarker, setSelectedMarker] = useState(null);
-  const [currentQuest, setCurrentQuest] = useState(null)
+  const [currentQuest, setCurrentQuest] = useState(null);
+  const [render, setRender] = useState(null);
+
 
   const getFirestoreData = async () => {
     const questsSnapshot = await getDocs(collection(db, 'quests'));
@@ -46,10 +49,12 @@ const Map = () => {
     const docSnap = await getDoc(docRef);
     setCurrentQuest(docSnap.data().currentQuest);
   }
+
   async function getLocation() {
     const questsRef = collection(db, "quests");
     const q = query(questsRef, where("questId", "==", currentQuest));
     const querySnapshot = await getDocs(q);
+    setRender(true);
     querySnapshot.forEach((doc) => {
       setQuestDestination(doc.data().location);
     });
@@ -65,8 +70,10 @@ const Map = () => {
           console.log("Permission to access location was denied");
           return;
         }
-        getUser()
+  
         getFirestoreData()
+        await getUser();
+
         const locationSubscription = await Location.watchPositionAsync(
           {
             accuracy: Location.Accuracy.Highest,
@@ -75,7 +82,7 @@ const Map = () => {
           },
           (userLocation) => {
             setCurrentLocation(userLocation);
-            getLocation()
+            getLocation();
           }
         );
         return () => locationSubscription.remove();
@@ -83,7 +90,7 @@ const Map = () => {
         console.error(error);
       }
     })();
-  }, []);
+  }, [render]);
 
   const handlePress = (e) => {
     const pressedMarker = questLocations.find(
@@ -149,7 +156,10 @@ const Map = () => {
           }}
         ></MapView>
       )}
-      <Example selectedMarker={selectedMarker} setSelectedMarker={setSelectedMarker} />
+      <Example
+        selectedMarker={selectedMarker}
+        setSelectedMarker={setSelectedMarker}
+      />
     </View>
   );
 };
