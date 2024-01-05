@@ -77,6 +77,7 @@ const Map = () => {
       setQuestDestination(doc.data().location);
     });
   }
+  
 
   useEffect(() => {
     (async () => {
