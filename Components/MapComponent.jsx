@@ -134,4 +134,3 @@ const styles = StyleSheet.create({
 export default Map;
 
 //figure out how to make the red modal for quest info, and how to link it to markers
-//styling for
