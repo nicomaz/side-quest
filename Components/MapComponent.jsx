@@ -55,29 +55,45 @@ const dummyLocations = [
 
 const Map = () => {
   const [currentLocation, setCurrentLocation] = useState(null);
+  const [questLocations, setQuestLocations] = useState([])
   const [questDestination, setQuestDestination] = useState(null);
   const [selectedMarker, setSelectedMarker] = useState(null);
   const [currentQuest, setCurrentQuest] = useState(null)
 
+  const getFirestoreData = async () => {
+    const questsSnapshot = await getDocs(collection(db, 'quests'));
+  
+
+    const allQuests = [];
+    questsSnapshot.forEach((doc) => {
+      allQuests.push(doc.data());
+     
+    });
+
+    setQuestLocations(allQuests);
+   console.log(questLocations[0].location, 'bye')
+  }
+
+
+
   const auth = getAuth(app)
   const user = auth.currentUser
-  console.log(user)
+
   async function getUser () {
     const docRef = doc(db, "users", user.phoneNumber);
     const docSnap = await getDoc(docRef);
     setCurrentQuest(docSnap.data().currentQuest);
-    console.log(docSnap.data(), '<===')
   }
   async function getLocation() {
     const questsRef = collection(db, "quests");
     const q = query(questsRef, where("questId", "==", currentQuest));
     const querySnapshot = await getDocs(q);
     querySnapshot.forEach((doc) => {
-      console.log(doc.data().location);
       setQuestDestination(doc.data().location);
     });
   }
   
+
 
   useEffect(() => {
     (async () => {
@@ -88,6 +104,7 @@ const Map = () => {
           return;
         }
         getUser()
+        getFirestoreData()
         const locationSubscription = await Location.watchPositionAsync(
           {
             accuracy: Location.Accuracy.Highest,
@@ -107,7 +124,7 @@ const Map = () => {
   }, []);
 
   const handlePress = (e) => {
-    const pressedMarker = dummyLocations.find(
+    const pressedMarker = questLocations.find(
       (marker) =>
         marker.location.latitude === e.nativeEvent.coordinate.latitude &&
         marker.location.longitude === e.nativeEvent.coordinate.longitude
@@ -135,11 +152,14 @@ const Map = () => {
           followsUserLocation={true}
           showsMyLocationButton={true}
         >
-          {dummyLocations.map((questMarker) => {
+          {questLocations.map((questMarker) => {
             return (
               <Marker
-                key={questMarker.name}
-                coordinate={questMarker.location}
+                key={questMarker.questId}
+                coordinate={{
+                  latitude: questMarker.location.latitude,
+                  longitude: questMarker.location.longitude,
+                }}
                 title={questMarker.name}
                 onPress={handlePress}
               />
