@@ -74,8 +74,15 @@ const Map = () => {
   }, []);
 
   const handlePress = (e) => {
-   
-    setSelectedMarker(e.nativeEvent.coordinate)
+    const pressedMarker = dummyLocations.find(
+      (marker) =>
+        marker.location.latitude === e.nativeEvent.coordinate.latitude &&
+        marker.location.longitude === e.nativeEvent.coordinate.longitude
+    );
+    if (pressedMarker) {
+      console.log('Pressed Marker Title:', pressedMarker.name);
+      setSelectedMarker(e.nativeEvent.coordinate);
+    }
   };
 
   return (
