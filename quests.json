@@ -1,0 +1,50 @@
+[
+  {
+    "questId": 1,
+    "title": "Unveiling the Monument's Secrets: A Quest Through the Great Fire of London's History",
+    "imgUrl": "https://upload.wikimedia.org/wikipedia/commons/8/84/The_Great_Fire_of_London.png",
+    "description": "The Monument to the Great Fire of London recounts one of the most devastating events of the city's history. Uncover the enigmatic secrets shrouded in the stone pillars as you decipher the mysteries that linger from the inferno of 1666.",
+    "landmark": "The Monument to the Great Fire of London",
+    "trivia": "A baker named Robert Hubert was accused of causing the Great Fire of London. While he confessed that he had thrown a grenade through a window into the bakery where it had started, he reached England 2 days into the fire. Additionally, the bakery didn’t have any windows."
+  },
+  {
+    "questId": 2,
+    "title": "Tower Bridge Quest",
+    "imgUrl": "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.QfE3W75LRzVGAVBe8yRHBwHaFF%26pid%3DApi&f=1&ipt=1e9ebe68caed781ce156b5a36a13722046978faa744a1fac1f92d001fc6016cb&ipo=images",
+    "description": "Tower Bridge is an iconic suspension bridge in London, England, spanning the River Thames. Known for its distinctive design and Victorian Gothic style, it stands near the Tower of London and has become one of the most recognisable landmarks in the city. The bridge comprises two towers connected by two horizontal walkways, designed to allow the bridge to be raised to accommodate river traffic. The central section can be lifted to allow taller ships to pass through.",
+    "landmark": "Tower Bridge",
+    "trivia": "Tower Bridge took 8 years to build, starting in 1886 and completing in 1894. Over 11,000 tonnes of steel and 70,000 tonnes of concrete were used in its construction. One of the largest Lego Structures ever built was Tower Bridge, requiring 5,805,846 individual pieces of Lego to complete."
+  },
+  {
+    "questId": 3,
+    "title": "Covent Garden Quest",
+    "imgUrl": "https://a.cdn-hotels.com/gdcs/production107/d879/5fbac677-8a47-456a-9549-c4386914cd27.jpg",
+    "description": "A shopping and entertainment hub in London's West End, Covent Garden centres on the elegant, car-free Piazza, home to fashion stores, craft stalls at the Apple Market, and the Royal Opera House. Street entertainers perform by 17th-century St. Paul's Church, and the London Transport Museum houses vintage vehicles. Upscale restaurants serve European cuisines, and nearby theatres draw crowds for plays and musicals.",
+    "landmark": "Covent Garden",
+    "trivia": "St. Paul's Church in Covent Garden has memorials dedicated to many famous entertainment personalities of the 20th century, including Sir Charlie Chaplin"
+  },
+  {
+    "questId": 4,
+    "title": "Saint Paul's Cathedral Quest",
+    "imgUrl": "https://media.cntraveler.com/photos/6123bcc2fd80a9a94a0eea66/16:9/w_2240,c_limit/St.%20Paul's%20Cathedral_GettyImages-1206429520.jpg",
+    "description": "Embark on a historical journey through the heart of London with the 'St. Paul's Enigma' quest series. As you find yourself standing beneath the grandeur of St. Paul's Cathedral, an enigmatic figure approaches, revealing tales of centuries past. 'Greetings, intrepid adventurer! You stand at the threshold of a quest that will unravel the mysteries woven into the very fabric of St. Paul's Cathedral and its surroundings. Listen closely, for each question is a key, unlocking a piece of history waiting to be discovered. Once, in the hushed whispers of time, great minds and artisans converged to craft a masterpiece. Let the quest commence, and may the echoes of history guide you on this thrilling expedition!'",
+    "landmark": "St Paul's Cathedral",
+    "trivia": "While the cathedral has a rich history dating back centuries, the structure you see today rose from the ashes of the Great Fire. Sir Christopher Wren's vision led to its reconstruction, making it a symbol of resilience and architectural brilliance."
+  },
+  {
+    "questId": 5,
+    "title": "The London Eye Quest",
+    "imgUrl": "https://cdn.britannica.com/26/95926-050-0228E1A6/London-Eye-River-Thames.jpg",
+    "description": "In the heart of the bustling city of London, a colossal structure rises above the hustle and bustle. Discover a symbol of the modern British age, The London Eye. The colossal structure stands as a testament to the marvels of modern engineering.",
+    "landmark": "The London Eye",
+    "trivia": "The London Eye bears witness to a peculiar quirk — absence befalls the 13th capsule. It seems the specter of misfortune, woven into the fabric of the number 13, has led to the omission of this particular chariot from the rotation. In its stead, the wheel graciously accommodates 32 pods, their sequential numbers spanning from 1 to 33, a subtle dance around the dreaded numeral that lingers in the shadows of superstition."
+  },
+  {
+    "questId": 6,
+    "title": "Big Ben Time Trek",
+    "imgUrl": "https://upload.wikimedia.org/wikipedia/commons/4/43/Elizabeth_Tower%2C_June_2022.jpg",
+    "description": "Embark on a fascinating journey through London with the 'Big Ben Time Trek' quest. As you continue your exploration of the iconic Big Ben, unravel the secrets and stories hidden within its timeless architecture. Let the echoes of its chimes guide you through a captivating quest filled with history and intrigue.",
+    "landmark": "Big Ben",
+    "trivia": "The clock was designed by Charles Barry, and the Great Bell (Big Ben) was named after Sir Benjamin Hall, the commissioner of works at the time."
+  }
+]
