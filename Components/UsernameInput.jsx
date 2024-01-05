@@ -14,9 +14,11 @@ const UsernameInput = () => {
 
   const saveUsername = async () => {
     try {
-      await setDoc(doc(db, "usernames", user.phoneNumber), {
+      await setDoc(doc(db, "users", user.phoneNumber), {
         username: username,
         mobileNumber: user.phoneNumber,
+        currentQuest: 1,
+        completedQuests: [],
       });
       await updateProfile(user, { displayName: username });
       navigation.navigate("Nav");
