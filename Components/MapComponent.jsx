@@ -16,41 +16,6 @@ import {
   where,
 } from "firebase/firestore";
 
-const dummyQuest = {
-  name: "The London Eye",
-  description: "dhbrfurhbfhj",
-  location: {
-    latitude: 51.503399,
-    longitude: -0.119519,
-  },
-};
-const dummyLocations = [
-  {
-    name: "Great Fire Quest",
-    description: "dhbrfurhbfhj",
-    location: {
-      latitude: 51.5101,
-      longitude: 0.0859,
-    },
-  },
-  {
-    name: "Tower Bridge Quest",
-    description: "dhbrfurhbfhj",
-    location: {
-      latitude: 51.5055,
-      longitude: 0.0754,
-    },
-  },
-  {
-    name: "Covent Garden Quest",
-    description: "dhbrfurhbfhj",
-    location: {
-      latitude: 51.5117,
-      longitude: 0.1240,
-    },
-  },
-];
-
 
 
 const Map = () => {
@@ -63,13 +28,12 @@ const Map = () => {
   const getFirestoreData = async () => {
     const questsSnapshot = await getDocs(collection(db, 'quests'));
   
-
     const allQuests = [];
     questsSnapshot.forEach((doc) => {
       allQuests.push(doc.data());
      
     });
-
+    console.log(allQuests[0])
     setQuestLocations(allQuests);
    console.log(questLocations[0].location, 'bye')
   }
@@ -130,8 +94,8 @@ const Map = () => {
         marker.location.longitude === e.nativeEvent.coordinate.longitude
     );
     if (pressedMarker) {
-      console.log("Pressed Marker Title:", pressedMarker.name);
-      setSelectedMarker(pressedMarker.name);
+      console.log("Pressed Marker Title:", pressedMarker.title);
+      setSelectedMarker(pressedMarker.title);
     }
   };
 
@@ -160,7 +124,7 @@ const Map = () => {
                   latitude: questMarker.location.latitude,
                   longitude: questMarker.location.longitude,
                 }}
-                title={questMarker.name}
+                title={questMarker.title}
                 onPress={handlePress}
               />
             );
