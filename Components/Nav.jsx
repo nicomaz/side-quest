@@ -4,6 +4,7 @@ import QuestList from "./QuestList";
 import Profile from "../screens/Profile";
 import Header from "./Header";
 import Map from "./MapComponent";
+import Logout from "../screens/Logout";
 
 function DrawerNavigation() {
   const Drawer = createDrawerNavigator();
@@ -21,6 +22,7 @@ function DrawerNavigation() {
         />
         <Drawer.Screen name="Profile" component={Profile} />
         <Drawer.Screen name="Quests" component={QuestList} />
+        <Drawer.Screen name="Logout" component={Logout}/>
       </>
     </Drawer.Navigator>
   );
