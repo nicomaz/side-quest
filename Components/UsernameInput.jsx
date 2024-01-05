@@ -1,10 +1,4 @@
-import {
-  View,
-  TextInput,
-  Text,
-  TouchableOpacity,
-  KeyboardAvoidingView,
-} from "react-native";
+import { View, TextInput, Text, TouchableOpacity } from "react-native";
 import React, { useState } from "react";
 import { auth, db } from "../firebaseConfig";
 import { setDoc, doc } from "firebase/firestore";
@@ -33,7 +27,7 @@ const UsernameInput = () => {
 
   return (
     <SafeAreaView>
-      <View className="items-center justify-center my-20 pt-8">
+      <View className="items-center justify-center">
         <Text className="text-xl text-center tracking-tighter font-bold text-[#d86429]">
           <Text className="text-black font-medium">Your</Text> Username
         </Text>
@@ -51,7 +45,8 @@ const UsernameInput = () => {
           />
         </View>
         <TouchableOpacity
-          className="mt-6 bg-[#ff8345] w-40 py-4 rounded-full shadow w-8/12"
+          autoFocus
+          className="mt-3 bg-[#ff8345] w-40 py-4 rounded-full shadow w-8/12"
           onPress={saveUsername}
         >
           <Text className="text-base font-bold text-center text-white">
@@ -64,5 +59,3 @@ const UsernameInput = () => {
 };
 
 export default UsernameInput;
-
-//behavior={Platform.OS === 'ios' ? 'padding' : 'height'}

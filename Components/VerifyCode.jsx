@@ -33,7 +33,7 @@ export default function VerifyCode({
   return (
     <SafeAreaProvider>
       <SafeAreaView>
-        <View className="py-3 mx-auto items-center w-9/12 h-28  rounded-lg">
+        <View className="py-3 mx-auto items-center w-9/12 h-24 rounded-lg">
           <Text className="text-xl font-medium mt-1">Verification Code</Text>
           <Text className="text-[#706e69]">please check your messages</Text>
 

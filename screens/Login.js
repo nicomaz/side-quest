@@ -1,11 +1,4 @@
-import {
-  Text,
-  View,
-  TextInput,
-  TouchableOpacity,
-  Image,
-  KeyboardAvoidingView,
-} from "react-native";
+import { Text, View, TextInput, TouchableOpacity } from "react-native";
 import {
   FirebaseRecaptchaVerifierModal,
   FirebaseRecaptchaBanner,
@@ -16,6 +9,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useRef, useState } from "react";
 import VerifyCode from "../Components/VerifyCode";
 import UsernameInput from "../Components/UsernameInput";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 export default function Login() {
   const recaptchaVerifier = useRef(null);
@@ -53,69 +47,67 @@ export default function Login() {
 
   return (
     <SafeAreaView>
-      <View
-        behavior={Platform.OS === "ios" ? "padding" : "position"}
-        className="items-center justify-center py-20"
+      <KeyboardAwareScrollView
+        resetScrollToCoords={{ x: 0, y: 0 }}
+        scrollEnabled={false}
       >
-        <FirebaseRecaptchaVerifierModal
-          ref={recaptchaVerifier}
-          firebaseConfig={app.options}
-        />
-        <View>
+        <View className="items-center justify-center my-8">
+          <FirebaseRecaptchaVerifierModal
+            ref={recaptchaVerifier}
+            firebaseConfig={app.options}
+          />
           <Text className="text-2xl mb-12 tracking-widest font-medium text-center shadow">
             Welcome to {"\n"}
             <Text className="text-3xl tracking-tighter font-bold text-[#d86429]">
               SideQuest
             </Text>
           </Text>
-        </View>
-        <Text className="text-xl text-center tracking-tighter font-bold text-[#d86429]">
-          <Text className="text-black font-medium">Your</Text> Phone Number
-        </Text>
-        <Text className="text-[#706e69]">ps. include your country code!</Text>
-        <View className="flex flex-row text-base justify-between p-2 mb-3 bg-[#ffe2d4] focus:bg-[#ffb087] w-8/12">
-          <TextInput
-            className="text-center text-base items-center justify-center pb-2"
-            placeholder="+441231231233"
-            placeholderTextColor="#8C8984"
-            autoCompleteType="tel"
-            keyboardType="phone-pad"
-            autoFocus
-            textContentType="telephoneNumber"
-            onChangeText={(phoneNumber) => setPhoneNumber(phoneNumber)}
-          />
-          <TouchableOpacity
-            className="items-center justify-center text-base text-center"
-            disabled={!phoneNumber && !error}
-            onPress={() => sendVerificationCode()}
-          >
-            <Text className="text-base font-bold">Send</Text>
-          </TouchableOpacity>
-        </View>
-        <View className="mx-16">
-          {attemptInvisibleVerification && !isVisible && (
-            <FirebaseRecaptchaBanner />
+          <Text className="text-xl text-center tracking-tighter font-bold text-[#d86429]">
+            <Text className="text-black font-medium">Your</Text> Phone Number
+          </Text>
+          <Text className="text-[#706e69]">ps. include your country code!</Text>
+          <View className="flex flex-row text-base justify-between p-2 mb-3 bg-[#ffe2d4] focus:bg-[#ffb087] w-8/12">
+            <TextInput
+              className="text-center text-base items-center justify-center pb-2"
+              placeholder="+441231231233"
+              placeholderTextColor="#8C8984"
+              autoCompleteType="tel"
+              keyboardType="phone-pad"
+              textContentType="telephoneNumber"
+              onChangeText={(phoneNumber) => setPhoneNumber(phoneNumber)}
+            />
+            <TouchableOpacity
+              className="items-center justify-center text-base text-center"
+              disabled={!phoneNumber && !error}
+              onPress={() => sendVerificationCode()}
+            >
+              <Text className="text-base font-bold">Send</Text>
+            </TouchableOpacity>
+          </View>
+          <View className="mx-16">
+            {attemptInvisibleVerification && !isVisible && (
+              <FirebaseRecaptchaBanner />
+            )}
+          </View>
+          {verificationId && (
+            <VerifyCode
+              isVisible={isVisible}
+              verificationId={verificationId}
+              setVerificationCode={setVerificationCode}
+              verificationCode={verificationCode}
+              showMessage={showMessage}
+              phoneNumber={phoneNumber}
+              setIsVisible={setIsVisible}
+              message={message}
+              setIsVerified={setIsVerified}
+            />
           )}
+          {isVerified && !user.displayName && (
+            <UsernameInput isVerified={isVerified} />
+          )}
+          {error && message ? <Text>{message.text}</Text> : null}
         </View>
-        {verificationId && (
-          <VerifyCode
-            isVisible={isVisible}
-            verificationId={verificationId}
-            setVerificationCode={setVerificationCode}
-            verificationCode={verificationCode}
-            showMessage={showMessage}
-            phoneNumber={phoneNumber}
-            setIsVisible={setIsVisible}
-            message={message}
-            setIsVerified={setIsVerified}
-          />
-        )}
-        {isVerified && !user.displayName && (
-          <UsernameInput isVerified={isVerified} />
-        )}
-        {error && message ? <Text>{message.text}</Text> : null}
-      </View>
+      </KeyboardAwareScrollView>
     </SafeAreaView>
   );
 }
-// +1 345-234-3333
