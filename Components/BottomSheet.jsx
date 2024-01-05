@@ -35,7 +35,7 @@ export default function Example(selectedMarker) {
       >
         {/* placeholder for now - actual quest card component goes here */}
        
-        <QuestList  selectedMarker={selectedMarker}/>
+        <QuestList selectedMarker={selectedMarker}/>
       </RBSheet>
     </View>
   );
