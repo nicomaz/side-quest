@@ -10,6 +10,7 @@ import React, { useState, useEffect } from "react";
 import MultipleChoice from "../Components/MultipleChoice";
 import TextEntry from "../Components/TextEntry";
 
+//TODO - quest completion, landmarks?
 const SingleQuest = ({ route }) => {
   const [questionsArray, setQuestionsArray] = useState([]);
   const [filteredQuestionsArray, setFilteredQuestionsArray] = useState([]);
@@ -21,6 +22,7 @@ const SingleQuest = ({ route }) => {
   const { questions } = route.params;
   const { questId } = route.params;
 
+  //TODO - get questions from firebase
   const getQuestions = () => {
     setSelectedOptions({});
     setGivenAnswer("");
