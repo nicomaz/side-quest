@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet } from "react-native";
-import MapView, { Marker } from "react-native-maps";
+import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import * as Location from "expo-location";
 import MapViewDirections from "react-native-maps-directions";
 import Example from "./BottomSheet";
+import mapStyle from "../assets/MapStyle";
+
 
 const dummyQuest = {
   name: "The London Eye",
@@ -73,7 +75,9 @@ const Map = () => {
     <View style={{ flex: 1 }}>
       {currentLocation ? (
         <MapView
+          provider={PROVIDER_GOOGLE}
           style={styles.map}
+          customMapStyle={mapStyle}
           initialRegion={{
             latitude: 51.5072,
             longitude: 0.1276,
