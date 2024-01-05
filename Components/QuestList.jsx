@@ -72,17 +72,22 @@ const questions = [
   },
 ];
 
-const QuestList = (selectedMarker) => {
- 
-   console.log(selectedMarker)
+const QuestList = ({ selectedMarker, setSelectedMarker }) => {
+  let filteredQuests = quests;
 
+  if (selectedMarker) {
+    const selectedLocation = quests.find(
+      (location) => location.title === selectedMarker
+    );
+    filteredQuests = selectedLocation ? [selectedLocation] : [];
+  }
 
   return (
     <View style={styles.container}>
       <View style={styles.questContainer}>
         <FlatList
-          data={quests}
-          keyExtractor={(quest) => quest.questId}
+          data={filteredQuests}
+          keyExtractor={(quest) => quest.questId.toString()}
           renderItem={({ item }) => (
             <QuestCard quest={item} questions={questions} />
           )}
@@ -96,10 +101,6 @@ export default QuestList;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-  },
-  questContainer: {
-    flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "center",
     alignItems: "center",

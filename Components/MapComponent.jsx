@@ -134,7 +134,7 @@ const Map = () => {
           }}
         ></MapView>
       )}
-      <Example selectedMarker={selectedMarker} />
+      <Example selectedMarker={selectedMarker} setSelectedMarker={setSelectedMarker} />
     </View>
   );
 };
