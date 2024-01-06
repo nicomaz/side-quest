@@ -15,18 +15,18 @@ export default function Example({ selectedMarker, setSelectedMarker }) {
         justifyContent: "center",
         alignItems: "center",
         backgroundColor: "transparent",
-        height: "10%",
+        height: "5%",
       }}
     >
       <Button
-        title="OPEN BOTTOM SHEET"
+        title="Reveal Quest"
         onPress={() => refRBSheet.current.open()}
       />
       <RBSheet
         ref={refRBSheet}
         closeOnDragDown={true}
-        closeOnPressMask={false}
-        height={500}
+        closeOnPressMask={true}
+        height={400}
         onClose={handleOnClose}
         customStyles={{
           wrapper: {
@@ -35,6 +35,9 @@ export default function Example({ selectedMarker, setSelectedMarker }) {
           draggableIcon: {
             backgroundColor: "#000",
           },
+          container: {
+            backgroundColor: "white"
+          }
         }}
       >
         {/* placeholder for now - actual quest card component goes here */}
