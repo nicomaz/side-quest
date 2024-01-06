@@ -6,12 +6,11 @@ import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { updateProfile } from "firebase/auth";
 
-const UsernameInput = () => {
+const UsernameInput = ({ userPiece }) => {
   const user = auth.currentUser;
 
   const [username, setUsername] = useState("");
   const navigation = useNavigation();
-
   const saveUsername = async () => {
     try {
       await setDoc(doc(db, "users", user.phoneNumber), {
@@ -20,7 +19,7 @@ const UsernameInput = () => {
         currentQuest: 1,
         completedQuests: [],
       });
-      await updateProfile(user, { displayName: username });
+      await updateProfile(user, { displayName: username, photoURL: userPiece });
       navigation.navigate("Nav");
     } catch (error) {
       console.error("Error saving username:", error); //change this to an alert at some point
@@ -30,25 +29,21 @@ const UsernameInput = () => {
   return (
     <SafeAreaView>
       <View className="items-center justify-center">
-        <Text className="text-xl text-center tracking-tighter font-bold text-[#d86429]">
-          <Text className="text-black font-medium">Your</Text> Username
+        <Text className="text-2xl font-medium text-center shadow tracking-widest mb-3">
+          Your Username
         </Text>
-        <Text className="text-[#706e69]">
-          pick wisely as you can't change this later
-        </Text>
-        <View className="flex flex-row text-base items-center justify-between p-2 mb-3 bg-[#ffe2d4] focus:bg-[#ffb087] w-64 mx-2">
+        <View className="flex flex-row text-base items-center justify-between p-2 mb-3 bg-[#ffa6a8] focus:bg-[#f27e81] w-64 mx-2 rounded-xl">
           <TextInput
             className="text-center text-base items-center justify-center pb-2"
             placeholder="Username here..."
             placeholderTextColor="#8C8984"
             defaultValue={username}
-            autoFocus
             onChangeText={(text) => setUsername(text)}
           />
         </View>
         <TouchableOpacity
           autoFocus
-          className="mt-3 bg-[#ff8345] w-40 py-4 rounded-full shadow w-8/12"
+          className="mt-8 bg-[#D01A1E] py-4 rounded-full shadow px-4"
           onPress={saveUsername}
         >
           <Text className="text-base font-bold text-center text-white">

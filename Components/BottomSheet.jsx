@@ -7,9 +7,18 @@ import CurrentQuestCard from "./CurrentQuestCard";
 
 export default function Example({ selectedMarker, setSelectedMarker }) {
 
+
   const [isLockedQuest, setIsLockedQuest] = useState(false);
-  function handleOnClose() {
-    setSelectedMarker(null);
+
+  useEffect(() => {
+    if (selectedMarker) {
+      refRBSheet.current.open();
+    }
+  }, [selectedMarker]);
+
+  function handleOnClose (){
+    setSelectedMarker(null)
+
   }
 
   const refRBSheet = useRef();
@@ -56,6 +65,10 @@ export default function Example({ selectedMarker, setSelectedMarker }) {
         }}
       >
        {isLockedQuest ? <QuestList /> : <CurrentQuestCard/> }
+
+        {/* placeholder for now - actual quest card component goes here */}
+        {selectedMarker ? <IndividualQuestCard selectedMarker={selectedMarker} /> : <QuestList />}
+
       </RBSheet>
     </View>
   );

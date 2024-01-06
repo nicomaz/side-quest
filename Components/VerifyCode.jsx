@@ -1,23 +1,21 @@
-import {
-  Text,
-  TextInput,
-  Modal,
-  View,
-  TouchableOpacity,
-  KeyboardAvoidingView,
-} from "react-native";
+import { Text, TextInput, View, TouchableOpacity } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
-import { PhoneAuthProvider, signInWithCredential } from "firebase/auth";
-import { auth } from "../firebaseConfig";
+import {
+  PhoneAuthProvider,
+  getAuth,
+  signInWithCredential,
+} from "firebase/auth";
+import { app, auth } from "../firebaseConfig";
 import { useNavigation } from "@react-navigation/native";
 
 export default function VerifyCode({
   verificationId,
   setVerificationCode,
   verificationCode,
-  showMessage,
   setIsVerified,
 }) {
+  const auth = getAuth(app);
+  const user = auth.currentUser;
   const navigation = useNavigation();
 
   async function confirmVerificationCode() {
@@ -28,9 +26,13 @@ export default function VerifyCode({
       );
       await signInWithCredential(auth, credential);
       setIsVerified(true);
-      navigation.navigate("Home");
+      if (user.displayName) {
+        navigation.navigate("Nav");
+      } else {
+        navigation.navigate("UserCustomisation");
+      }
     } catch (err) {
-      showMessage({ text: `Error: ${err.message}` });
+      console.log(err.message);
     }
   }
 
@@ -38,10 +40,12 @@ export default function VerifyCode({
     <SafeAreaProvider>
       <SafeAreaView>
         <View className="py-3 mx-auto items-center w-9/12 h-24 rounded-lg">
-          <Text className="text-xl font-medium mt-1">Verification Code</Text>
+          <Text className="text-xl font-medium mt-1">
+            Verification <Text className="text-[#D01A1E] font-bold">Code</Text>
+          </Text>
           <Text className="text-[#706e69]">please check your messages</Text>
 
-          <View className="flex flex-row justify-between text-base bg-[#ffe2d4] focus:bg-[#ffb087] p-2">
+          <View className="flex flex-row justify-between text-base bg-[#ffa6a8] focus:bg-[#f27e81] p-2">
             <TextInput
               className="text-left text-base items-center justify-center pb-2 w-44"
               placeholderTextColor="#8C8984"
