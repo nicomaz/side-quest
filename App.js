@@ -6,6 +6,7 @@ import Nav from "./Components/Nav";
 import SingleQuest from "./screens/SingleQuest";
 
 import SplashScreen from "./screens/SpashScreen";
+import CustomiseUser from "./screens/CustomiseUser";
 
 export default function App() {
   const Stack = createNativeStackNavigator();
@@ -18,6 +19,11 @@ export default function App() {
           <Stack.Screen
             name="Login"
             component={Login}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="UserCustomisation"
+            component={CustomiseUser}
             options={{ headerShown: false }}
           />
           <Stack.Screen

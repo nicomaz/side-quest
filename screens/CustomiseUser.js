@@ -1,10 +1,18 @@
-import { View, Text } from 'react-native'
-import React from 'react'
+import { View, Text } from "react-native";
+import React, { useState } from "react";
+import { SafeAreaView } from "react-native-safe-area-context";
+import UsernameInput from "../Components/UsernameInput";
+import PickUserPhoto from "../Components/PickUserPhoto";
 
 export default function CustomiseUser() {
+  const [userPiece, setUserPiece] = useState(null);
+
   return (
-    <View>
-      <Text>Login-2</Text>
-    </View>
-  )
+    <SafeAreaView>
+      <View className="mt-2">
+        <PickUserPhoto setUserPiece={setUserPiece} />
+        <UsernameInput userPiece={userPiece} />
+      </View>
+    </SafeAreaView>
+  );
 }
