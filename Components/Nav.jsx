@@ -19,7 +19,15 @@ function DrawerNavigation() {
             headerTitle: () => <Header name="Home" />,
           }}
         />
-        <Drawer.Screen name="Profile" component={Profile} />
+        <Drawer.Screen
+          name="Profile"
+          component={Profile}
+          options={{
+            headerTintColor: "white",
+            headerStyle: { backgroundColor: "#fc7d3d" },
+            headerShadowVisible: false,
+          }}
+        />
         <Drawer.Screen name="Quests" component={QuestList} />
         <Drawer.Screen name="Logout" component={Logout} />
       </>
@@ -28,3 +36,5 @@ function DrawerNavigation() {
 }
 
 export default DrawerNavigation;
+
+// fdbb2d
