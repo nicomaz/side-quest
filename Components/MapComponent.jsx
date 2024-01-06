@@ -95,7 +95,9 @@ const Map = () => {
         marker.location.longitude === e.nativeEvent.coordinate.longitude
     );
     if (pressedMarker) {
+
       setSelectedMarker(pressedMarker.questId);
+
     }
   };
 

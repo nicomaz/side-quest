@@ -1,10 +1,14 @@
-import React, { useEffect, useRef } from "react";
+import React, { useRef, useState } from "react";
 import { View, Button, Text } from "react-native";
 import RBSheet from "react-native-raw-bottom-sheet";
 import QuestList from "./QuestList";
 import IndividualQuestCard from "./IndividualQuestCard";
+import CurrentQuestCard from "./CurrentQuestCard";
 
 export default function Example({ selectedMarker, setSelectedMarker }) {
+
+
+  const [isLockedQuest, setIsLockedQuest] = useState(false);
 
   useEffect(() => {
     if (selectedMarker) {
@@ -14,21 +18,34 @@ export default function Example({ selectedMarker, setSelectedMarker }) {
 
   function handleOnClose (){
     setSelectedMarker(null)
+
   }
+
   const refRBSheet = useRef();
+
+  const handleLockedQuestClick = () => {
+  refRBSheet.current.open()
+  setIsLockedQuest(true)
+  }
+
+  const handleCurrentQuestClick = () => {
+    refRBSheet.current.open()
+    setIsLockedQuest(false)
+  }
   return (
     <View
       style={{
         justifyContent: "center",
         alignItems: "center",
         backgroundColor: "transparent",
-        height: "5%",
+
+        height: "10%",
+        flexDirection: 'row'
       }}
     >
-      <Button
-        title="Reveal Quest"
-        onPress={() => refRBSheet.current.open()}
-      />
+      <Button title="current quest" onPress={handleCurrentQuestClick} />
+      <Button title="locked quest" onPress={handleLockedQuestClick} />
+
       <RBSheet
         ref={refRBSheet}
         closeOnDragDown={true}
@@ -47,8 +64,11 @@ export default function Example({ selectedMarker, setSelectedMarker }) {
           }
         }}
       >
+       {isLockedQuest ? <QuestList /> : <CurrentQuestCard/> }
+
         {/* placeholder for now - actual quest card component goes here */}
         {selectedMarker ? <IndividualQuestCard selectedMarker={selectedMarker} /> : <QuestList />}
+
       </RBSheet>
     </View>
   );
