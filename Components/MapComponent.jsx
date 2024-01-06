@@ -56,6 +56,8 @@ const Map = () => {
     });
   }
 
+
+
   useEffect(() => {
     (async () => {
       try {
@@ -93,9 +95,10 @@ const Map = () => {
         marker.location.longitude === e.nativeEvent.coordinate.longitude
     );
     if (pressedMarker) {
-      setSelectedMarker(pressedMarker.landmark);
+      setSelectedMarker(pressedMarker.questId);
     }
   };
+
 
   return (
     <View style={{ flex: 1 }}>

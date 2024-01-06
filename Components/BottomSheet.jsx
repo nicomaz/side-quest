@@ -1,10 +1,17 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { View, Button, Text } from "react-native";
 import RBSheet from "react-native-raw-bottom-sheet";
 import QuestList from "./QuestList";
 import IndividualQuestCard from "./IndividualQuestCard";
 
 export default function Example({ selectedMarker, setSelectedMarker }) {
+
+  useEffect(() => {
+    if (selectedMarker) {
+      refRBSheet.current.open();
+    }
+  }, [selectedMarker]);
+
   function handleOnClose (){
     setSelectedMarker(null)
   }
@@ -41,7 +48,7 @@ export default function Example({ selectedMarker, setSelectedMarker }) {
         }}
       >
         {/* placeholder for now - actual quest card component goes here */}
-        {selectedMarker ? <IndividualQuestCard /> : <QuestList />}
+        {selectedMarker ? <IndividualQuestCard selectedMarker={selectedMarker} /> : <QuestList />}
       </RBSheet>
     </View>
   );
