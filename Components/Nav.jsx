@@ -14,7 +14,8 @@ function DrawerNavigation() {
           name="Home"
           component={Home}
           options={{
-            headerStyle: { backgroundColor: "#f0ad4e" },
+            headerTintColor: "white",
+            headerStyle: { backgroundColor: "#fc7d3d" },
             headerTitle: () => <Header name="Home" />,
           }}
         />
@@ -27,7 +28,14 @@ function DrawerNavigation() {
             headerShadowVisible: false,
           }}
         />
-        <Drawer.Screen name="Quests" component={QuestList} />
+        <Drawer.Screen
+          name="Quests"
+          component={QuestList}
+          options={{
+            headerTintColor: "white",
+            headerStyle: { backgroundColor: "#fc7d3d" },
+          }}
+        />
       </>
     </Drawer.Navigator>
   );
