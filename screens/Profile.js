@@ -28,18 +28,18 @@ export default function Profile() {
         <Text className="text-center text-sm font-medium text-gray-100">
           {user.phoneNumber}
         </Text>
-        <View className="bg-[#ffecde] w-screen h-24 rounded-lg my-6">
+        <View className="bg-[#fff5ed] w-screen h-24 rounded-lg my-10">
           <Text className="text-[#fc7d3d] text-base mt-2 ml-2 font-bold">
             Locations visited
           </Text>
         </View>
-        <View className="bg-[#ffecde] w-screen h-24 rounded-lg mb-6">
+        <View className="bg-[#fff5ed] w-screen h-24 rounded-lg mb-6">
           <Text className="text-[#fc7d3d] text-base mt-2 ml-2 font-bold">
             Completed Quests
           </Text>
         </View>
         <TouchableOpacity
-          className="mt-8 bg-[#ff8345] py-4 rounded-full shadow w-32 self-center"
+          className="mt-8 bg-[#ff8345] py-4 rounded-full shadow w-32 self-center shadow"
           onPress={handleSignOut}
         >
           <Text className="text-base font-bold text-center text-white">

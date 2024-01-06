@@ -3,7 +3,6 @@ import React from "react";
 import QuestList from "./QuestList";
 import Profile from "../screens/Profile";
 import Header from "./Header";
-import Logout from "../screens/Logout";
 import Home from "../screens/Home";
 
 function DrawerNavigation() {
@@ -29,7 +28,6 @@ function DrawerNavigation() {
           }}
         />
         <Drawer.Screen name="Quests" component={QuestList} />
-        <Drawer.Screen name="Logout" component={Logout} />
       </>
     </Drawer.Navigator>
   );
