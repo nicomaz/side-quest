@@ -4,11 +4,10 @@ import {
   FirebaseRecaptchaBanner,
 } from "expo-firebase-recaptcha";
 import { PhoneAuthProvider, getAuth } from "firebase/auth";
-import { app, auth } from "../firebaseConfig";
+import { app } from "../firebaseConfig";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useRef, useState } from "react";
 import VerifyCode from "../Components/VerifyCode";
-import UsernameInput from "../Components/UsernameInput";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 export default function Login() {
@@ -16,15 +15,9 @@ export default function Login() {
   const [phoneNumber, setPhoneNumber] = useState();
   const [verificationId, setVerificationId] = useState();
   const [verificationCode, setVerificationCode] = useState();
-  const [message, showMessage] = useState();
   const [isVerified, setIsVerified] = useState(false);
-  const attemptInvisibleVerification = true;
   const [error, setError] = useState(false);
-
-  const [isVisible, setIsVisible] = useState(false);
-
   const auth = getAuth(app);
-  const user = auth.currentUser;
 
   async function sendVerificationCode() {
     try {
@@ -35,12 +28,8 @@ export default function Login() {
       );
       setVerificationId(verificationId);
       setError(false);
-      await showMessage({
-        text: "please check your messages",
-      });
-      setIsVisible(true);
     } catch (err) {
-      showMessage({ text: `Invalid phone number, please try again` });
+      console.alert("Invalid phone number, please try again");
       setError(true);
     }
   }
@@ -59,15 +48,15 @@ export default function Login() {
           />
           <Text className="text-2xl mb-12 tracking-widest font-medium text-center shadow">
             Welcome to {"\n"}
-            <Text className="text-3xl tracking-tighter font-bold text-[#d86429]">
+            <Text className="text-3xl tracking-tighter font-bold text-[#D01A1E]">
               SideQuest
             </Text>
           </Text>
-          <Text className="text-xl text-center tracking-tighter font-bold text-[#d86429]">
+          <Text className="text-xl text-center tracking-tighter font-bold text-[#D01A1E]">
             <Text className="text-black font-medium">Your</Text> Phone Number
           </Text>
           <Text className="text-[#706e69]">ps. include your country code!</Text>
-          <View className="flex flex-row text-base justify-between p-2 mb-3 bg-[#ffe2d4] focus:bg-[#ffb087] w-8/12">
+          <View className="flex flex-row text-base justify-between p-2 mb-3 bg-[#ffa6a8] focus:bg-[#f27e81] w-8/12">
             <TextInput
               className="text-center text-base items-center justify-center pb-2"
               placeholder="+441231231233"
@@ -86,27 +75,16 @@ export default function Login() {
             </TouchableOpacity>
           </View>
           <View className="mx-16">
-            {attemptInvisibleVerification && !isVisible && (
-              <FirebaseRecaptchaBanner />
-            )}
+            {!verificationId && <FirebaseRecaptchaBanner />}
           </View>
           {verificationId && (
             <VerifyCode
-              isVisible={isVisible}
               verificationId={verificationId}
               setVerificationCode={setVerificationCode}
               verificationCode={verificationCode}
-              showMessage={showMessage}
-              phoneNumber={phoneNumber}
-              setIsVisible={setIsVisible}
-              message={message}
               setIsVerified={setIsVerified}
             />
           )}
-          {isVerified && !user.displayName && (
-            <UsernameInput isVerified={isVerified} />
-          )}
-          {error && message ? <Text>{message.text}</Text> : null}
         </View>
       </KeyboardAwareScrollView>
     </SafeAreaView>

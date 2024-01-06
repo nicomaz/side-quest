@@ -3,7 +3,6 @@ import React from "react";
 import { getAuth } from "firebase/auth";
 import { app } from "../firebaseConfig";
 
-
 const Header = (props) => {
   const auth = getAuth(app);
   const user = auth.currentUser;
@@ -28,7 +27,7 @@ const styles = StyleSheet.create({
   headerText: {
     fontWeight: "bold",
     fontSize: 26,
-    color: "#de6429",
+    color: "white",
     letterSpacing: 2,
   },
   pageName: {

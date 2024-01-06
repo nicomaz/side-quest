@@ -2,10 +2,11 @@ import "react-native-gesture-handler";
 import Login from "./screens/Login";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import Nav from "./Components/Nav";
+import Nav from "./NavScreens";
 import SingleQuest from "./screens/SingleQuest";
 
 import SplashScreen from "./screens/SpashScreen";
+import CustomiseUser from "./screens/CustomiseUser";
 
 export default function App() {
   const Stack = createNativeStackNavigator();
@@ -18,6 +19,11 @@ export default function App() {
           <Stack.Screen
             name="Login"
             component={Login}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="UserCustomisation"
+            component={CustomiseUser}
             options={{ headerShown: false }}
           />
           <Stack.Screen
