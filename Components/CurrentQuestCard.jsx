@@ -45,8 +45,7 @@ const CurrentQuestCard = () => {
     setCurrentQuestQuestions(allQuestions);
   }
 
-  console.log(questions);
-  console.log(currentQuest.questId, "hi");
+
 
   useEffect(() => {
     getUserCurrentQuestId();

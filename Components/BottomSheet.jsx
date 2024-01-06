@@ -1,14 +1,14 @@
-import React, { useRef, useState } from "react";
-import { View, Button, Text } from "react-native";
+import React, { useEffect, useRef, useState } from "react";
+import { View, Button } from "react-native";
 import RBSheet from "react-native-raw-bottom-sheet";
 import QuestList from "./QuestList";
 import IndividualQuestCard from "./IndividualQuestCard";
 import CurrentQuestCard from "./CurrentQuestCard";
 
 export default function Example({ selectedMarker, setSelectedMarker }) {
-
-
   const [isLockedQuest, setIsLockedQuest] = useState(false);
+
+  const refRBSheet = useRef();
 
   useEffect(() => {
     if (selectedMarker) {
@@ -16,35 +16,30 @@ export default function Example({ selectedMarker, setSelectedMarker }) {
     }
   }, [selectedMarker]);
 
-  function handleOnClose (){
-    setSelectedMarker(null)
-
+  function handleOnClose() {
+    setSelectedMarker(null);
   }
 
-  const refRBSheet = useRef();
+  const handleQuestTypeClick = (locked) => {
+    refRBSheet.current.open();
+    setIsLockedQuest(locked);
+  };
 
-  const handleLockedQuestClick = () => {
-  refRBSheet.current.open()
-  setIsLockedQuest(true)
-  }
-
-  const handleCurrentQuestClick = () => {
-    refRBSheet.current.open()
-    setIsLockedQuest(false)
-  }
   return (
     <View
       style={{
         justifyContent: "center",
         alignItems: "center",
         backgroundColor: "transparent",
-
         height: "10%",
-        flexDirection: 'row'
+        flexDirection: "row",
       }}
     >
-      <Button title="current quest" onPress={handleCurrentQuestClick} />
-      <Button title="locked quest" onPress={handleLockedQuestClick} />
+      <Button
+        title="Current Quest"
+        onPress={() => handleQuestTypeClick(false)}
+      />
+      <Button title="Locked Quest" onPress={() => handleQuestTypeClick(true)} />
 
       <RBSheet
         ref={refRBSheet}
@@ -60,15 +55,17 @@ export default function Example({ selectedMarker, setSelectedMarker }) {
             backgroundColor: "#000",
           },
           container: {
-            backgroundColor: "white"
-          }
+            backgroundColor: "white",
+          },
         }}
       >
-       {isLockedQuest ? <QuestList /> : <CurrentQuestCard/> }
-
-        {/* placeholder for now - actual quest card component goes here */}
-        {selectedMarker ? <IndividualQuestCard selectedMarker={selectedMarker} /> : <QuestList />}
-
+        {selectedMarker ? (
+          <IndividualQuestCard selectedMarker={selectedMarker} />
+        ) : isLockedQuest ? (
+          <QuestList />
+        ) : (
+          <CurrentQuestCard />
+        )}
       </RBSheet>
     </View>
   );
