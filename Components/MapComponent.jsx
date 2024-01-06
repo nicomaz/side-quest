@@ -112,7 +112,6 @@ const Map = () => {
         marker.location.longitude === e.nativeEvent.coordinate.longitude
     );
     if (pressedMarker) {
-      console.log("Pressed Marker Title:", pressedMarker.name);
       setSelectedMarker(pressedMarker.name);
     }
   };
