@@ -16,47 +16,26 @@ import {
   where,
 } from "firebase/firestore";
 
-const dummyQuest = {
-  name: "The London Eye",
-  description: "dhbrfurhbfhj",
-  location: {
-    latitude: 51.503399,
-    longitude: -0.119519,
-  },
-};
-const dummyLocations = [
-  {
-    name: "Great Fire Quest",
-    description: "dhbrfurhbfhj",
-    location: {
-      latitude: 51.5101,
-      longitude: 0.0859,
-    },
-  },
-  {
-    name: "Tower Bridge Quest",
-    description: "dhbrfurhbfhj",
-    location: {
-      latitude: 51.5055,
-      longitude: 0.0754,
-    },
-  },
-  {
-    name: "Covent Garden Quest",
-    description: "dhbrfurhbfhj",
-    location: {
-      latitude: 51.5117,
-      longitude: 0.124,
-    },
-  },
-];
-
 const Map = () => {
   const [currentLocation, setCurrentLocation] = useState(null);
-  const [questDestination, setQuestDestination] = useState(null);
+  const [questLocations, setQuestLocations] = useState([]);
+  const [questDestination, setQuestDestination] = useState({
+    latitude: 51.5138,
+    longitude: -0.0984,
+  });
   const [selectedMarker, setSelectedMarker] = useState(null);
   const [currentQuest, setCurrentQuest] = useState(null);
   const [render, setRender] = useState(null);
+
+  const getFirestoreData = async () => {
+    const questsSnapshot = await getDocs(collection(db, "quests"));
+
+    const allQuests = [];
+    questsSnapshot.forEach((doc) => {
+      allQuests.push(doc.data());
+    });
+    setQuestLocations(allQuests);
+  };
 
   const auth = getAuth(app);
   const user = auth.currentUser;
@@ -64,8 +43,7 @@ const Map = () => {
   async function getUser() {
     const docRef = doc(db, "users", user.phoneNumber);
     const docSnap = await getDoc(docRef);
-    const data = await docSnap.data().currentQuest;
-    setCurrentQuest(data);
+    setCurrentQuest(docSnap.data().currentQuest);
   }
 
   async function getLocation() {
@@ -86,7 +64,10 @@ const Map = () => {
           console.log("Permission to access location was denied");
           return;
         }
+
+        getFirestoreData();
         await getUser();
+
         const locationSubscription = await Location.watchPositionAsync(
           {
             accuracy: Location.Accuracy.Highest,
@@ -106,7 +87,7 @@ const Map = () => {
   }, [render]);
 
   const handlePress = (e) => {
-    const pressedMarker = dummyLocations.find(
+    const pressedMarker = questLocations.find(
       (marker) =>
         marker.location.latitude === e.nativeEvent.coordinate.latitude &&
         marker.location.longitude === e.nativeEvent.coordinate.longitude
@@ -133,12 +114,15 @@ const Map = () => {
           followsUserLocation={true}
           showsMyLocationButton={true}
         >
-          {dummyLocations.map((questMarker) => {
+          {questLocations.map((questMarker) => {
             return (
               <Marker
-                key={questMarker.name}
-                coordinate={questMarker.location}
-                title={questMarker.name}
+                key={questMarker.questId}
+                coordinate={{
+                  latitude: questMarker.location.latitude,
+                  longitude: questMarker.location.longitude,
+                }}
+                title={questMarker.landmark}
                 onPress={handlePress}
               />
             );
@@ -185,7 +169,5 @@ const styles = StyleSheet.create({
   },
 });
 export default Map;
-
-//figure out how to make the red modal for quest info, and how to link it to markers
 
 //51.511087475628955, -0.08601434783572807

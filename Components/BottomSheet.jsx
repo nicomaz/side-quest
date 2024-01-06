@@ -29,17 +29,19 @@ export default function Example({ selectedMarker, setSelectedMarker }) {
         justifyContent: "center",
         alignItems: "center",
         backgroundColor: "transparent",
+
         height: "10%",
         flexDirection: 'row'
       }}
     >
       <Button title="current quest" onPress={handleCurrentQuestClick} />
       <Button title="locked quest" onPress={handleLockedQuestClick} />
+
       <RBSheet
         ref={refRBSheet}
         closeOnDragDown={true}
-        closeOnPressMask={false}
-        height={500}
+        closeOnPressMask={true}
+        height={400}
         onClose={handleOnClose}
         customStyles={{
           wrapper: {
@@ -48,6 +50,9 @@ export default function Example({ selectedMarker, setSelectedMarker }) {
           draggableIcon: {
             backgroundColor: "#000",
           },
+          container: {
+            backgroundColor: "white"
+          }
         }}
       >
        {isLockedQuest ? <QuestList /> : <CurrentQuestCard/> }
