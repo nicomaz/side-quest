@@ -26,7 +26,11 @@ export default function VerifyCode({
       );
       await signInWithCredential(auth, credential);
       setIsVerified(true);
-      navigation.navigate("UserCustomisation");
+      if (user.displayName) {
+        navigation.navigate("Nav");
+      } else {
+        navigation.navigate("UserCustomisation");
+      }
     } catch (err) {
       console.log(err.message);
     }

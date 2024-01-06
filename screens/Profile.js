@@ -11,8 +11,6 @@ export default function Profile() {
   const navigation = useNavigation();
   const user = auth.currentUser;
 
-  console.log(user.photoURL);
-
   const images = {
     "phone.png": require("../assets/phone.png"),
     "teapot.png": require("../assets/teapot.png"),
