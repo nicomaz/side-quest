@@ -15,7 +15,7 @@ function DrawerNavigation() {
           component={Home}
           options={{
             headerTintColor: "white",
-            headerStyle: { backgroundColor: "#fc7d3d" },
+            headerStyle: { backgroundColor: "#D01A1E" },
             headerTitle: () => <Header name="Home" />,
           }}
         />
@@ -24,7 +24,7 @@ function DrawerNavigation() {
           component={Profile}
           options={{
             headerTintColor: "white",
-            headerStyle: { backgroundColor: "#fc7d3d" },
+            headerStyle: { backgroundColor: "#D01A1E" },
             headerShadowVisible: false,
           }}
         />
@@ -33,7 +33,7 @@ function DrawerNavigation() {
           component={QuestList}
           options={{
             headerTintColor: "white",
-            headerStyle: { backgroundColor: "#fc7d3d" },
+            headerStyle: { backgroundColor: "#D01A1E" },
           }}
         />
       </>

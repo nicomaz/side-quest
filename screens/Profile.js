@@ -1,4 +1,4 @@
-import { View, Text } from "react-native";
+import { View, Text, Image } from "react-native";
 import React from "react";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { getAuth, signOut } from "firebase/auth";
@@ -11,6 +11,14 @@ export default function Profile() {
   const navigation = useNavigation();
   const user = auth.currentUser;
 
+  console.log(user.photoURL);
+
+  const images = {
+    "phone.png": require("../assets/phone.png"),
+    "teapot.png": require("../assets/teapot.png"),
+    "double-decker-bus.png": require("../assets/double-decker-bus.png"),
+  };
+
   const handleSignOut = () => {
     signOut(auth)
       .then(() => {
@@ -21,7 +29,11 @@ export default function Profile() {
 
   return (
     <View>
-      <LinearGradient colors={["#fc7d3d", "#fdbb2d"]} className="h-screen">
+      <LinearGradient colors={["#D01A1E", "#ff7d80"]} className="h-screen">
+        <Image
+          source={images[user.photoURL]}
+          className="h-20 w-20 self-center mt-4"
+        />
         <Text className="text-center text-2xl font-medium text-white">
           {user.displayName}
         </Text>
@@ -29,17 +41,17 @@ export default function Profile() {
           {user.phoneNumber}
         </Text>
         <View className="bg-[#fff5ed] w-screen h-24 rounded-lg my-10">
-          <Text className="text-[#fc7d3d] text-base mt-2 ml-2 font-bold">
+          <Text className="text-[#D01A1E] text-base mt-2 ml-2 font-bold">
             Locations visited
           </Text>
         </View>
         <View className="bg-[#fff5ed] w-screen h-24 rounded-lg mb-6">
-          <Text className="text-[#fc7d3d] text-base mt-2 ml-2 font-bold">
+          <Text className="text-[#D01A1E] text-base mt-2 ml-2 font-bold">
             Completed Quests
           </Text>
         </View>
         <TouchableOpacity
-          className="mt-8 bg-[#ff8345] py-4 rounded-full shadow w-32 self-center shadow"
+          className="mt-8 bg-[#D01A1E] py-4 rounded-full shadow w-32 self-center shadow"
           onPress={handleSignOut}
         >
           <Text className="text-base font-bold text-center text-white">
