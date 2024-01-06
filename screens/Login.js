@@ -4,7 +4,7 @@ import {
   FirebaseRecaptchaBanner,
 } from "expo-firebase-recaptcha";
 import { PhoneAuthProvider, getAuth } from "firebase/auth";
-import { app, auth } from "../firebaseConfig";
+import { app } from "../firebaseConfig";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useRef, useState } from "react";
 import VerifyCode from "../Components/VerifyCode";
@@ -16,13 +16,8 @@ export default function Login() {
   const [phoneNumber, setPhoneNumber] = useState();
   const [verificationId, setVerificationId] = useState();
   const [verificationCode, setVerificationCode] = useState();
-  const [message, showMessage] = useState();
   const [isVerified, setIsVerified] = useState(false);
-  const attemptInvisibleVerification = true;
   const [error, setError] = useState(false);
-
-  const [isVisible, setIsVisible] = useState(false);
-
   const auth = getAuth(app);
   const user = auth.currentUser;
 
@@ -35,12 +30,8 @@ export default function Login() {
       );
       setVerificationId(verificationId);
       setError(false);
-      await showMessage({
-        text: "please check your messages",
-      });
-      setIsVisible(true);
     } catch (err) {
-      showMessage({ text: `Invalid phone number, please try again` });
+      console.alert("Invalid phone number, please try again");
       setError(true);
     }
   }
@@ -85,28 +76,18 @@ export default function Login() {
               <Text className="text-base font-bold">Send</Text>
             </TouchableOpacity>
           </View>
-          <View className="mx-16">
-            {attemptInvisibleVerification && !isVisible && (
-              <FirebaseRecaptchaBanner />
-            )}
-          </View>
+          <View className="mx-16">{<FirebaseRecaptchaBanner />}</View>
           {verificationId && (
             <VerifyCode
-              isVisible={isVisible}
               verificationId={verificationId}
               setVerificationCode={setVerificationCode}
               verificationCode={verificationCode}
-              showMessage={showMessage}
-              phoneNumber={phoneNumber}
-              setIsVisible={setIsVisible}
-              message={message}
               setIsVerified={setIsVerified}
             />
           )}
           {isVerified && !user.displayName && (
             <UsernameInput isVerified={isVerified} />
           )}
-          {error && message ? <Text>{message.text}</Text> : null}
         </View>
       </KeyboardAwareScrollView>
     </SafeAreaView>

@@ -1,11 +1,4 @@
-import {
-  Text,
-  TextInput,
-  Modal,
-  View,
-  TouchableOpacity,
-  KeyboardAvoidingView,
-} from "react-native";
+import { Text, TextInput, View, TouchableOpacity } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import { PhoneAuthProvider, signInWithCredential } from "firebase/auth";
 import { auth } from "../firebaseConfig";
