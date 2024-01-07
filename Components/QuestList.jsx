@@ -21,6 +21,8 @@ const QuestList = () => {
     });
     setQuests(allQuests);
     setQuestions(allQuestions);
+    console.log(allQuestions)
+
   }
   
   useEffect(() => {
