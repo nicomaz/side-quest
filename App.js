@@ -33,7 +33,7 @@ export default function App() {
             options={{ headerShown: false }}
           />
           <Stack.Screen name="SingleQuest" component={SingleQuest} />
-          <Stack.Screen name="Home" component={Home}/>
+          
         </>
       </Stack.Navigator>
     </NavigationContainer>

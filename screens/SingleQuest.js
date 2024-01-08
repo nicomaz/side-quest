@@ -41,24 +41,28 @@ const SingleQuest = ({ route }) => {
   };
 
   const isAnswerCorrect = (question, index) => {
-    if (question.type === "multiple choice") {
-      return (
-        question.options[selectedOptions[index] - 1] === question.correctAnswer
-      );
-    } else if (question.type === "text input") {
-      return (
-        givenAnswers[index].toLowerCase() ===
-        question.correctAnswer.toLowerCase()
-      );
-    } else if (question.type === "true or false") {
-      return (
-        givenAnswers[index].toLowerCase() ===
-        question.correctAnswer.toLowerCase()
-      );
-    }
+   const trimmedGivenAnswer = givenAnswers[index].trim();
 
-    return false;
-  };
+  if (question.type === "multiple choice") {
+    return (
+      question.options[selectedOptions[index] - 1] === question.correctAnswer
+    );
+  } else if (question.type === "text input") {
+    
+    const trimmedCorrectAnswer = question.correctAnswer.trim();
+
+    return (
+      trimmedGivenAnswer.toLowerCase() === trimmedCorrectAnswer.toLowerCase()
+    );
+  } else if (question.type === "true or false") {
+    return (
+      trimmedGivenAnswer.toLowerCase() ===
+      question.correctAnswer.toLowerCase()
+    );
+  }
+
+  return false;
+};
 
   const handleSubmit = () => {
     let correctAnswers = 0;
