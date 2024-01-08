@@ -23,14 +23,21 @@ async function getUser() {
   return docSnap.data();
 }
 
-/*  returns location of the users' current quest
+/*  return current quest object / current quest location
+
 required setRender to re-rended upon completion, otherwise
 you have to refresh manually in order to update location which 
 is a problem on first render
 
 required setQuestDestination to return destination 
+
+required setQuestDestination ONLY if you need destination, otherwise do not add is as argument. 
 */
-async function getLocation(setQuestDestination, setRender) {
+async function getCurrentQuest(
+  setCurrentQuest,
+  setRender,
+  setQuestDestination
+) {
   //gets current user from db
   const user = await getUser();
 
@@ -40,12 +47,16 @@ async function getLocation(setQuestDestination, setRender) {
   // queries db to find quests with same quiestId as user.currentQuest
   const q = query(questsRef, where("questId", "==", user.currentQuest));
   const querySnapshot = await getDocs(q);
-  setRender(true);
 
   // setsQuestDestination of currentQuest
   querySnapshot.forEach((doc) => {
-    setQuestDestination(doc.data().location);
+    if (setQuestDestination) {
+      setQuestDestination(doc.data().location);
+    } else {
+      setCurrentQuest(doc.data());
+    }
   });
+  setRender(true);
 }
 
 /* getAllQuests
@@ -54,13 +65,25 @@ returns all quests
 async function getQuests(setQuests) {
   // returns quests from db
   const questsSnapshot = await getDocs(collection(db, "quests"));
-  const allQuests = [];
 
+  const allQuests = [];
   questsSnapshot.forEach((doc) => {
     allQuests.push(doc.data());
 
+    // array with all quests
     setQuests(allQuests);
   });
 }
 
-export { getLocation, getUser, getQuests };
+/* gets questions of a quest
+ */
+async function getQuestQuestions(setCurrentQuestQuestions) {
+  const questionsSnapshot = await getDocs(collection(db, "questions"));
+  const allQuestions = [];
+  questionsSnapshot.forEach((doc) => {
+    allQuestions.push(doc.data());
+  });
+  setCurrentQuestQuestions(allQuestions);
+}
+
+export { getCurrentQuest, getUser, getQuests, getQuestQuestions };

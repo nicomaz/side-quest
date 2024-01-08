@@ -11,6 +11,7 @@ import {
 import { app, db } from "../firebaseConfig";
 import { getAuth } from "firebase/auth";
 import { useNavigation } from "@react-navigation/native";
+import { getCurrentQuest, getQuestQuestions, getUser } from "../utils/users";
 
 const CurrentQuestCard = () => {
   const [currentQuestId, setCurrentQuestId] = useState(null);
@@ -18,38 +19,38 @@ const CurrentQuestCard = () => {
   const [questions, setCurrentQuestQuestions] = useState([]);
   const [render, setRender] = useState(null);
 
-  const auth = getAuth(app);
-  const user = auth.currentUser;
+  // const auth = getAuth(app);
+  // const user = auth.currentUser;
 
-  async function getUserCurrentQuestId() {
-    const docRef = doc(db, "users", user.phoneNumber);
-    const docSnap = await getDoc(docRef);
-    const data = await docSnap.data().currentQuest;
-    setCurrentQuestId(data);
-  }
+  // async function getUserCurrentQuestId() {
+  //   const docRef = doc(db, "users", user.phoneNumber);
+  //   const docSnap = await getDoc(docRef);
+  //   const data = await docSnap.data().currentQuest;
+  //   setCurrentQuestId(data);
+  // }
 
-  async function getCurrentQuestData() {
-    const questsRef = collection(db, "quests");
-    const q = query(questsRef, where("questId", "==", currentQuestId));
-    const querySnapshot = await getDocs(q);
-    setRender(true);
-    querySnapshot.forEach((doc) => {
-      setCurrentQuest(doc.data());
-    });
+  // async function getCurrentQuestData() {
+  //   const questsRef = collection(db, "quests");
+  //   const q = query(questsRef, where("questId", "==", currentQuestId));
+  //   const querySnapshot = await getDocs(q);
+  //   setRender(true);
+  //   querySnapshot.forEach((doc) => {
+  //     setCurrentQuest(doc.data());
+  //   });
 
-    const questionsSnapshot = await getDocs(collection(db, "questions"));
-    const allQuestions = [];
-    questionsSnapshot.forEach((doc) => {
-      allQuestions.push(doc.data());
-    });
-    setCurrentQuestQuestions(allQuestions);
-  }
-
+  //   const questionsSnapshot = await getDocs(collection(db, "questions"));
+  //   const allQuestions = [];
+  //   questionsSnapshot.forEach((doc) => {
+  //     allQuestions.push(doc.data());
+  //   });
+  //   setCurrentQuestQuestions(allQuestions);
+  // }
 
 
   useEffect(() => {
-    getUserCurrentQuestId();
-    getCurrentQuestData();
+    getCurrentQuest(setCurrentQuest, setRender);
+    getQuestQuestions(setCurrentQuestQuestions);
+    console.log(currentQuest)
   }, [render]);
 
   const navigation = useNavigation();
@@ -66,13 +67,15 @@ const CurrentQuestCard = () => {
           })
         }
       >
-       <View style={styles.quest}>
-        <Text style={styles.questTitle}>{currentQuest.title}</Text>
-        <Text style={styles.questDescription}>{currentQuest.description}</Text>
-        <Image
-          style={styles.questImage}
-          source={{ uri: currentQuest.imgUrl }}
-        />
+        <View style={styles.quest}>
+          <Text style={styles.questTitle}>{currentQuest.title}</Text>
+          <Text style={styles.questDescription}>
+            {currentQuest.description}
+          </Text>
+          <Image
+            style={styles.questImage}
+            source={{ uri: currentQuest.imgUrl }}
+          />
         </View>
       </TouchableOpacity>
     </View>
@@ -113,6 +116,5 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
 });
-
 
 export default CurrentQuestCard;
