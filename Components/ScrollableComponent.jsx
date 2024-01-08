@@ -3,21 +3,13 @@ import React, { useEffect, useState } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../firebaseConfig";
 import SmallQuestCard from "./SmallQuestCard";
+import { getQuests } from "../utils/api";
 
 export default function ScrollableComponent({ name }) {
   const [quests, setQuests] = useState([]);
 
-  const getFirestoreData = async () => {
-    const questsSnapshot = await getDocs(collection(db, "quests"));
-    const allQuests = [];
-    questsSnapshot.forEach((doc) => {
-      allQuests.push(doc.data());
-    });
-    setQuests(allQuests);
-  };
-
   useEffect(() => {
-    getFirestoreData();
+    getQuests(setQuests);
   }, []);
 
   return (
