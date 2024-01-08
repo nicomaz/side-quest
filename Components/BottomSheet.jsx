@@ -6,7 +6,11 @@ import IndividualQuestCard from "./IndividualQuestCard";
 import CurrentQuestCard from "./CurrentQuestCard";
 import LockedQuestsComponent from "./LockedQuestComponent";
 
-export default function Example({ selectedMarker, setSelectedMarker }) {
+export default function Example({
+  selectedMarker,
+  setSelectedMarker,
+  currentQuest,
+}) {
   const [isLockedQuest, setIsLockedQuest] = useState(false);
 
   const refRBSheet = useRef();
@@ -65,7 +69,7 @@ export default function Example({ selectedMarker, setSelectedMarker }) {
         ) : isLockedQuest ? (
           <LockedQuestsComponent />
         ) : (
-          <CurrentQuestCard />
+          <CurrentQuestCard currentQuestId={currentQuest} />
         )}
       </RBSheet>
     </View>
