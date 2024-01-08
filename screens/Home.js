@@ -7,6 +7,7 @@ import { useNavigation } from "@react-navigation/native";
 
 const Home = ({ route }) => {
   const { showModal } = route.params || {};
+  const { quest } = route.params || {};
   const [completeQuestTriviaModalVisible, setCompleteQuestTriviaModalVisible] =
     useState(false);
   const navigation = useNavigation();
@@ -26,7 +27,7 @@ const Home = ({ route }) => {
       <Map />
 
       <CompleteQuestTriviaModal
-      route={route}
+      quest={quest}
         isVisible={completeQuestTriviaModalVisible}
         onClose={handleModalClose}
       />

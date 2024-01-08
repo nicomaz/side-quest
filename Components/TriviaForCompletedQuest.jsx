@@ -4,26 +4,12 @@ import { getDoc, doc } from 'firebase/firestore';
 import { db } from '../firebaseConfig';
 
 
-const TriviaForCompletedQuest = ({questId}) => {
+const TriviaForCompletedQuest = ({ quest }) => {
     const [trivia, setTrivia] = useState(null)
 
     useEffect(() => {
-        console.log('questId:!!!!!!!!!!!!!!!!!!!', questId)
-        const fetchTrivia = async () => {
-            try {
-                const docRef = doc(db, 'quests', questId)
-                const docSnap = await getDoc(docRef)
-
-                if (docSnap.exists()) {
-                    const questData = docSnap.data()
-                    setTrivia(questData.trivia)
-                }
-            } catch (error) {
-                console.error('Error fetching trivia:', error.message)
-            }
-        }
-        fetchTrivia()
-    }, [questId])
+      setTrivia(quest.trivia)
+    }, [quest])
   
     return (
         <View style={styles.container}>

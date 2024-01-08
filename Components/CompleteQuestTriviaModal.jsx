@@ -2,8 +2,7 @@ import { View, Text, Modal, TouchableOpacity, StyleSheet } from "react-native";
 import React from "react";
 import TriviaForCompletedQuest from "./TriviaForCompletedQuest";
 
-const CompleteQuestTriviaModal = ({ isVisible, onClose, route }) => {
-  const questId = route.params.questId;
+const CompleteQuestTriviaModal = ({ isVisible, onClose, quest }) => {
   return (
     <Modal
       animationType="slide"
@@ -11,7 +10,7 @@ const CompleteQuestTriviaModal = ({ isVisible, onClose, route }) => {
       visible={isVisible}
       onRequestClose={onClose}
     >
-      <TriviaForCompletedQuest questId={questId} />
+      <TriviaForCompletedQuest quest={quest}/>
       <View style={styles.modalContainer}>
         <View style={styles.modalContent}>
           <TouchableOpacity

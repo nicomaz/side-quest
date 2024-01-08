@@ -26,6 +26,7 @@ const SingleQuest = ({ route }) => {
   );
   const { questions } = route.params;
   const { questId } = route.params;
+  const { quest } = route.params;
 
   const getQuestions = () => {
     setSelectedOptions({});
@@ -79,7 +80,7 @@ const SingleQuest = ({ route }) => {
   const handleCompleteQuest = () => {
     if(questId) {
       console.log(questId)
-      navigation.navigate("Home", { showModal: true, questId: questId });
+      navigation.navigate("Home", { showModal: true, quest: quest });
     } else {
       console.error('questId is not available to singlequest')
     }
