@@ -66,7 +66,7 @@ async function getQuests(setQuests) {
 /* gets questions of a quest
 requires state setting function
  */
-async function getQuestQuestions(setCurrentQuestQuestions) {
+async function getQuestQuestions(setQuestions) {
   //gets questions from db
   const questionsSnapshot = await getDocs(collection(db, "questions"));
 
@@ -74,7 +74,7 @@ async function getQuestQuestions(setCurrentQuestQuestions) {
   questionsSnapshot.forEach((doc) => {
     allQuestions.push(doc.data());
   });
-  setCurrentQuestQuestions(allQuestions);
+  setQuestions(allQuestions);
 }
 
 export { getSingularQuest, getUser, getQuests, getQuestQuestions };

@@ -1,31 +1,16 @@
-import { View, Text, FlatList, StyleSheet } from "react-native";
+import { View, FlatList, StyleSheet } from "react-native";
 import React, { useState, useEffect } from "react";
 import QuestCard from "./QuestCard";
-import { collection, getDocs } from "firebase/firestore";
-import { db } from '../firebaseConfig';
+import { getQuestQuestions, getQuests } from "../utils/api";
 
 const QuestList = () => {
   const [quests, setQuests] = useState([]);
   const [questions, setQuestions] = useState([]);
 
-  const getFirestoreData = async () => {
-    const questsSnapshot = await getDocs(collection(db, 'quests'));
-    const questionsSnapshot = await getDocs(collection(db, 'questions'));
-    const allQuests = [];
-    const allQuestions = [];
-    questsSnapshot.forEach((doc) => {
-      allQuests.push(doc.data());
-    });
-    questionsSnapshot.forEach((doc) => {
-      allQuestions.push(doc.data());
-    });
-    setQuests(allQuests);
-    setQuestions(allQuestions);
-  }
-  
   useEffect(() => {
-    getFirestoreData()
-  }, [])
+    getQuests(setQuests);
+    getQuestQuestions(setQuestions);
+  }, []);
 
   return (
     <View style={styles.container}>
