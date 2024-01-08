@@ -106,7 +106,17 @@ export default function Profile() {
                 </Text>
               )}
             </View>
-
+            <View>
+              {quests.length === 6 ? (
+                <Text>
+                  <AntDesign name="star" size={14} color="gold"></AntDesign>
+                </Text>
+              ) : (
+                <Text>
+                  <AntDesign name="star" size={14} color="white"></AntDesign>
+                </Text>
+              )}
+            </View>
           </View>
           <ScrollableComponent name={"Completed Quests"} quests={quests} />
           <TouchableOpacity
