@@ -12,7 +12,7 @@ const Header = (props) => {
 
   return (
     <SafeAreaView>
-      <View className="flex flex-row justify-between w-screen pr-24">
+      <View className="flex flex-row justify-center">
         <Text className="font-bold text-white text-xl tracking-wide">
           SideQuest
         </Text>
