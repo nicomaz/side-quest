@@ -1,13 +1,29 @@
 import { View, Text, StyleSheet, TextInput } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const TextEntry = ({
   item,
   index,
   givenAnswer,
-  setGivenAnswer,
+  givenAnswers,
+  setGivenAnswers,
   showResults,
+  textInputKey,
 }) => {
+  const [textInputValue, setTextInputValue] = useState("");
+
+  useEffect(() => {
+    setTextInputValue("");
+  }, [textInputKey]);
+
+  const handleTextInputChange = (input) => {
+    const updatedGivenAnswers = [...givenAnswers];
+    updatedGivenAnswers[index] = input;
+    setGivenAnswers(updatedGivenAnswers);
+    setTextInputValue(input);
+    console.log(updatedGivenAnswers, 'my answersfrom textentry.jsx')
+  };
+
   return (
     <>
       <Text style={styles.question}>{item.text}</Text>
@@ -15,19 +31,21 @@ const TextEntry = ({
         style={[
           styles.container,
           showResults &&
-            givenAnswer === item.correctAnswer &&
+            givenAnswers[index] === item.correctAnswer &&
             styles.correctAnswer,
           showResults &&
-            givenAnswer !== item.correctAnswer &&
+            givenAnswers[index] !== item.correctAnswer &&
             styles.wrongAnswer,
         ]}
       >
         <TextInput
-          onChangeText={(input) => setGivenAnswer(input)}
+          key={String(textInputKey)}
+          onChangeText={handleTextInputChange}
           placeholder="Enter your answer here"
           style={styles.input}
           editable={!showResults}
           selectTextOnFocus={!showResults}
+          value={textInputValue}
         />
       </View>
     </>
