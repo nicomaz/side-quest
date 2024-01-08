@@ -1,20 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import * as Location from "expo-location";
 import MapViewDirections from "react-native-maps-directions";
 import Example from "./BottomSheet";
 import mapStyle from "../assets/MapStyle";
-import { applyActionCode, getAuth } from "firebase/auth";
-import { app, db } from "../firebaseConfig";
-import {
-  collection,
-  doc,
-  getDoc,
-  getDocs,
-  query,
-  where,
-} from "firebase/firestore";
+import { getLocation, getQuests, getUser } from "../utils/users";
 
 const Map = () => {
   const [currentLocation, setCurrentLocation] = useState(null);
@@ -27,37 +18,6 @@ const Map = () => {
   const [currentQuest, setCurrentQuest] = useState(null);
   const [render, setRender] = useState(null);
 
-  const getFirestoreData = async () => {
-    const questsSnapshot = await getDocs(collection(db, "quests"));
-
-    const allQuests = [];
-    questsSnapshot.forEach((doc) => {
-      allQuests.push(doc.data());
-    });
-    setQuestLocations(allQuests);
-  };
-
-  const auth = getAuth(app);
-  const user = auth.currentUser;
-
-  async function getUser() {
-    const docRef = doc(db, "users", user.phoneNumber);
-    const docSnap = await getDoc(docRef);
-    setCurrentQuest(docSnap.data().currentQuest);
-  }
-
-  async function getLocation() {
-    const questsRef = collection(db, "quests");
-    const q = query(questsRef, where("questId", "==", currentQuest));
-    const querySnapshot = await getDocs(q);
-    setRender(true);
-    querySnapshot.forEach((doc) => {
-      setQuestDestination(doc.data().location);
-    });
-  }
-
-
-
   useEffect(() => {
     (async () => {
       try {
@@ -67,8 +27,9 @@ const Map = () => {
           return;
         }
 
-        getFirestoreData();
-        await getUser();
+        await getQuests(setQuestLocations);
+        const user = await getUser();
+        setCurrentQuest(user.currentQuest);
 
         const locationSubscription = await Location.watchPositionAsync(
           {
@@ -78,7 +39,7 @@ const Map = () => {
           },
           (userLocation) => {
             setCurrentLocation(userLocation);
-            getLocation();
+            getLocation(setQuestDestination, setRender);
           }
         );
         return () => locationSubscription.remove();
@@ -95,12 +56,9 @@ const Map = () => {
         marker.location.longitude === e.nativeEvent.coordinate.longitude
     );
     if (pressedMarker) {
-
       setSelectedMarker(pressedMarker.questId);
-
     }
   };
-
 
   return (
     <View style={{ flex: 1 }}>
