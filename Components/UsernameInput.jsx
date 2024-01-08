@@ -18,6 +18,7 @@ const UsernameInput = ({ userPiece }) => {
         mobileNumber: user.phoneNumber,
         currentQuest: 1,
         completedQuests: [],
+        lockedQuests: [2, 3, 4, 5, 6],
       });
       await updateProfile(user, { displayName: username, photoURL: userPiece });
       navigation.navigate("Nav");
