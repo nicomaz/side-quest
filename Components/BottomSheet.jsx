@@ -4,6 +4,7 @@ import RBSheet from "react-native-raw-bottom-sheet";
 import QuestList from "./QuestList";
 import IndividualQuestCard from "./IndividualQuestCard";
 import CurrentQuestCard from "./CurrentQuestCard";
+import LockedQuestsComponent from "./LockedQuestComponent";
 
 export default function Example({
   selectedMarker,
@@ -43,7 +44,7 @@ export default function Example({
         title="Current Quest"
         onPress={() => handleQuestTypeClick(false)}
       />
-      <Button title="Locked Quest" onPress={() => handleQuestTypeClick(true)} />
+      <Button title="Locked Quests" onPress={() => handleQuestTypeClick(true)} />
 
       <RBSheet
         ref={refRBSheet}
@@ -66,7 +67,7 @@ export default function Example({
         {selectedMarker ? (
           <IndividualQuestCard selectedMarker={selectedMarker} />
         ) : isLockedQuest ? (
-          <QuestList />
+          <LockedQuestsComponent />
         ) : (
           <CurrentQuestCard currentQuestId={currentQuest} />
         )}

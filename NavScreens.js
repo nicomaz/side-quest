@@ -8,7 +8,13 @@ import Home from "./screens/Home";
 function DrawerNavigation() {
   const Drawer = createDrawerNavigator();
   return (
-    <Drawer.Navigator>
+    <Drawer.Navigator
+      screenOptions={{
+        drawerStyle: { backgroundColor: "#D01A1E" },
+        drawerType: "front",
+        drawerLabelStyle: { color: "white" },
+      }}
+    >
       <>
         <Drawer.Screen
           name="Home"
@@ -16,6 +22,7 @@ function DrawerNavigation() {
           options={{
             headerTintColor: "white",
             headerStyle: { backgroundColor: "#D01A1E" },
+            drawerActiveBackgroundColor: { backgroundColor: "#D01A1E" },
             headerTitle: () => <Header name="Home" />,
           }}
         />
