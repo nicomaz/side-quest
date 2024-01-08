@@ -10,7 +10,7 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import { getSingularQuest, getQuestQuestions } from "../utils/api";
 
-const CurrentQuestCard = ({ currentQuestId }) => {
+const CurrentQuestCard = ({ currentQuestId, setIsQuestionScreenDisplayed }) => {
   const [currentQuest, setCurrentQuest] = useState({});
   const [questions, setCurrentQuestQuestions] = useState([]);
 
@@ -27,11 +27,13 @@ const CurrentQuestCard = ({ currentQuestId }) => {
         <Text style={styles.currentQuestLabel}>Current Quest</Text>
         <TouchableOpacity
           style={styles.questContainer}
-          onPress={() =>
+          onPress={() => {
             navigation.navigate("SingleQuest", {
               questId: currentQuestId,
               questions,
             })
+            setIsQuestionScreenDisplayed(true)
+          }
           }
         >
           <View style={styles.quest}>

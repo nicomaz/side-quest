@@ -13,7 +13,7 @@ export default function Example({
   setCurrentQuestClicked,
 }) {
   const [isLockedQuest, setIsLockedQuest] = useState(false);
-
+  const [isQuestionScreenDisplayed, setIsQuestionScreenDisplayed] = useState(false)
   const refRBSheet = useRef();
 
   useEffect(() => {
@@ -22,6 +22,12 @@ export default function Example({
     }
   }, [selectedMarker]);
 
+  useEffect(() => {
+    if (isQuestionScreenDisplayed) {
+      refRBSheet.current.close();
+      setIsQuestionScreenDisplayed(false)
+    }
+  }, [isQuestionScreenDisplayed]);
 
   function handleOnClose() {
     setSelectedMarker(null);
@@ -79,7 +85,7 @@ export default function Example({
         ) : isLockedQuest ? (
           <LockedQuestsComponent />
         ) : (
-          <CurrentQuestCard currentQuestId={currentQuest} />
+          <CurrentQuestCard currentQuestId={currentQuest} setIsQuestionScreenDisplayed={setIsQuestionScreenDisplayed} />
         )}
       </RBSheet>
     </View>
