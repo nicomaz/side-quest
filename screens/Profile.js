@@ -5,6 +5,7 @@ import { getAuth, signOut } from "firebase/auth";
 import { app } from "../firebaseConfig";
 import { useNavigation } from "@react-navigation/native";
 import { LinearGradient } from "expo-linear-gradient";
+import ScrollableComponent from "../Components/ScrollableComponent";
 
 export default function Profile() {
   const auth = getAuth(app);
@@ -25,6 +26,7 @@ export default function Profile() {
       .catch((error) => alert(error.message));
   };
 
+
   return (
     <View>
       <LinearGradient colors={["#D01A1E", "#ff7d80"]} className="h-screen">
@@ -43,11 +45,7 @@ export default function Profile() {
             Locations visited
           </Text>
         </View>
-        <View className="bg-[#fff5ed] w-screen h-24 rounded-lg mb-6">
-          <Text className="text-[#D01A1E] text-base mt-2 ml-2 font-bold">
-            Completed Quests
-          </Text>
-        </View>
+        <ScrollableComponent name={"Completed Quests"} />
         <TouchableOpacity
           className="mt-8 bg-[#D01A1E] py-4 rounded-full shadow w-32 self-center shadow"
           onPress={handleSignOut}
