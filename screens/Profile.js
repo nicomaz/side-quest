@@ -9,6 +9,7 @@ import ScrollableComponent from "../Components/ScrollableComponent";
 import { AntDesign } from "@expo/vector-icons";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { getCompletedQuests, getUser } from "../utils/api";
+import { FontAwesome5 } from '@expo/vector-icons';
 
 export default function Profile() {
   const auth = getAuth(app);
@@ -54,7 +55,7 @@ export default function Profile() {
             <View>
               {quests.length >= 1 ? (
                 <Text>
-                  <AntDesign name="star" size={14} color="gold"></AntDesign>
+                  <FontAwesome5 name="scroll" size={24} color="gold" />
                 </Text>
               ) : (
                 <Text>
@@ -65,7 +66,7 @@ export default function Profile() {
             <View>
               {quests.length >= 2 ? (
                 <Text>
-                  <AntDesign name="star" size={14} color="gold"></AntDesign>
+                  <FontAwesome5 name="scroll" size={24} color="gold"></FontAwesome5>
                 </Text>
               ) : (
                 <Text>
@@ -76,7 +77,7 @@ export default function Profile() {
             <View>
               {quests.length >= 3 ? (
                 <Text>
-                  <AntDesign name="star" size={14} color="gold"></AntDesign>
+                  <FontAwesome5 name="scroll" size={24} color="gold"></FontAwesome5>
                 </Text>
               ) : (
                 <Text>
@@ -87,7 +88,7 @@ export default function Profile() {
             <View>
               {quests.length >= 4 ? (
                 <Text>
-                  <AntDesign name="star" size={14} color="gold"></AntDesign>
+                  <FontAwesome5 name="scroll" size={24} color="gold"></FontAwesome5>
                 </Text>
               ) : (
                 <Text>
@@ -98,7 +99,7 @@ export default function Profile() {
             <View>
               {quests.length >= 5 ? (
                 <Text>
-                  <AntDesign name="star" size={14} color="gold"></AntDesign>
+                  <FontAwesome5 name="scroll" size={24} color="gold"></FontAwesome5>
                 </Text>
               ) : (
                 <Text>
@@ -109,7 +110,7 @@ export default function Profile() {
             <View>
               {quests.length === 6 ? (
                 <Text>
-                  <AntDesign name="star" size={14} color="gold"></AntDesign>
+                  <FontAwesome5 name="scroll" size={24} color="gold"></FontAwesome5>
                 </Text>
               ) : (
                 <Text>
