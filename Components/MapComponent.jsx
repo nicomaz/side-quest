@@ -92,7 +92,7 @@ const Map = () => {
                   onPress={handlePress}
                 />
               );
-            } else if (questArr.includes(questMarker.questId.toString())) {
+            } else if (questArr.includes(questMarker.questId)) {
               return (
                 <Marker
                   key={questMarker.questId}
