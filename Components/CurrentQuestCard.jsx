@@ -1,14 +1,14 @@
 import { View, Text, TouchableOpacity, Image, StyleSheet } from "react-native";
 import React, { useState, useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
-import { getCurrentQuest, getQuestQuestions, getUser } from "../utils/users";
+import { getSingularQuest, getQuestQuestions } from "../utils/api";
 
 const CurrentQuestCard = ({ currentQuestId }) => {
   const [currentQuest, setCurrentQuest] = useState({});
   const [questions, setCurrentQuestQuestions] = useState([]);
 
   useEffect(() => {
-    getCurrentQuest(setCurrentQuest, currentQuestId);
+    getSingularQuest(setCurrentQuest, currentQuestId);
     getQuestQuestions(setCurrentQuestQuestions);
   }, [currentQuestId]);
 

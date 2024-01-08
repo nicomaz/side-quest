@@ -23,14 +23,13 @@ async function getUser() {
   return docSnap.data();
 }
 
-/*  return current quest object / current quest location
+/*  return singular quest object / current quest location
 
-required setQuestDestination to return destination 
+required questId !!
 
 required setQuestDestination ONLY if you need destination, otherwise do not add is as argument. 
 */
-async function getCurrentQuest(setCurrentQuest, questId, setQuestDestination) {
-
+async function getSingularQuest(setQuest, questId, setQuestDestination) {
   // quests reference
   const questsRef = collection(db, "quests");
 
@@ -43,7 +42,7 @@ async function getCurrentQuest(setCurrentQuest, questId, setQuestDestination) {
     if (setQuestDestination) {
       setQuestDestination(doc.data().location);
     } else {
-      setCurrentQuest(doc.data());
+      setQuest(doc.data());
     }
   });
 }
@@ -65,9 +64,12 @@ async function getQuests(setQuests) {
 }
 
 /* gets questions of a quest
+requires state setting function
  */
 async function getQuestQuestions(setCurrentQuestQuestions) {
+  //gets questions from db
   const questionsSnapshot = await getDocs(collection(db, "questions"));
+
   const allQuestions = [];
   questionsSnapshot.forEach((doc) => {
     allQuestions.push(doc.data());
@@ -75,4 +77,4 @@ async function getQuestQuestions(setCurrentQuestQuestions) {
   setCurrentQuestQuestions(allQuestions);
 }
 
-export { getCurrentQuest, getUser, getQuests, getQuestQuestions };
+export { getSingularQuest, getUser, getQuests, getQuestQuestions };
