@@ -16,41 +16,53 @@ const SingleQuest = ({ route }) => {
   const [selectedOptions, setSelectedOptions] = useState({});
   const [score, setScore] = useState(0);
   const [showResults, setShowResults] = useState(false);
-  //TODO - could be more dynamic
-  const [givenAnswer, setGivenAnswer] = useState("");
+  const [textInputKeys, setTextInputKeys] = useState([0, 1, 2]);
+  const [givenAnswers, setGivenAnswers] = useState(
+    Array.from({ length: textInputKeys.length }, () => "")
+  );
   const { questions } = route.params;
   const { questId } = route.params;
 
   const getQuestions = () => {
     setSelectedOptions({});
-    setGivenAnswer("");
+    
+    setGivenAnswers(Array.from({ length: textInputKeys.length }, () => ""));
     setShowResults(false);
     setQuestionsArray(questions);
-    const filteredArr = [];
-    for (let i = 0; i < questions.length; i++) {
-      if (questions[i].questId === questId) {
-        filteredArr.push(questions[i]);
-      }
-    }
+    const filteredArr = questions.filter(
+      (question) => question.questId === questId
+    );
     setFilteredQuestionsArray(filteredArr);
+    console.log(filteredArr);
+    setTextInputKeys((prevKeys) => prevKeys.map((key) => key + 1));
+  };
+
+  const isAnswerCorrect = (question, index) => {
+    console.log(givenAnswers, 'my answers from singlequest')
+    if (question.type === "multiple choice") {
+      return (
+        question.options[selectedOptions[index] - 1] === question.correctAnswer
+      );
+    } else if (question.type === "text input") {
+      return (
+        givenAnswers[index].toLowerCase() === question.correctAnswer.toLowerCase()
+      );
+    } else if (question.type === "true or false") {
+      return givenAnswers[index].toLowerCase() === question.correctAnswer.toLowerCase();
+    }
+  
+    return false;
   };
 
   const handleSubmit = () => {
     let correctAnswers = 0;
-    //TODO - will need logic here for other question types
+
     filteredQuestionsArray.forEach((question, index) => {
-      if (
-        question.type === "multiple choice" &&
-        question.options[selectedOptions[index] - 1] === question.correctAnswer
-      ) {
-        correctAnswers++;
-      } else if (
-        question.type === "text input" &&
-        givenAnswer === question.correctAnswer
-      ) {
+      if (isAnswerCorrect(question, index)) {
         correctAnswers++;
       }
     });
+
     setScore(correctAnswers);
     setShowResults(true);
   };
@@ -63,7 +75,7 @@ const SingleQuest = ({ route }) => {
     <View style={styles.container}>
       <FlatList
         data={filteredQuestionsArray}
-        keyExtractor={(item, index) => index.toString()}
+        keyExtractor={(item2, index) => index.toString()}
         renderItem={({ item, index }) => (
           <View style={styles.questionContainer}>
             {/* TODO - better conditional rendering based on question type */}
@@ -77,11 +89,13 @@ const SingleQuest = ({ route }) => {
               />
             ) : (
               <TextEntry
+                key={index}
                 item={item}
                 index={index}
-                givenAnswer={givenAnswer}
-                setGivenAnswer={setGivenAnswer}
+                givenAnswers={givenAnswers}
+                setGivenAnswers={setGivenAnswers}
                 showResults={showResults}
+                textInputKey={textInputKeys[index]}
               />
             )}
           </View>
