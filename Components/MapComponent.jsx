@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import * as Location from "expo-location";
 import MapViewDirections from "react-native-maps-directions";
 import Example from "./BottomSheet";
 import mapStyle from "../assets/MapStyle";
-import { applyActionCode, getAuth } from "firebase/auth";
+import { getAuth } from "firebase/auth";
 import { app, db } from "../firebaseConfig";
 import {
   collection,
@@ -20,12 +20,13 @@ const Map = () => {
   const [currentLocation, setCurrentLocation] = useState(null);
   const [questLocations, setQuestLocations] = useState([]);
   const [questDestination, setQuestDestination] = useState({
-    latitude: 51.5138,
-    longitude: -0.0984,
+    latitude: 51.5007,
+    longitude: -0.1246,
   });
   const [selectedMarker, setSelectedMarker] = useState(null);
   const [currentQuest, setCurrentQuest] = useState(null);
   const [render, setRender] = useState(null);
+  const [questArr, setQuestArr] = useState([])
 
   const getFirestoreData = async () => {
     const questsSnapshot = await getDocs(collection(db, "quests"));
@@ -44,8 +45,8 @@ const Map = () => {
     const docRef = doc(db, "users", user.phoneNumber);
     const docSnap = await getDoc(docRef);
     setCurrentQuest(docSnap.data().currentQuest);
+    setQuestArr(docSnap.data().completedQuests)
   }
-
   async function getLocation() {
     const questsRef = collection(db, "quests");
     const q = query(questsRef, where("questId", "==", currentQuest));
@@ -55,8 +56,6 @@ const Map = () => {
       setQuestDestination(doc.data().location);
     });
   }
-
-
 
   useEffect(() => {
     (async () => {
@@ -120,18 +119,48 @@ const Map = () => {
           showsMyLocationButton={true}
         >
           {questLocations.map((questMarker) => {
-            return (
-              <Marker
+            if(currentQuest === questMarker.questId) {
+              return (
+                <Marker
                 key={questMarker.questId}
                 coordinate={{
                   latitude: questMarker.location.latitude,
                   longitude: questMarker.location.longitude,
                 }}
                 title={questMarker.landmark}
+                pinColor={"navy"}
                 onPress={handlePress}
               />
-            );
-          })}
+              )
+            } else if(questArr.includes(questMarker.questId.toString())) {
+              return (
+                <Marker
+                key={questMarker.questId}
+                coordinate={{
+                  latitude: questMarker.location.latitude,
+                  longitude: questMarker.location.longitude,
+                }}
+                title={questMarker.landmark}
+                pinColor={"gold"}
+                onPress={handlePress}
+              />
+              )
+            } else {
+              return (
+                <Marker
+                key={questMarker.questId}
+                coordinate={{
+                  latitude: questMarker.location.latitude,
+                  longitude: questMarker.location.longitude,
+                }}
+                title={questMarker.landmark}
+                pinColor={"red"}
+                onPress={handlePress}
+              />
+              )
+            }
+          }
+        )}
           <MapViewDirections
             origin={{
               latitude: currentLocation.coords.latitude,
@@ -174,5 +203,3 @@ const styles = StyleSheet.create({
   },
 });
 export default Map;
-
-//51.511087475628955, -0.08601434783572807
