@@ -6,31 +6,15 @@ import {
   Image,
   ScrollView,
 } from "react-native";
-import { db } from "../firebaseConfig";
-import { collection, query, where, getDocs } from "firebase/firestore";
 import { useEffect, useState } from "react";
+import { getSingularQuest } from "../utils/api";
 
 const IndividualQuestCard = ({ selectedMarker }) => {
   const [quest, setQuest] = useState(null);
-  const [render, setRender] = useState(null);
-
-  async function getQuestByName() {
-    try {
-      const questsRef = collection(db, "quests");
-      const q = query(questsRef, where("questId", "==", selectedMarker));
-      const querySnapshot = await getDocs(q);
-      setRender(true);
-      querySnapshot.forEach((doc) => {
-        setQuest(doc.data());
-      });
-    } catch (error) {
-      console.error("Error fetching quest:", error);
-    }
-  }
 
   useEffect(() => {
-    getQuestByName();
-  }, [render]);
+    getSingularQuest(setQuest, selectedMarker);
+  }, []);
 
   if (!quest) {
     return (

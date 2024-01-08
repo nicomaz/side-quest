@@ -5,16 +5,7 @@ import * as Location from "expo-location";
 import MapViewDirections from "react-native-maps-directions";
 import Example from "./BottomSheet";
 import mapStyle from "../assets/MapStyle";
-import { getAuth } from "firebase/auth";
-import { app, db } from "../firebaseConfig";
-import {
-  collection,
-  doc,
-  getDoc,
-  getDocs,
-  query,
-  where,
-} from "firebase/firestore";
+import { getSingularQuest, getQuests, getUser } from "../utils/api";
 
 const Map = () => {
   const [currentLocation, setCurrentLocation] = useState(null);
@@ -25,37 +16,7 @@ const Map = () => {
   });
   const [selectedMarker, setSelectedMarker] = useState(null);
   const [currentQuest, setCurrentQuest] = useState(null);
-  const [render, setRender] = useState(null);
-  const [questArr, setQuestArr] = useState([])
-
-  const getFirestoreData = async () => {
-    const questsSnapshot = await getDocs(collection(db, "quests"));
-
-    const allQuests = [];
-    questsSnapshot.forEach((doc) => {
-      allQuests.push(doc.data());
-    });
-    setQuestLocations(allQuests);
-  };
-
-  const auth = getAuth(app);
-  const user = auth.currentUser;
-
-  async function getUser() {
-    const docRef = doc(db, "users", user.phoneNumber);
-    const docSnap = await getDoc(docRef);
-    setCurrentQuest(docSnap.data().currentQuest);
-    setQuestArr(docSnap.data().completedQuests)
-  }
-  async function getLocation() {
-    const questsRef = collection(db, "quests");
-    const q = query(questsRef, where("questId", "==", currentQuest));
-    const querySnapshot = await getDocs(q);
-    setRender(true);
-    querySnapshot.forEach((doc) => {
-      setQuestDestination(doc.data().location);
-    });
-  }
+  const [questArr, setQuestArr] = useState([]);
 
   useEffect(() => {
     (async () => {
@@ -66,8 +27,11 @@ const Map = () => {
           return;
         }
 
-        getFirestoreData();
-        await getUser();
+        await getQuests(setQuestLocations);
+        const user = await getUser();
+        setCurrentQuest(user.currentQuest);
+        setQuestArr(user.completedQuests);
+        getSingularQuest(setCurrentQuest, currentQuest, setQuestDestination);
 
         const locationSubscription = await Location.watchPositionAsync(
           {
@@ -77,7 +41,6 @@ const Map = () => {
           },
           (userLocation) => {
             setCurrentLocation(userLocation);
-            getLocation();
           }
         );
         return () => locationSubscription.remove();
@@ -85,7 +48,7 @@ const Map = () => {
         console.error(error);
       }
     })();
-  }, [render]);
+  }, [currentQuest]);
 
   const handlePress = (e) => {
     const pressedMarker = questLocations.find(
@@ -94,12 +57,9 @@ const Map = () => {
         marker.location.longitude === e.nativeEvent.coordinate.longitude
     );
     if (pressedMarker) {
-
       setSelectedMarker(pressedMarker.questId);
-
     }
   };
-
 
   return (
     <View style={{ flex: 1 }}>
@@ -119,48 +79,47 @@ const Map = () => {
           showsMyLocationButton={true}
         >
           {questLocations.map((questMarker) => {
-            if(currentQuest === questMarker.questId) {
+            if (currentQuest === questMarker.questId) {
               return (
                 <Marker
-                key={questMarker.questId}
-                coordinate={{
-                  latitude: questMarker.location.latitude,
-                  longitude: questMarker.location.longitude,
-                }}
-                title={questMarker.landmark}
-                pinColor={"navy"}
-                onPress={handlePress}
-              />
-              )
-            } else if(questArr.includes(questMarker.questId.toString())) {
+                  key={questMarker.questId}
+                  coordinate={{
+                    latitude: questMarker.location.latitude,
+                    longitude: questMarker.location.longitude,
+                  }}
+                  title={questMarker.landmark}
+                  pinColor={"navy"}
+                  onPress={handlePress}
+                />
+              );
+            } else if (questArr.includes(questMarker.questId.toString())) {
               return (
                 <Marker
-                key={questMarker.questId}
-                coordinate={{
-                  latitude: questMarker.location.latitude,
-                  longitude: questMarker.location.longitude,
-                }}
-                title={questMarker.landmark}
-                pinColor={"gold"}
-                onPress={handlePress}
-              />
-              )
+                  key={questMarker.questId}
+                  coordinate={{
+                    latitude: questMarker.location.latitude,
+                    longitude: questMarker.location.longitude,
+                  }}
+                  title={questMarker.landmark}
+                  pinColor={"gold"}
+                  onPress={handlePress}
+                />
+              );
             } else {
               return (
                 <Marker
-                key={questMarker.questId}
-                coordinate={{
-                  latitude: questMarker.location.latitude,
-                  longitude: questMarker.location.longitude,
-                }}
-                title={questMarker.landmark}
-                pinColor={"red"}
-                onPress={handlePress}
-              />
-              )
+                  key={questMarker.questId}
+                  coordinate={{
+                    latitude: questMarker.location.latitude,
+                    longitude: questMarker.location.longitude,
+                  }}
+                  title={questMarker.landmark}
+                  pinColor={"red"}
+                  onPress={handlePress}
+                />
+              );
             }
-          }
-        )}
+          })}
           <MapViewDirections
             origin={{
               latitude: currentLocation.coords.latitude,
@@ -187,6 +146,7 @@ const Map = () => {
       <Example
         selectedMarker={selectedMarker}
         setSelectedMarker={setSelectedMarker}
+        currentQuest={currentQuest}
       />
     </View>
   );

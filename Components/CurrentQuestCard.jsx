@@ -1,56 +1,16 @@
 import { View, Text, TouchableOpacity, Image, StyleSheet } from "react-native";
 import React, { useState, useEffect } from "react";
-import {
-  collection,
-  getDoc,
-  getDocs,
-  doc,
-  query,
-  where,
-} from "firebase/firestore";
-import { app, db } from "../firebaseConfig";
-import { getAuth } from "firebase/auth";
 import { useNavigation } from "@react-navigation/native";
+import { getSingularQuest, getQuestQuestions } from "../utils/api";
 
-const CurrentQuestCard = () => {
-  const [currentQuestId, setCurrentQuestId] = useState(null);
+const CurrentQuestCard = ({ currentQuestId }) => {
   const [currentQuest, setCurrentQuest] = useState({});
   const [questions, setCurrentQuestQuestions] = useState([]);
-  const [render, setRender] = useState(null);
-
-  const auth = getAuth(app);
-  const user = auth.currentUser;
-
-  async function getUserCurrentQuestId() {
-    const docRef = doc(db, "users", user.phoneNumber);
-    const docSnap = await getDoc(docRef);
-    const data = await docSnap.data().currentQuest;
-    setCurrentQuestId(data);
-  }
-
-  async function getCurrentQuestData() {
-    const questsRef = collection(db, "quests");
-    const q = query(questsRef, where("questId", "==", currentQuestId));
-    const querySnapshot = await getDocs(q);
-    setRender(true);
-    querySnapshot.forEach((doc) => {
-      setCurrentQuest(doc.data());
-    });
-
-    const questionsSnapshot = await getDocs(collection(db, "questions"));
-    const allQuestions = [];
-    questionsSnapshot.forEach((doc) => {
-      allQuestions.push(doc.data());
-    });
-    setCurrentQuestQuestions(allQuestions);
-  }
-
-
 
   useEffect(() => {
-    getUserCurrentQuestId();
-    getCurrentQuestData();
-  }, [render]);
+    getSingularQuest(setCurrentQuest, currentQuestId);
+    getQuestQuestions(setCurrentQuestQuestions);
+  }, [currentQuestId]);
 
   const navigation = useNavigation();
 
@@ -61,18 +21,20 @@ const CurrentQuestCard = () => {
         style={styles.questContainer}
         onPress={() =>
           navigation.navigate("SingleQuest", {
-            questId: currentQuest.questId,
+            questId: currentQuestId,
             questions,
           })
         }
       >
-       <View style={styles.quest}>
-        <Text style={styles.questTitle}>{currentQuest.title}</Text>
-        <Text style={styles.questDescription}>{currentQuest.description}</Text>
-        <Image
-          style={styles.questImage}
-          source={{ uri: currentQuest.imgUrl }}
-        />
+        <View style={styles.quest}>
+          <Text style={styles.questTitle}>{currentQuest.title}</Text>
+          <Text style={styles.questDescription}>
+            {currentQuest.description}
+          </Text>
+          <Image
+            style={styles.questImage}
+            source={{ uri: currentQuest.imgUrl }}
+          />
         </View>
       </TouchableOpacity>
     </View>
@@ -113,6 +75,5 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
 });
-
 
 export default CurrentQuestCard;
