@@ -14,7 +14,9 @@ export default function Profile() {
   const auth = getAuth(app);
   const navigation = useNavigation();
   const user = auth.currentUser;
-  const [quests, setQuests] = useState(null);
+  const [quests, setQuests] = useState([]);
+
+  const completedQuests = 2;
 
   const images = {
     "phone.png": require("../assets/phone.png"),
@@ -50,35 +52,61 @@ export default function Profile() {
           </Text>
           <View className="flex flex-row justify-center pt-1">
             <View>
-              <Text>
-                <AntDesign name="star" size={14} color="gold"></AntDesign>
-              </Text>
+              {quests.length >= 1 ? (
+                <Text>
+                  <AntDesign name="star" size={14} color="gold"></AntDesign>
+                </Text>
+              ) : (
+                <Text>
+                  <AntDesign name="star" size={14} color="white"></AntDesign>
+                </Text>
+              )}
             </View>
             <View>
-              <Text>
-                <AntDesign name="star" size={14} color="white"></AntDesign>
-              </Text>
+              {quests.length >= 2 ? (
+                <Text>
+                  <AntDesign name="star" size={14} color="gold"></AntDesign>
+                </Text>
+              ) : (
+                <Text>
+                  <AntDesign name="star" size={14} color="white"></AntDesign>
+                </Text>
+              )}
             </View>
             <View>
-              <Text>
-                <AntDesign name="star" size={14} color="white"></AntDesign>
-              </Text>
+              {quests.length >= 3 ? (
+                <Text>
+                  <AntDesign name="star" size={14} color="gold"></AntDesign>
+                </Text>
+              ) : (
+                <Text>
+                  <AntDesign name="star" size={14} color="white"></AntDesign>
+                </Text>
+              )}
             </View>
             <View>
-              <Text>
-                <AntDesign name="star" size={14} color="white"></AntDesign>
-              </Text>
+              {quests.length >= 4 ? (
+                <Text>
+                  <AntDesign name="star" size={14} color="gold"></AntDesign>
+                </Text>
+              ) : (
+                <Text>
+                  <AntDesign name="star" size={14} color="white"></AntDesign>
+                </Text>
+              )}
             </View>
             <View>
-              <Text>
-                <AntDesign name="star" size={14} color="white"></AntDesign>
-              </Text>
+              {quests.length >= 5 ? (
+                <Text>
+                  <AntDesign name="star" size={14} color="gold"></AntDesign>
+                </Text>
+              ) : (
+                <Text>
+                  <AntDesign name="star" size={14} color="white"></AntDesign>
+                </Text>
+              )}
             </View>
-            <View>
-              <Text>
-                <AntDesign name="star" size={14} color="white"></AntDesign>
-              </Text>
-            </View>
+
           </View>
           <ScrollableComponent name={"Completed Quests"} quests={quests} />
           <TouchableOpacity
@@ -94,3 +122,6 @@ export default function Profile() {
     </View>
   );
 }
+
+
+
