@@ -1,6 +1,6 @@
 import { View, Text, Image } from "react-native";
 import React, { useEffect, useState } from "react";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import { FlatList, TouchableOpacity } from "react-native-gesture-handler";
 import { getAuth, signOut } from "firebase/auth";
 import { app } from "../firebaseConfig";
 import { useNavigation } from "@react-navigation/native";
@@ -8,7 +8,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import ScrollableComponent from "../Components/ScrollableComponent";
 import { AntDesign } from "@expo/vector-icons";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { getCompletedQuests } from "../utils/api";
+import { getCompletedQuests, getUser } from "../utils/api";
 
 export default function Profile() {
   const auth = getAuth(app);
@@ -80,11 +80,9 @@ export default function Profile() {
               </Text>
             </View>
           </View>
-          <View className="bg-[#fff5ed] rounded-lg my-3 mx-1">
-            <Text className="text-[#D01A1E] text-base mt-2 ml-2 font-bold">
-              Locations visited
-            </Text>
-          </View>
+          {/* data={quests}
+        keyExtractor={(quest) => quest.questId}
+        renderItem={({ item }) => <SmallQuestCard quest={item} />} */}
           <ScrollableComponent name={"Completed Quests"} quests={quests} />
           <TouchableOpacity
             className="mt-2 bg-[#D01A1E] py-4 rounded-full shadow w-32 self-center shadow"
