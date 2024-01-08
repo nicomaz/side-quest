@@ -31,10 +31,10 @@ const TextEntry = ({
         style={[
           styles.container,
           showResults &&
-            givenAnswers[index] === item.correctAnswer &&
+            givenAnswers[index].toLowerCase().trim() === item.correctAnswer.toLowerCase() &&
             styles.correctAnswer,
           showResults &&
-            givenAnswers[index] !== item.correctAnswer &&
+            givenAnswers[index].toLowerCase().trim() !== item.correctAnswer.toLowerCase() &&
             styles.wrongAnswer,
         ]}
       >
