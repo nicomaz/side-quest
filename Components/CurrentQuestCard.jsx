@@ -1,20 +1,9 @@
 import { View, Text, TouchableOpacity, Image, StyleSheet } from "react-native";
 import React, { useState, useEffect } from "react";
-import {
-  collection,
-  getDoc,
-  getDocs,
-  doc,
-  query,
-  where,
-} from "firebase/firestore";
-import { app, db } from "../firebaseConfig";
-import { getAuth } from "firebase/auth";
 import { useNavigation } from "@react-navigation/native";
-import { getCurrentQuest, getQuestQuestions, getUser } from "../utils/users";
+import { getCurrentQuest, getQuestQuestions } from "../utils/users";
 
 const CurrentQuestCard = () => {
-  const [currentQuestId, setCurrentQuestId] = useState(null);
   const [currentQuest, setCurrentQuest] = useState({});
   const [questions, setCurrentQuestQuestions] = useState([]);
   const [render, setRender] = useState(null);
