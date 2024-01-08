@@ -5,7 +5,12 @@ import * as Location from "expo-location";
 import MapViewDirections from "react-native-maps-directions";
 import Example from "./BottomSheet";
 import mapStyle from "../assets/MapStyle";
-import { getLocation, getQuests, getUser } from "../utils/users";
+import {
+  getCurrentQuest,
+  getLocation,
+  getQuests,
+  getUser,
+} from "../utils/users";
 
 const Map = () => {
   const [currentLocation, setCurrentLocation] = useState(null);
@@ -31,6 +36,8 @@ const Map = () => {
         const user = await getUser();
         setCurrentQuest(user.currentQuest);
 
+        getCurrentQuest(setCurrentQuest, setRender, setQuestDestination);
+
         const locationSubscription = await Location.watchPositionAsync(
           {
             accuracy: Location.Accuracy.Highest,
@@ -39,7 +46,6 @@ const Map = () => {
           },
           (userLocation) => {
             setCurrentLocation(userLocation);
-            getLocation(setQuestDestination, setRender);
           }
         );
         return () => locationSubscription.remove();
