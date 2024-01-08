@@ -6,6 +6,8 @@ import { app } from "../firebaseConfig";
 import { useNavigation } from "@react-navigation/native";
 import { LinearGradient } from "expo-linear-gradient";
 import ScrollableComponent from "../Components/ScrollableComponent";
+import { AntDesign } from "@expo/vector-icons";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Profile() {
   const auth = getAuth(app);
@@ -26,9 +28,8 @@ export default function Profile() {
       .catch((error) => alert(error.message));
   };
 
-
   return (
-    <View>
+    <View className="h-screen">
       <LinearGradient colors={["#D01A1E", "#ff7d80"]} className="h-screen">
         <Image
           source={images[user.photoURL]}
@@ -40,14 +41,46 @@ export default function Profile() {
         <Text className="text-center text-sm font-medium text-gray-100">
           {user.phoneNumber}
         </Text>
-        <View className="bg-[#fff5ed] w-screen h-24 rounded-lg my-10">
+        <View className="flex flex-row justify-center pt-1">
+          <View>
+            <Text>
+              <AntDesign name="star" size={14} color="gold"></AntDesign>
+            </Text>
+          </View>
+          <View>
+            <Text>
+              <AntDesign name="star" size={14} color="white"></AntDesign>
+            </Text>
+          </View>
+          <View>
+            <Text>
+              <AntDesign name="star" size={14} color="white"></AntDesign>
+            </Text>
+          </View>
+          <View>
+            <Text>
+              <AntDesign name="star" size={14} color="white"></AntDesign>
+            </Text>
+          </View>
+          <View>
+            <Text>
+              <AntDesign name="star" size={14} color="white"></AntDesign>
+            </Text>
+          </View>
+          <View>
+            <Text>
+              <AntDesign name="star" size={14} color="white"></AntDesign>
+            </Text>
+          </View>
+        </View>
+        <View className="bg-[#fff5ed] rounded-lg my-3 mx-1">
           <Text className="text-[#D01A1E] text-base mt-2 ml-2 font-bold">
             Locations visited
           </Text>
         </View>
         <ScrollableComponent name={"Completed Quests"} />
         <TouchableOpacity
-          className="mt-8 bg-[#D01A1E] py-4 rounded-full shadow w-32 self-center shadow"
+          className="mt-2 bg-[#D01A1E] py-4 rounded-full shadow w-32 self-center shadow"
           onPress={handleSignOut}
         >
           <Text className="text-base font-bold text-center text-white">

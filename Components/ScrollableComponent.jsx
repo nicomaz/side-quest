@@ -2,7 +2,6 @@ import { View, Text, SectionList, FlatList } from "react-native";
 import React, { useEffect, useState } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../firebaseConfig";
-import IndividualQuestCard from "./IndividualQuestCard";
 import SmallQuestCard from "./SmallQuestCard";
 
 export default function ScrollableComponent({ name }) {
@@ -22,15 +21,15 @@ export default function ScrollableComponent({ name }) {
   }, []);
 
   return (
-    <View className="bg-[#fff5ed]">
-     <Text className="text-[#D01A1E] text-base mt-2 ml-2 font-bold">{name}</Text>
+    <View className="bg-[#fff5ed] mx-1 rounded-xl mb-2">
+      <Text className="text-[#D01A1E] text-base mt-2 ml-2 font-bold">
+        {name}
+      </Text>
       <FlatList
         horizontal
         data={quests}
         keyExtractor={(quest) => quest.questId}
-        renderItem={({ item }) => (
-          <SmallQuestCard quest={item} />
-        )}
+        renderItem={({ item }) => <SmallQuestCard quest={item} />}
       ></FlatList>
     </View>
   );
