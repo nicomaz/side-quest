@@ -31,62 +31,64 @@ export default function Profile() {
   return (
     <View className="h-screen">
       <LinearGradient colors={["#D01A1E", "#ff7d80"]} className="h-screen">
-        <Image
-          source={images[user.photoURL]}
-          className="h-20 w-20 self-center mt-4"
-        />
-        <Text className="text-center text-2xl font-medium text-white">
-          {user.displayName}
-        </Text>
-        <Text className="text-center text-sm font-medium text-gray-100">
-          {user.phoneNumber}
-        </Text>
-        <View className="flex flex-row justify-center pt-1">
-          <View>
-            <Text>
-              <AntDesign name="star" size={14} color="gold"></AntDesign>
-            </Text>
-          </View>
-          <View>
-            <Text>
-              <AntDesign name="star" size={14} color="white"></AntDesign>
-            </Text>
-          </View>
-          <View>
-            <Text>
-              <AntDesign name="star" size={14} color="white"></AntDesign>
-            </Text>
-          </View>
-          <View>
-            <Text>
-              <AntDesign name="star" size={14} color="white"></AntDesign>
-            </Text>
-          </View>
-          <View>
-            <Text>
-              <AntDesign name="star" size={14} color="white"></AntDesign>
-            </Text>
-          </View>
-          <View>
-            <Text>
-              <AntDesign name="star" size={14} color="white"></AntDesign>
-            </Text>
-          </View>
-        </View>
-        <View className="bg-[#fff5ed] rounded-lg my-3 mx-1">
-          <Text className="text-[#D01A1E] text-base mt-2 ml-2 font-bold">
-            Locations visited
+        <SafeAreaView>
+          <Image
+            source={images[user.photoURL]}
+            className="h-20 w-20 self-center mt-[-4]"
+          />
+          <Text className="text-center text-2xl font-medium text-white">
+            {user.displayName}
           </Text>
-        </View>
-        <ScrollableComponent name={"Completed Quests"} />
-        <TouchableOpacity
-          className="mt-2 bg-[#D01A1E] py-4 rounded-full shadow w-32 self-center shadow"
-          onPress={handleSignOut}
-        >
-          <Text className="text-base font-bold text-center text-white">
-            Sign Out
+          <Text className="text-center text-sm font-medium text-gray-100">
+            {user.phoneNumber}
           </Text>
-        </TouchableOpacity>
+          <View className="flex flex-row justify-center pt-1">
+            <View>
+              <Text>
+                <AntDesign name="star" size={14} color="gold"></AntDesign>
+              </Text>
+            </View>
+            <View>
+              <Text>
+                <AntDesign name="star" size={14} color="white"></AntDesign>
+              </Text>
+            </View>
+            <View>
+              <Text>
+                <AntDesign name="star" size={14} color="white"></AntDesign>
+              </Text>
+            </View>
+            <View>
+              <Text>
+                <AntDesign name="star" size={14} color="white"></AntDesign>
+              </Text>
+            </View>
+            <View>
+              <Text>
+                <AntDesign name="star" size={14} color="white"></AntDesign>
+              </Text>
+            </View>
+            <View>
+              <Text>
+                <AntDesign name="star" size={14} color="white"></AntDesign>
+              </Text>
+            </View>
+          </View>
+          <View className="bg-[#fff5ed] rounded-lg my-3 mx-1">
+            <Text className="text-[#D01A1E] text-base mt-2 ml-2 font-bold">
+              Locations visited
+            </Text>
+          </View>
+          <ScrollableComponent name={"Completed Quests"} />
+          <TouchableOpacity
+            className="mt-2 bg-[#D01A1E] py-4 rounded-full shadow w-32 self-center shadow"
+            onPress={handleSignOut}
+          >
+            <Text className="text-base font-bold text-center text-white">
+              Sign Out
+            </Text>
+          </TouchableOpacity>
+        </SafeAreaView>
       </LinearGradient>
     </View>
   );
