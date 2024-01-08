@@ -4,22 +4,10 @@ import React from 'react'
 
 const CompleteCard = () => {
   return (
-    <Modal
-      animationType="slide"
-      transparent={true}
-      visible={isVisible}
-      onRequestClose={onClose}
-    >
-      <View style={styles.modalContainer}>
-        <View style={styles.modalContent}>
-        <Text>Congratulations! You have officially completed SideQuest! Your adventure is at its end.</Text>
+    <View>
+        <Text>Congratulations! You have officially completed SideQuest! Your journey is at its end...or is it?</Text>
         
-        <TouchableOpacity style={styles.closeAndContinueButton} onPress={onClose}>
-          <Text style={styles.closeAndContinueButtonText}>Close modal and continute to nextquest all in one</Text>
-        </TouchableOpacity>
-        </View>
-      </View>
-    </Modal>
+    </View>
   )
 }
 

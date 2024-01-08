@@ -12,6 +12,8 @@ import {
 import MultipleChoice from "../Components/MultipleChoice";
 import TextEntry from "../Components/TextEntry";
 import { useNavigation } from "@react-navigation/native";
+import { getCompletedQuests } from "../utils/api";
+
 
 const SingleQuest = ({ route }) => {
   const navigation = useNavigation();
@@ -21,12 +23,16 @@ const SingleQuest = ({ route }) => {
   const [score, setScore] = useState(0);
   const [showResults, setShowResults] = useState(false);
   const [textInputKeys, setTextInputKeys] = useState([0, 1, 2]);
+  // const [questArr, setQuestArr] = useState([])
+  // getCompletedQuests(setQuestArr)
+  // console.log(questArr) neet to get user, then compare quest completion to 6 and navigate alternate route
   const [givenAnswers, setGivenAnswers] = useState(
     Array.from({ length: textInputKeys.length }, () => "")
   );
   const { questions } = route.params;
   const { questId } = route.params;
 
+  setQuestArr(user.completedQuests)
   const getQuestions = () => {
     setSelectedOptions({});
 
@@ -80,6 +86,9 @@ const SingleQuest = ({ route }) => {
   const handleCompleteQuest = () => {
     navigation.navigate("Home", { showModal: true });
   };
+  const handleCompleteAllQuests = () => {
+    navigation.navigate('Profile', { gameComplete: true })
+  }
 
   useEffect(() => {
     getQuestions();
