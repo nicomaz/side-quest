@@ -76,9 +76,8 @@
   {
     "questId": 5,
     "questionId": 13,
-    "type": "multiple choice",
+    "type": "text input",
     "text": "As you ascend the grand staircase of St. Paul's Cathedral, you can't help but marvel at the craftsmanship. The steps, crafted from sturdy stone, have witnessed centuries of history. What material was primarily used in the construction of St. Paul's Cathedral?",
-    "options": ["Stone", "Wood", "Iron", "Marble"],
     "correctAnswer": "Stone"
   },
   {
@@ -92,9 +91,10 @@
   {
     "questId": 5,
     "questionId": 15,
-    "type": "text input",
+    "type": "multiple choice",
     "text": "As you stand atop St. Paul's Cathedral, the panoramic view of London is breathtaking. Your eyes drift downward, and you can't help but wonder: How many steps did you climb to reach this stunning viewpoint?",
-    "correctAnswer": "365"
+    "options": ["365", "420", "528", "603"],
+    "correctAnswer": "528"
   },
   {
     "questId": 2,
@@ -108,7 +108,7 @@
     "questionId": 5,
     "type": "multiple choice",
     "text": "As you board the contraption and traverse the heights above the urban landscape, the question tugs at your brain, how many people can these capsules safely accommodate?",
-    "options": ["30", "18", "25", "23"],
+    "options": ["25", "18", "30", "23"],
     "correctAnswer": "25"
   },
   {
@@ -127,9 +127,8 @@
   {
     "questId": 1,
     "questionId": 1,
-    "type": "multiple choice",
+    "type": "text input",
     "text": "Standing beneath the grandeur of Big Ben, you marvel at its intricate details. What material was primarily used in the construction of Big Ben's majestic tower?",
-    "options": ["Stone", "Steel", "Cast Iron", "Copper"],
     "correctAnswer": "Cast Iron"
   },
   {
@@ -143,8 +142,9 @@
   {
     "questId": 1,
     "questionId": 3,
-    "type": "text input",
+    "type": "multiple choice",
     "text": "Climbing the steps towards the top of Big Ben, you can't help but wonder: How many steps did you ascend to reach the observation deck?",
+    "options": ["321", "358", "297", "334"],
     "correctAnswer": "334"
   }
 ]
