@@ -5,6 +5,7 @@ import { getAuth, signOut } from "firebase/auth";
 import { app } from "../firebaseConfig";
 import { useNavigation } from "@react-navigation/native";
 import { LinearGradient } from "expo-linear-gradient";
+import { AntDesign } from '@expo/vector-icons';
 
 export default function Profile() {
   const auth = getAuth(app);
@@ -38,6 +39,14 @@ export default function Profile() {
         <Text className="text-center text-sm font-medium text-gray-100">
           {user.phoneNumber}
         </Text>
+        <View className="flex flex-row justify-center pt-5">
+          <View><Text><AntDesign name="star" size={14} color="gold"></AntDesign></Text></View>
+          <View><Text><AntDesign name="star" size={14} color="white"></AntDesign></Text></View>
+          <View><Text><AntDesign name="star" size={14} color="white"></AntDesign></Text></View>
+          <View><Text ><AntDesign name="star" size={14} color="white"></AntDesign></Text></View>
+          <View><Text ><AntDesign name="star" size={14} color="white"></AntDesign></Text></View>
+          <View><Text><AntDesign name="star" size={14} color="white"></AntDesign></Text></View>
+        </View>
         <View className="bg-[#fff5ed] w-screen h-24 rounded-lg my-10">
           <Text className="text-[#D01A1E] text-base mt-2 ml-2 font-bold">
             Locations visited

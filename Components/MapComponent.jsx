@@ -11,11 +11,12 @@ const Map = () => {
   const [currentLocation, setCurrentLocation] = useState(null);
   const [questLocations, setQuestLocations] = useState([]);
   const [questDestination, setQuestDestination] = useState({
-    latitude: 51.5138,
-    longitude: -0.0984,
+    latitude: 51.5007,
+    longitude: -0.1246,
   });
   const [selectedMarker, setSelectedMarker] = useState(null);
   const [currentQuest, setCurrentQuest] = useState(null);
+  const [questArr, setQuestArr] = useState([]);
 
   useEffect(() => {
     (async () => {
@@ -29,7 +30,7 @@ const Map = () => {
         await getQuests(setQuestLocations);
         const user = await getUser();
         setCurrentQuest(user.currentQuest);
-
+        setQuestArr(user.completedQuests);
         getSingularQuest(setCurrentQuest, currentQuest, setQuestDestination);
 
         const locationSubscription = await Location.watchPositionAsync(
@@ -78,17 +79,46 @@ const Map = () => {
           showsMyLocationButton={true}
         >
           {questLocations.map((questMarker) => {
-            return (
-              <Marker
-                key={questMarker.questId}
-                coordinate={{
-                  latitude: questMarker.location.latitude,
-                  longitude: questMarker.location.longitude,
-                }}
-                title={questMarker.landmark}
-                onPress={handlePress}
-              />
-            );
+            if (currentQuest === questMarker.questId) {
+              return (
+                <Marker
+                  key={questMarker.questId}
+                  coordinate={{
+                    latitude: questMarker.location.latitude,
+                    longitude: questMarker.location.longitude,
+                  }}
+                  title={questMarker.landmark}
+                  pinColor={"navy"}
+                  onPress={handlePress}
+                />
+              );
+            } else if (questArr.includes(questMarker.questId.toString())) {
+              return (
+                <Marker
+                  key={questMarker.questId}
+                  coordinate={{
+                    latitude: questMarker.location.latitude,
+                    longitude: questMarker.location.longitude,
+                  }}
+                  title={questMarker.landmark}
+                  pinColor={"gold"}
+                  onPress={handlePress}
+                />
+              );
+            } else {
+              return (
+                <Marker
+                  key={questMarker.questId}
+                  coordinate={{
+                    latitude: questMarker.location.latitude,
+                    longitude: questMarker.location.longitude,
+                  }}
+                  title={questMarker.landmark}
+                  pinColor={"red"}
+                  onPress={handlePress}
+                />
+              );
+            }
           })}
           <MapViewDirections
             origin={{
@@ -133,5 +163,3 @@ const styles = StyleSheet.create({
   },
 });
 export default Map;
-
-//51.511087475628955, -0.08601434783572807
