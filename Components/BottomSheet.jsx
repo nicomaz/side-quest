@@ -1,10 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
-import { View, Button } from "react-native";
+import { View, Button, Text } from "react-native";
 import RBSheet from "react-native-raw-bottom-sheet";
 import QuestList from "./QuestList";
 import IndividualQuestCard from "./IndividualQuestCard";
 import CurrentQuestCard from "./CurrentQuestCard";
 import LockedQuestsComponent from "./LockedQuestComponent";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 export default function Example({
   selectedMarker,
@@ -31,26 +32,20 @@ export default function Example({
   };
 
   return (
-    <View
-      style={{
-        justifyContent: "center",
-        alignItems: "center",
-        backgroundColor: "transparent",
-        height: "10%",
-        flexDirection: "row",
-      }}
-    >
-      <Button
-        title="Current Quest"
-        onPress={() => handleQuestTypeClick(false)}
-      />
-      <Button title="Locked Quests" onPress={() => handleQuestTypeClick(true)} />
-
+    <View className="bg-[#D01A1E] w-screen py-2 px-1">
+      <View className="flex flex-row justify-between mx-2 my-2">
+        <TouchableOpacity onPress={() => handleQuestTypeClick(false)}>
+          <Text className="text-white text-base">Current Quest</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => handleQuestTypeClick(true)}>
+          <Text className="text-white text-base">Locked Quests</Text>
+        </TouchableOpacity>
+      </View>
       <RBSheet
         ref={refRBSheet}
         closeOnDragDown={true}
         closeOnPressMask={true}
-        height={400}
+        height={300}
         onClose={handleOnClose}
         customStyles={{
           wrapper: {
@@ -60,7 +55,7 @@ export default function Example({
             backgroundColor: "#000",
           },
           container: {
-            backgroundColor: "white",
+            backgroundColor: "#D01A1E",
           },
         }}
       >
