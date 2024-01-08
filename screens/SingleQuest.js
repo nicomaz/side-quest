@@ -1,3 +1,6 @@
+// SingleQuest.js
+
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -6,11 +9,12 @@ import {
   TouchableOpacity,
   Alert,
 } from "react-native";
-import React, { useState, useEffect } from "react";
 import MultipleChoice from "../Components/MultipleChoice";
 import TextEntry from "../Components/TextEntry";
+import { useNavigation } from "@react-navigation/native";
 
 const SingleQuest = ({ route }) => {
+  const navigation = useNavigation();
   const [questionsArray, setQuestionsArray] = useState([]);
   const [filteredQuestionsArray, setFilteredQuestionsArray] = useState([]);
   const [selectedOptions, setSelectedOptions] = useState({});
@@ -25,7 +29,7 @@ const SingleQuest = ({ route }) => {
 
   const getQuestions = () => {
     setSelectedOptions({});
-    
+
     setGivenAnswers(Array.from({ length: textInputKeys.length }, () => ""));
     setShowResults(false);
     setQuestionsArray(questions);
@@ -33,24 +37,26 @@ const SingleQuest = ({ route }) => {
       (question) => question.questId === questId
     );
     setFilteredQuestionsArray(filteredArr);
-    console.log(filteredArr);
     setTextInputKeys((prevKeys) => prevKeys.map((key) => key + 1));
   };
 
   const isAnswerCorrect = (question, index) => {
-    console.log(givenAnswers, 'my answers from singlequest')
     if (question.type === "multiple choice") {
       return (
         question.options[selectedOptions[index] - 1] === question.correctAnswer
       );
     } else if (question.type === "text input") {
       return (
-        givenAnswers[index].toLowerCase() === question.correctAnswer.toLowerCase()
+        givenAnswers[index].toLowerCase() ===
+        question.correctAnswer.toLowerCase()
       );
     } else if (question.type === "true or false") {
-      return givenAnswers[index].toLowerCase() === question.correctAnswer.toLowerCase();
+      return (
+        givenAnswers[index].toLowerCase() ===
+        question.correctAnswer.toLowerCase()
+      );
     }
-  
+
     return false;
   };
 
@@ -65,6 +71,10 @@ const SingleQuest = ({ route }) => {
 
     setScore(correctAnswers);
     setShowResults(true);
+  };
+
+  const handleCompleteQuest = () => {
+    navigation.navigate("Home", { showModal: true });
   };
 
   useEffect(() => {
@@ -101,31 +111,43 @@ const SingleQuest = ({ route }) => {
           </View>
         )}
       />
-      <TouchableOpacity
-        style={styles.submitButton}
-        onPress={handleSubmit}
-        disabled={showResults}
-      >
-        <Text style={styles.submitButtonText}>Submit</Text>
-      </TouchableOpacity>
+      {!showResults && (
+        <TouchableOpacity
+          style={styles.submitButton}
+          onPress={handleSubmit}
+          disabled={showResults}
+        >
+          <Text style={styles.submitButtonText}>Submit</Text>
+        </TouchableOpacity>
+      )}
       {showResults && (
         <View style={styles.result}>
           <Text style={styles.resultText}>
             You scored {score} out of {filteredQuestionsArray.length}
           </Text>
           <TouchableOpacity
-            style={styles.tryAgainButton}
-            onPress={getQuestions}
+            style={
+              score === filteredQuestionsArray.length
+                ? styles.completeQuestButton
+                : styles.tryAgainButton
+            }
+            onPress={
+              score === filteredQuestionsArray.length
+                ? handleCompleteQuest
+                : getQuestions
+            }
           >
-            <Text style={styles.tryAgainButtonText}>Try Again</Text>
+            <Text style={styles.tryAgainButtonText}>
+              {score === filteredQuestionsArray.length
+                ? "Complete Quest"
+                : "Try Again"}
+            </Text>
           </TouchableOpacity>
         </View>
       )}
     </View>
   );
 };
-
-export default SingleQuest;
 
 const styles = StyleSheet.create({
   container: {
@@ -177,4 +199,12 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 20,
   },
+  completeQuestButton: {
+    backgroundColor: "green",
+    padding: 10,
+    marginVertical: 10,
+    borderRadius: 5,
+  },
 });
+
+export default SingleQuest;

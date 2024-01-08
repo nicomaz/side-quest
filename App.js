@@ -7,6 +7,7 @@ import SingleQuest from "./screens/SingleQuest";
 
 import SplashScreen from "./screens/SpashScreen";
 import CustomiseUser from "./screens/CustomiseUser";
+import Home from "./screens/Home";
 
 export default function App() {
   const Stack = createNativeStackNavigator();
@@ -32,6 +33,7 @@ export default function App() {
             options={{ headerShown: false }}
           />
           <Stack.Screen name="SingleQuest" component={SingleQuest} />
+          <Stack.Screen name="Home" component={Home}/>
         </>
       </Stack.Navigator>
     </NavigationContainer>
