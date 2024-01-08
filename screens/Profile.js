@@ -1,5 +1,5 @@
 import { View, Text, Image } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { getAuth, signOut } from "firebase/auth";
 import { app } from "../firebaseConfig";
@@ -8,17 +8,23 @@ import { LinearGradient } from "expo-linear-gradient";
 import ScrollableComponent from "../Components/ScrollableComponent";
 import { AntDesign } from "@expo/vector-icons";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { getCompletedQuests } from "../utils/api";
 
 export default function Profile() {
   const auth = getAuth(app);
   const navigation = useNavigation();
   const user = auth.currentUser;
+  const [quests, setQuests] = useState(null);
 
   const images = {
     "phone.png": require("../assets/phone.png"),
     "teapot.png": require("../assets/teapot.png"),
     "double-decker-bus.png": require("../assets/double-decker-bus.png"),
   };
+
+  useEffect(() => {
+    getCompletedQuests(setQuests);
+  }, []);
 
   const handleSignOut = () => {
     signOut(auth)
@@ -79,7 +85,7 @@ export default function Profile() {
               Locations visited
             </Text>
           </View>
-          <ScrollableComponent name={"Completed Quests"} />
+          <ScrollableComponent name={"Completed Quests"} quests={quests} />
           <TouchableOpacity
             className="mt-2 bg-[#D01A1E] py-4 rounded-full shadow w-32 self-center shadow"
             onPress={handleSignOut}

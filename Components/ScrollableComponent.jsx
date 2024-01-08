@@ -1,16 +1,10 @@
-import { View, Text, SectionList, FlatList } from "react-native";
-import React, { useEffect, useState } from "react";
-import { collection, getDocs } from "firebase/firestore";
-import { db } from "../firebaseConfig";
+import { View, Text, FlatList } from "react-native";
+import React from "react";
+
 import SmallQuestCard from "./SmallQuestCard";
-import { getQuests } from "../utils/api";
 
-export default function ScrollableComponent({ name }) {
-  const [quests, setQuests] = useState([]);
 
-  useEffect(() => {
-    getQuests(setQuests);
-  }, []);
+export default function ScrollableComponent({ name, quests }) {
 
   return (
     <View className="bg-[#fff5ed] mx-1 rounded-xl mb-2">
