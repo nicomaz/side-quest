@@ -49,5 +49,3 @@ function DrawerNavigation() {
 }
 
 export default DrawerNavigation;
-
-// fdbb2d

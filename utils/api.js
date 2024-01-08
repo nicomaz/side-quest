@@ -77,4 +77,24 @@ async function getQuestQuestions(setQuestions) {
   setQuestions(allQuestions);
 }
 
-export { getSingularQuest, getUser, getQuests, getQuestQuestions };
+async function getCompletedQuests(setQuests) {
+  const user = await getUser();
+  const completedQuests = user.completedQuests;
+  const userCompletedQuests = await Promise.all(
+    completedQuests.map(async (completedQuest) => {
+      const questsRef = collection(db, "quests");
+      const q = query(questsRef, where("questId", "==", completedQuest));
+      const querySnapshot = await getDocs(q);
+      return querySnapshot.docs.map((doc) => doc.data());
+    })
+  );
+  setQuests(userCompletedQuests.flat());
+}
+
+export {
+  getSingularQuest,
+  getUser,
+  getQuests,
+  getQuestQuestions,
+  getCompletedQuests,
+};
