@@ -41,28 +41,27 @@ const SingleQuest = ({ route }) => {
   };
 
   const isAnswerCorrect = (question, index) => {
-   const trimmedGivenAnswer = givenAnswers[index].trim();
+    const trimmedGivenAnswer = givenAnswers[index].trim();
 
-  if (question.type === "multiple choice") {
-    return (
-      question.options[selectedOptions[index] - 1] === question.correctAnswer
-    );
-  } else if (question.type === "text input") {
-    
-    const trimmedCorrectAnswer = question.correctAnswer.trim();
+    if (question.type === "multiple choice") {
+      return (
+        question.options[selectedOptions[index] - 1] === question.correctAnswer
+      );
+    } else if (question.type === "text input") {
+      const trimmedCorrectAnswer = question.correctAnswer.trim();
 
-    return (
-      trimmedGivenAnswer.toLowerCase() === trimmedCorrectAnswer.toLowerCase()
-    );
-  } else if (question.type === "true or false") {
-    return (
-      trimmedGivenAnswer.toLowerCase() ===
-      question.correctAnswer.toLowerCase()
-    );
-  }
+      return (
+        trimmedGivenAnswer.toLowerCase() === trimmedCorrectAnswer.toLowerCase()
+      );
+    } else if (question.type === "true or false") {
+      return (
+        trimmedGivenAnswer.toLowerCase() ===
+        question.correctAnswer.toLowerCase()
+      );
+    }
 
-  return false;
-};
+    return false;
+  };
 
   const handleSubmit = () => {
     let correctAnswers = 0;
@@ -78,8 +77,14 @@ const SingleQuest = ({ route }) => {
   };
 
   const handleCompleteQuest = () => {
-    navigation.navigate("Home", { showModal: true });
-  };
+    if(questId) {
+      console.log(questId)
+      navigation.navigate("Home", { showModal: true, questId: questId });
+    } else {
+      console.error('questId is not available to singlequest')
+    }
+  }
+    
 
   useEffect(() => {
     getQuestions();

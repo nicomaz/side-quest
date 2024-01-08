@@ -26,6 +26,7 @@ const Home = ({ route }) => {
       <Map />
 
       <CompleteQuestTriviaModal
+      route={route}
         isVisible={completeQuestTriviaModalVisible}
         onClose={handleModalClose}
       />
