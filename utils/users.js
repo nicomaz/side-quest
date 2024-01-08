@@ -25,27 +25,17 @@ async function getUser() {
 
 /*  return current quest object / current quest location
 
-required setRender to re-rended upon completion, otherwise
-you have to refresh manually in order to update location which 
-is a problem on first render
-
 required setQuestDestination to return destination 
 
 required setQuestDestination ONLY if you need destination, otherwise do not add is as argument. 
 */
-async function getCurrentQuest(
-  setCurrentQuest,
-  setRender,
-  setQuestDestination
-) {
-  //gets current user from db
-  const user = await getUser();
+async function getCurrentQuest(setCurrentQuest, questId, setQuestDestination) {
 
   // quests reference
   const questsRef = collection(db, "quests");
 
   // queries db to find quests with same quiestId as user.currentQuest
-  const q = query(questsRef, where("questId", "==", user.currentQuest));
+  const q = query(questsRef, where("questId", "==", questId));
   const querySnapshot = await getDocs(q);
 
   // setsQuestDestination of currentQuest
@@ -56,7 +46,6 @@ async function getCurrentQuest(
       setCurrentQuest(doc.data());
     }
   });
-  setRender(true);
 }
 
 /* getAllQuests

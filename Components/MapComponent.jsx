@@ -5,12 +5,7 @@ import * as Location from "expo-location";
 import MapViewDirections from "react-native-maps-directions";
 import Example from "./BottomSheet";
 import mapStyle from "../assets/MapStyle";
-import {
-  getCurrentQuest,
-  getLocation,
-  getQuests,
-  getUser,
-} from "../utils/users";
+import { getCurrentQuest, getQuests, getUser } from "../utils/users";
 
 const Map = () => {
   const [currentLocation, setCurrentLocation] = useState(null);
@@ -21,7 +16,6 @@ const Map = () => {
   });
   const [selectedMarker, setSelectedMarker] = useState(null);
   const [currentQuest, setCurrentQuest] = useState(null);
-  const [render, setRender] = useState(null);
 
   useEffect(() => {
     (async () => {
@@ -36,7 +30,7 @@ const Map = () => {
         const user = await getUser();
         setCurrentQuest(user.currentQuest);
 
-        getCurrentQuest(setCurrentQuest, setRender, setQuestDestination);
+        getCurrentQuest(setCurrentQuest, currentQuest, setQuestDestination);
 
         const locationSubscription = await Location.watchPositionAsync(
           {
@@ -53,7 +47,7 @@ const Map = () => {
         console.error(error);
       }
     })();
-  }, [render]);
+  }, [currentQuest]);
 
   const handlePress = (e) => {
     const pressedMarker = questLocations.find(
@@ -122,6 +116,7 @@ const Map = () => {
       <Example
         selectedMarker={selectedMarker}
         setSelectedMarker={setSelectedMarker}
+        currentQuest={currentQuest}
       />
     </View>
   );

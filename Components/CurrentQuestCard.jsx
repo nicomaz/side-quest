@@ -1,17 +1,16 @@
 import { View, Text, TouchableOpacity, Image, StyleSheet } from "react-native";
 import React, { useState, useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
-import { getCurrentQuest, getQuestQuestions } from "../utils/users";
+import { getCurrentQuest, getQuestQuestions, getUser } from "../utils/users";
 
-const CurrentQuestCard = () => {
+const CurrentQuestCard = ({ currentQuestId }) => {
   const [currentQuest, setCurrentQuest] = useState({});
   const [questions, setCurrentQuestQuestions] = useState([]);
-  const [render, setRender] = useState(null);
 
   useEffect(() => {
-    getCurrentQuest(setCurrentQuest, setRender);
+    getCurrentQuest(setCurrentQuest, currentQuestId);
     getQuestQuestions(setCurrentQuestQuestions);
-  }, [render]);
+  }, [currentQuestId]);
 
   const navigation = useNavigation();
 
@@ -22,7 +21,7 @@ const CurrentQuestCard = () => {
         style={styles.questContainer}
         onPress={() =>
           navigation.navigate("SingleQuest", {
-            questId: currentQuest.questId,
+            questId: currentQuestId,
             questions,
           })
         }
