@@ -26,6 +26,7 @@ const Map = () => {
   const [selectedMarker, setSelectedMarker] = useState(null);
   const [currentQuest, setCurrentQuest] = useState(null);
   const [render, setRender] = useState(null);
+  const [questArr, setQuestArr] = useState([])
 
   const getFirestoreData = async () => {
     const questsSnapshot = await getDocs(collection(db, "quests"));
@@ -44,8 +45,8 @@ const Map = () => {
     const docRef = doc(db, "users", user.phoneNumber);
     const docSnap = await getDoc(docRef);
     setCurrentQuest(docSnap.data().currentQuest);
+    setQuestArr(docSnap.data().completedQuests)
   }
-
   async function getLocation() {
     const questsRef = collection(db, "quests");
     const q = query(questsRef, where("questId", "==", currentQuest));
@@ -55,7 +56,6 @@ const Map = () => {
       setQuestDestination(doc.data().location);
     });
   }
-
 
 
   useEffect(() => {
@@ -120,18 +120,48 @@ const Map = () => {
           showsMyLocationButton={true}
         >
           {questLocations.map((questMarker) => {
-            return (
-              <Marker
+            if(currentQuest === questMarker.questId) {
+              return (
+                <Marker
                 key={questMarker.questId}
                 coordinate={{
                   latitude: questMarker.location.latitude,
                   longitude: questMarker.location.longitude,
                 }}
                 title={questMarker.landmark}
+                pinColor={"navy"}
                 onPress={handlePress}
               />
-            );
-          })}
+              )
+            } else if(questArr.includes(questMarker.questId.toString())) {
+              return (
+                <Marker
+                key={questMarker.questId}
+                coordinate={{
+                  latitude: questMarker.location.latitude,
+                  longitude: questMarker.location.longitude,
+                }}
+                title={questMarker.landmark}
+                pinColor={"gold"}
+                onPress={handlePress}
+              />
+              )
+            } else {
+              return (
+                <Marker
+                key={questMarker.questId}
+                coordinate={{
+                  latitude: questMarker.location.latitude,
+                  longitude: questMarker.location.longitude,
+                }}
+                title={questMarker.landmark}
+                pinColor={"red"}
+                onPress={handlePress}
+              />
+              )
+            }
+          }
+        )}
           <MapViewDirections
             origin={{
               latitude: currentLocation.coords.latitude,
@@ -174,5 +204,3 @@ const styles = StyleSheet.create({
   },
 });
 export default Map;
-
-//51.511087475628955, -0.08601434783572807
