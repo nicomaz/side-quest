@@ -1,5 +1,12 @@
-import { View, Text, TouchableOpacity, Image, StyleSheet } from "react-native";
 import React, { useState, useEffect } from "react";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Image,
+  StyleSheet,
+  ScrollView,
+} from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { getSingularQuest, getQuestQuestions } from "../utils/api";
 
@@ -15,33 +22,39 @@ const CurrentQuestCard = ({ currentQuestId }) => {
   const navigation = useNavigation();
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.currentQuestLabel}>Current Quest</Text>
-      <TouchableOpacity
-        style={styles.questContainer}
-        onPress={() =>
-          navigation.navigate("SingleQuest", {
-            questId: currentQuestId,
-            questions,
-          })
-        }
-      >
-        <View style={styles.quest}>
-          <Text style={styles.questTitle}>{currentQuest.title}</Text>
-          <Text style={styles.questDescription}>
-            {currentQuest.description}
-          </Text>
-          <Image
-            style={styles.questImage}
-            source={{ uri: currentQuest.imgUrl }}
-          />
-        </View>
-      </TouchableOpacity>
-    </View>
+    <ScrollView contentContainerStyle={styles.scrollContainer}>
+      <View style={styles.container}>
+        <Text style={styles.currentQuestLabel}>Current Quest</Text>
+        <TouchableOpacity
+          style={styles.questContainer}
+          onPress={() =>
+            navigation.navigate("SingleQuest", {
+              questId: currentQuestId,
+              questions,
+            })
+          }
+        >
+          <View style={styles.quest}>
+            <Text style={styles.questTitle}>{currentQuest.title}</Text>
+            <Text style={styles.questDescription}>
+              {currentQuest.description}
+            </Text>
+            <Image
+              style={styles.questImage}
+              source={{ uri: currentQuest.imgUrl }}
+            />
+          </View>
+        </TouchableOpacity>
+      </View>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
+  scrollContainer: {
+    flexGrow: 1,
+    padding: 10,
+  },
   container: {
     padding: 10,
   },

@@ -10,6 +10,7 @@ export default function Example({
   selectedMarker,
   setSelectedMarker,
   currentQuest,
+  setCurrentQuestClicked,
 }) {
   const [isLockedQuest, setIsLockedQuest] = useState(false);
 
@@ -21,6 +22,7 @@ export default function Example({
     }
   }, [selectedMarker]);
 
+
   function handleOnClose() {
     setSelectedMarker(null);
   }
@@ -29,7 +31,9 @@ export default function Example({
     refRBSheet.current.open();
     setIsLockedQuest(locked);
   };
-
+  const handleCurrentQuestZoom = () => {
+    setCurrentQuestClicked(true);
+  };
   return (
     <View
       style={{
@@ -42,9 +46,15 @@ export default function Example({
     >
       <Button
         title="Current Quest"
-        onPress={() => handleQuestTypeClick(false)}
+        onPress={() => {
+          handleQuestTypeClick(false);
+          handleCurrentQuestZoom();
+        }}
       />
-      <Button title="Locked Quests" onPress={() => handleQuestTypeClick(true)} />
+      <Button
+        title="Locked Quests"
+        onPress={() => handleQuestTypeClick(true)}
+      />
 
       <RBSheet
         ref={refRBSheet}
