@@ -1,10 +1,16 @@
 import { View, Text } from "react-native";
 import React from "react";
+import LottieView from "lottie-react-native";
 
 export default function Loading() {
   return (
-    <View>
-      <Text>Loading</Text>
+    <View className="mt-10">
+      <LottieView
+        source={require("../assets/bus-loading.json")}
+        autoPlay
+        className="h-20"
+      />
+      <Text className="mt-[-22] text-[#D01A1E] font-bold tracking-tighter">One moment</Text>
     </View>
   );
 }
