@@ -21,7 +21,7 @@ const QuestList = () => {
   }, []);
 
 
-
+  quests.sort((a, b) => a.questId - b.questId)
 
   return (
     <View style={styles.container}>
