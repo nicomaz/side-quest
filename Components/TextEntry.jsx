@@ -21,7 +21,6 @@ const TextEntry = ({
     updatedGivenAnswers[index] = input;
     setGivenAnswers(updatedGivenAnswers);
     setTextInputValue(input);
-    console.log(updatedGivenAnswers, 'my answersfrom textentry.jsx')
   };
 
   return (
