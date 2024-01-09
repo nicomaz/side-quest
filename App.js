@@ -32,7 +32,6 @@ export default function App() {
             options={{ headerShown: false }}
           />
           <Stack.Screen name="SingleQuest" component={SingleQuest} />
-          
         </>
       </Stack.Navigator>
     </NavigationContainer>
