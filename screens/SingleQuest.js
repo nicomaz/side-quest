@@ -1,5 +1,3 @@
-// SingleQuest.js
-
 import React, { useState, useEffect } from "react";
 import {
   View,
@@ -12,8 +10,12 @@ import {
 import MultipleChoice from "../Components/MultipleChoice";
 import TextEntry from "../Components/TextEntry";
 import { useNavigation } from "@react-navigation/native";
+import { doc, updateDoc} from "firebase/firestore";
+import { db } from "../firebaseConfig";
+import { getUser } from "../utils/api";
 
 const SingleQuest = ({ route }) => {
+  const [completedQuests, setCompletedQuests] = useState([]);
   const navigation = useNavigation();
   const [questionsArray, setQuestionsArray] = useState([]);
   const [filteredQuestionsArray, setFilteredQuestionsArray] = useState([]);
@@ -77,14 +79,33 @@ const SingleQuest = ({ route }) => {
     setShowResults(true);
   };
 
-  const handleCompleteQuest = () => {
-    if(quest) {
+  const handleCompleteQuest = async () => {
+    try {
+      const user = await getUser();
+      const currentCompletedQuests = user.completedQuests || [];
+      const updatedCompletedQuests = [questId, ...currentCompletedQuests];
+
+      setCompletedQuests(updatedCompletedQuests);
+
+      console.log(user.completedQuests, 'user');
+      console.log(questId, 'questId');
+      console.log(updatedCompletedQuests, 'updated array');
+      console.log(completedQuests, 'state with updated array')
+
+      const docRef = doc(db, "users", user.phoneNumber);
+      await updateDoc(docRef, {
+        completedQuests: updatedCompletedQuests,
+      });
+
+      useEffect(() => {
+        console.log(completedQuests, 'state with updated array from useEffect');
+      }, [completedQuests]);
+
       navigation.navigate("Home", { showModal: true, quest: quest });
-    } else {
-      console.error('questId is not available to singlequest')
+    } catch (error) {
+      console.error("error updating completed quests:", error.message);
     }
-  }
-    
+  };
 
   useEffect(() => {
     getQuestions();
