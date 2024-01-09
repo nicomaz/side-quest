@@ -87,6 +87,9 @@ const SingleQuest = ({ route }) => {
         await updateDoc(userRef, {
           completedQuests: arrayUnion(user.currentQuest),
         });
+        await updateDoc(userRef, {
+          currentQuest: (user.currentQuest+1),
+        });
       } catch (err) {
         console.error("error updating completed quests: ", err.message);
       }
