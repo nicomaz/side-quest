@@ -92,6 +92,10 @@ async function getCompletedQuests(setQuests) {
 }
 
 
+async function resetUser() {
+  
+}
+
 export {
   getSingularQuest,
   getUser,

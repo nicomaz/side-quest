@@ -14,6 +14,8 @@ import { useNavigation } from "@react-navigation/native";
 import { getUser } from "../utils/api";
 import { doc, updateDoc, arrayUnion } from "firebase/firestore";
 import { db } from "../firebaseConfig";
+import { getCompletedQuests } from "../utils/api";
+
 
 const SingleQuest = ({ route }) => {
   const navigation = useNavigation();
@@ -23,6 +25,7 @@ const SingleQuest = ({ route }) => {
   const [score, setScore] = useState(0);
   const [showResults, setShowResults] = useState(false);
   const [textInputKeys, setTextInputKeys] = useState([0, 1, 2]);
+  const [quests, setQuests] = useState([])
   const [givenAnswers, setGivenAnswers] = useState(
     Array.from({ length: textInputKeys.length }, () => "")
   );
@@ -93,6 +96,9 @@ const SingleQuest = ({ route }) => {
       } catch (err) {
         console.error("error updating completed quests: ", err.message);
       }
+      if(user.completedQuests.length >= 6) {
+        navigation.navigate('Profile')
+      }
       navigation.navigate("Home", { showModal: true, quest: quest });
     } else {
       console.error("questId is not available to singlequest");
@@ -101,6 +107,7 @@ const SingleQuest = ({ route }) => {
 
   useEffect(() => {
     getQuestions();
+    getCompletedQuests(setQuests)
   }, []);
 
   return (

@@ -10,14 +10,13 @@ import { AntDesign } from "@expo/vector-icons";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { getCompletedQuests, getUser } from "../utils/api";
 import { FontAwesome5 } from '@expo/vector-icons';
+import CompleteCard from "../Components/CompleteCard";
 
 export default function Profile() {
   const auth = getAuth(app);
   const navigation = useNavigation();
   const user = auth.currentUser;
   const [quests, setQuests] = useState([]);
-
-  const completedQuests = 2;
 
   const images = {
     "phone.png": require("../assets/phone.png"),
@@ -118,6 +117,13 @@ export default function Profile() {
                 </Text>
               )}
             </View>
+          </View>
+          <View>
+            {quests.length === 6 ? (
+              <CompleteCard />
+            ) : (
+              <Text></Text>
+            )}
           </View>
           <ScrollableComponent name={"Completed Quests"} quests={quests} />
           <TouchableOpacity
