@@ -5,14 +5,17 @@ import { setDoc, doc } from "firebase/firestore";
 import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { updateProfile } from "firebase/auth";
+import Loading from "./Loading";
 
 const UsernameInput = ({ userPiece }) => {
   const user = auth.currentUser;
-
+  const [isLoading, setIsLoading] = useState(false);
   const [username, setUsername] = useState("");
+
   const navigation = useNavigation();
   const saveUsername = async () => {
     try {
+      setIsLoading(true);
       await setDoc(doc(db, "users", user.phoneNumber), {
         username: username,
         mobileNumber: user.phoneNumber,
@@ -21,6 +24,7 @@ const UsernameInput = ({ userPiece }) => {
         lockedQuests: [2, 3, 4, 5, 6],
       });
       await updateProfile(user, { displayName: username, photoURL: userPiece });
+      setIsLoading(false);
       navigation.navigate("Nav");
     } catch (error) {
       console.error("Error saving username:", error); //change this to an alert at some point
@@ -51,6 +55,7 @@ const UsernameInput = ({ userPiece }) => {
             Begin your quest!
           </Text>
         </TouchableOpacity>
+        {isLoading && <Loading />}
       </View>
     </SafeAreaView>
   );

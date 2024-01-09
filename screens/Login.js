@@ -9,18 +9,21 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useRef, useState } from "react";
 import VerifyCode from "../Components/VerifyCode";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import Loading from "../Components/Loading";
 
 export default function Login() {
   const recaptchaVerifier = useRef(null);
   const [phoneNumber, setPhoneNumber] = useState();
   const [verificationId, setVerificationId] = useState();
   const [verificationCode, setVerificationCode] = useState();
-  const [isVerified, setIsVerified] = useState(false);
   const [error, setError] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
   const auth = getAuth(app);
 
   async function sendVerificationCode() {
     try {
+      setIsLoading(true);
       const phoneProvider = new PhoneAuthProvider(auth);
       const verificationId = await phoneProvider.verifyPhoneNumber(
         phoneNumber,
@@ -28,9 +31,11 @@ export default function Login() {
       );
       setVerificationId(verificationId);
       setError(false);
+      setIsLoading(false);
     } catch (err) {
       console.alert("Invalid phone number, please try again");
       setError(true);
+      setIsLoading(false);
     }
   }
 
@@ -82,9 +87,10 @@ export default function Login() {
               verificationId={verificationId}
               setVerificationCode={setVerificationCode}
               verificationCode={verificationCode}
-              setIsVerified={setIsVerified}
+              setIsLoading={setIsLoading}
             />
           )}
+          {isLoading && <Loading />}
         </View>
       </KeyboardAwareScrollView>
     </SafeAreaView>

@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import UsernameInput from "../Components/UsernameInput";
 import PickUserPhoto from "../Components/PickUserPhoto";
+import Loading from "../Components/Loading";
 
 export default function CustomiseUser() {
   const [userPiece, setUserPiece] = useState(null);
@@ -10,7 +11,8 @@ export default function CustomiseUser() {
   return (
     <SafeAreaView>
       <View className="mt-2">
-        <PickUserPhoto setUserPiece={setUserPiece} />
+        <PickUserPhoto setUserPiece={setUserPiece}
+        />
         <UsernameInput userPiece={userPiece} />
       </View>
     </SafeAreaView>

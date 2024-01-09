@@ -5,14 +5,14 @@ import {
   getAuth,
   signInWithCredential,
 } from "firebase/auth";
-import { app, auth } from "../firebaseConfig";
+import { app } from "../firebaseConfig";
 import { useNavigation } from "@react-navigation/native";
 
 export default function VerifyCode({
   verificationId,
   setVerificationCode,
   verificationCode,
-  setIsVerified,
+  setIsLoading,
 }) {
   const auth = getAuth(app);
   const user = auth.currentUser;
@@ -20,15 +20,17 @@ export default function VerifyCode({
 
   async function confirmVerificationCode() {
     try {
+      setIsLoading(true);
       const credential = PhoneAuthProvider.credential(
         verificationId,
         verificationCode
       );
       await signInWithCredential(auth, credential);
-      setIsVerified(true);
       if (user.displayName) {
+        setIsLoading(false);
         navigation.navigate("Nav");
       } else {
+        setIsLoading(false);
         navigation.navigate("UserCustomisation");
       }
     } catch (err) {
