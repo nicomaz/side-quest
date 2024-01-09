@@ -7,23 +7,13 @@ import {
   StyleSheet,
   FlatList,
   TouchableOpacity,
-  Alert,
 } from "react-native";
 import MultipleChoice from "../Components/MultipleChoice";
 import TextEntry from "../Components/TextEntry";
 import { useNavigation } from "@react-navigation/native";
 import { getUser } from "../utils/api";
-import {
-  doc,
-  getDoc,
-  collection,
-  getDocs,
-  query,
-  where,
-  updateDoc
-} from "firebase/firestore";
-import { app, db } from "../firebaseConfig";
-import { getAuth } from "firebase/auth";
+import { doc, updateDoc, arrayUnion } from "firebase/firestore";
+import { db } from "../firebaseConfig";
 
 const SingleQuest = ({ route }) => {
   const navigation = useNavigation();
@@ -33,7 +23,6 @@ const SingleQuest = ({ route }) => {
   const [score, setScore] = useState(0);
   const [showResults, setShowResults] = useState(false);
   const [textInputKeys, setTextInputKeys] = useState([0, 1, 2]);
-  const [completedQuests, setCompletedQuests] = useState([]);
   const [givenAnswers, setGivenAnswers] = useState(
     Array.from({ length: textInputKeys.length }, () => "")
   );
@@ -91,26 +80,21 @@ const SingleQuest = ({ route }) => {
   };
 
   const handleCompleteQuest = async () => {
-    if(quest) {
+    if (quest) {
       try {
         const user = await getUser();
-        setCompletedQuests(user.completedQuests)
         const userRef = doc(db, "users", user.mobileNumber);
-        const updatedCompletedQuests = [...completedQuests]
-        updatedCompletedQuests.push(questId);
-        setCompletedQuests(updatedCompletedQuests)
-        const userRes = await updateDoc(userRef, {
-          completedQuests: updatedCompletedQuests,
+        await updateDoc(userRef, {
+          completedQuests: arrayUnion(user.currentQuest),
         });
       } catch (err) {
-        console.error(err.message)
+        console.error("error updating completed quests: ", err.message);
       }
       navigation.navigate("Home", { showModal: true, quest: quest });
     } else {
-      console.error('questId is not available to singlequest')
+      console.error("questId is not available to singlequest");
     }
-  }
-    
+  };
 
   useEffect(() => {
     getQuestions();
