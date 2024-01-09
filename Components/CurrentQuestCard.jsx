@@ -20,35 +20,31 @@ const CurrentQuestCard = ({ currentQuestId, setIsQuestionScreenDisplayed }) => {
   }, [currentQuestId]);
 
   const navigation = useNavigation();
-
   return (
-    <ScrollView contentContainerStyle={styles.scrollContainer}>
-      <View style={styles.container}>
-        <Text style={styles.currentQuestLabel}>Current Quest</Text>
-        <TouchableOpacity
-          style={styles.questContainer}
-          onPress={() => {
-            navigation.navigate("SingleQuest", {
-              questId: currentQuestId,
-              questions,
-            })
-            setIsQuestionScreenDisplayed(true)
-          }
-          }
-        >
-          <View style={styles.quest}>
-            <Text style={styles.questTitle}>{currentQuest.title}</Text>
-            <Text style={styles.questDescription}>
-              {currentQuest.description}
-            </Text>
-            <Image
-              style={styles.questImage}
-              source={{ uri: currentQuest.imgUrl }}
-            />
-          </View>
-        </TouchableOpacity>
-      </View>
-    </ScrollView>
+    <View style={styles.container}>
+      <Text style={styles.currentQuestLabel}>Current Quest</Text>
+      <TouchableOpacity
+        style={styles.questContainer}
+        onPress={() =>
+          navigation.navigate("SingleQuest", {
+            questId: currentQuestId,
+            questions,
+            quest: currentQuest
+          })
+        }
+      >
+        <View style={styles.quest}>
+          <Text style={styles.questTitle}>{currentQuest.title}</Text>
+          <Text style={styles.questDescription}>
+            {currentQuest.description}
+          </Text>
+          <Image
+            style={styles.questImage}
+            source={{ uri: currentQuest.imgUrl }}
+          />
+        </View>
+      </TouchableOpacity>
+    </View>
   );
 };
 

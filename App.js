@@ -8,6 +8,7 @@ import SingleQuest from "./screens/SingleQuest";
 import SplashScreen from "./screens/SpashScreen";
 import CustomiseUser from "./screens/CustomiseUser";
 import Home from "./screens/Home";
+import { StatusBar } from "expo-status-bar";
 
 export default function App() {
   const Stack = createNativeStackNavigator();
@@ -33,7 +34,6 @@ export default function App() {
             options={{ headerShown: false }}
           />
           <Stack.Screen name="SingleQuest" component={SingleQuest} />
-          
         </>
       </Stack.Navigator>
     </NavigationContainer>

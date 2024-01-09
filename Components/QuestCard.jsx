@@ -9,6 +9,7 @@ const QuestCard = ({ quest, questions, lockedQuests }) => {
 
   return (
     <TouchableOpacity
+    
       style={isLocked ? styles.lockedQuest : styles.quest}
       onPress={() =>
         navigation.navigate("SingleQuest", {
@@ -16,6 +17,7 @@ const QuestCard = ({ quest, questions, lockedQuests }) => {
           questions,
         })
       }
+
     >
       <Text style={styles.questTitle}>{quest.title}</Text>
     </TouchableOpacity>
