@@ -10,9 +10,10 @@ export default function Example({
   selectedMarker,
   setSelectedMarker,
   currentQuest,
+  setCurrentQuestClicked,
 }) {
   const [isLockedQuest, setIsLockedQuest] = useState(false);
-
+  const [isQuestionScreenDisplayed, setIsQuestionScreenDisplayed] = useState(false)
   const refRBSheet = useRef();
 
   useEffect(() => {
@@ -20,6 +21,13 @@ export default function Example({
       refRBSheet.current.open();
     }
   }, [selectedMarker]);
+
+  useEffect(() => {
+    if (isQuestionScreenDisplayed) {
+      refRBSheet.current.close();
+      setIsQuestionScreenDisplayed(false)
+    }
+  }, [isQuestionScreenDisplayed]);
 
   function handleOnClose() {
     setSelectedMarker(null);
@@ -29,7 +37,9 @@ export default function Example({
     refRBSheet.current.open();
     setIsLockedQuest(locked);
   };
-
+  const handleCurrentQuestZoom = () => {
+    setCurrentQuestClicked(true);
+  };
   return (
     <View
       style={{
@@ -42,9 +52,15 @@ export default function Example({
     >
       <Button
         title="Current Quest"
-        onPress={() => handleQuestTypeClick(false)}
+        onPress={() => {
+          handleQuestTypeClick(false);
+          handleCurrentQuestZoom();
+        }}
       />
-      <Button title="Locked Quests" onPress={() => handleQuestTypeClick(true)} />
+      <Button
+        title="Locked Quests"
+        onPress={() => handleQuestTypeClick(true)}
+      />
 
       <RBSheet
         ref={refRBSheet}
@@ -69,7 +85,7 @@ export default function Example({
         ) : isLockedQuest ? (
           <LockedQuestsComponent />
         ) : (
-          <CurrentQuestCard currentQuestId={currentQuest} />
+          <CurrentQuestCard currentQuestId={currentQuest} setIsQuestionScreenDisplayed={setIsQuestionScreenDisplayed} />
         )}
       </RBSheet>
     </View>

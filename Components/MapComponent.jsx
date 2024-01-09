@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { View, StyleSheet } from "react-native";
 import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import * as Location from "expo-location";
@@ -16,7 +16,9 @@ const Map = () => {
   });
   const [selectedMarker, setSelectedMarker] = useState(null);
   const [currentQuest, setCurrentQuest] = useState(null);
+  const [currentQuestClicked, setCurrentQuestClicked] = useState(false);
   const [questArr, setQuestArr] = useState([]);
+  const mapRef = useRef(null);
 
   useEffect(() => {
     (async () => {
@@ -50,6 +52,16 @@ const Map = () => {
     })();
   }, [currentQuest]);
 
+
+
+  useEffect(() => {
+    if (currentQuestClicked) {
+      handleAnimateToRegion();
+      
+      setCurrentQuestClicked(false);
+    }
+  }, [currentQuestClicked]);
+
   const handlePress = (e) => {
     const pressedMarker = questLocations.find(
       (marker) =>
@@ -61,6 +73,20 @@ const Map = () => {
     }
   };
 
+  const handleAnimateToRegion = () => {
+    const newRegion = {
+      latitude: questDestination.latitude,
+      longitude: questDestination.longitude,
+      latitudeDelta: 0.01,
+      longitudeDelta: 0.01,
+    };
+
+    mapRef.current.animateToRegion(newRegion, 1000);
+  };
+
+  if (currentQuestClicked) {
+    handleAnimateToRegion();
+  }
   return (
     <View style={{ flex: 1 }}>
       {currentLocation ? (
@@ -77,6 +103,7 @@ const Map = () => {
           showsUserLocation={true}
           followsUserLocation={true}
           showsMyLocationButton={true}
+          ref={mapRef}
         >
           {questLocations.map((questMarker) => {
             if (currentQuest === questMarker.questId) {
@@ -92,7 +119,7 @@ const Map = () => {
                   onPress={handlePress}
                 />
               );
-            } else if (questArr.includes(questMarker.questId.toString())) {
+            } else if (questArr.includes(questMarker.questId)) {
               return (
                 <Marker
                   key={questMarker.questId}
@@ -147,6 +174,7 @@ const Map = () => {
         selectedMarker={selectedMarker}
         setSelectedMarker={setSelectedMarker}
         currentQuest={currentQuest}
+        setCurrentQuestClicked={setCurrentQuestClicked}
       />
     </View>
   );

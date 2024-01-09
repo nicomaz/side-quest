@@ -1,9 +1,16 @@
-import { View, Text, TouchableOpacity, Image, StyleSheet } from "react-native";
 import React, { useState, useEffect } from "react";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Image,
+  StyleSheet,
+  ScrollView,
+} from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { getSingularQuest, getQuestQuestions } from "../utils/api";
 
-const CurrentQuestCard = ({ currentQuestId }) => {
+const CurrentQuestCard = ({ currentQuestId, setIsQuestionScreenDisplayed }) => {
   const [currentQuest, setCurrentQuest] = useState({});
   const [questions, setCurrentQuestQuestions] = useState([]);
 
@@ -42,6 +49,10 @@ const CurrentQuestCard = ({ currentQuestId }) => {
 };
 
 const styles = StyleSheet.create({
+  scrollContainer: {
+    flexGrow: 1,
+    padding: 10,
+  },
   container: {
     padding: 10,
   },
