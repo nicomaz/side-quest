@@ -6,20 +6,27 @@ import CompleteQuestTriviaModal from "../Components/CompleteQuestTriviaModal";
 import { useNavigation } from "@react-navigation/native";
 
 const Home = ({ route }) => {
-  const { showModal } = route.params || {};
+  // maybe make a state for showModal as well?
+  let { showModal } = route.params || {};
   const { quest } = route.params || {};
   const [completeQuestTriviaModalVisible, setCompleteQuestTriviaModalVisible] =
     useState(false);
-  const navigation = useNavigation();
 
   const handleModalClose = () => {
     setCompleteQuestTriviaModalVisible(false);
+    showModal = false;
+  };
+
+  const getModalVisibility = (showModal) => {
+    if (showModal) {
+      setCompleteQuestTriviaModalVisible(true);
+    } else {
+      setCompleteQuestTriviaModalVisible(false);
+    }
   };
 
   useEffect(() => {
-    if (showModal) {
-      setCompleteQuestTriviaModalVisible(true);
-    }
+    getModalVisibility(showModal);
   }, [showModal]);
 
   return (
@@ -27,7 +34,7 @@ const Home = ({ route }) => {
       <Map />
 
       <CompleteQuestTriviaModal
-      quest={quest}
+        quest={quest}
         isVisible={completeQuestTriviaModalVisible}
         onClose={handleModalClose}
       />

@@ -78,8 +78,7 @@ const SingleQuest = ({ route }) => {
   };
 
   const handleCompleteQuest = () => {
-    if(questId) {
-      console.log(questId)
+    if(quest) {
       navigation.navigate("Home", { showModal: true, quest: quest });
     } else {
       console.error('questId is not available to singlequest')

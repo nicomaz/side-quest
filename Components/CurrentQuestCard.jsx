@@ -13,7 +13,6 @@ const CurrentQuestCard = ({ currentQuestId }) => {
   }, [currentQuestId]);
 
   const navigation = useNavigation();
-
   return (
     <View style={styles.container}>
       <Text style={styles.currentQuestLabel}>Current Quest</Text>
@@ -23,6 +22,7 @@ const CurrentQuestCard = ({ currentQuestId }) => {
           navigation.navigate("SingleQuest", {
             questId: currentQuestId,
             questions,
+            quest: currentQuest
           })
         }
       >
