@@ -15,7 +15,6 @@ export default function VerifyCode({
   setIsLoading,
 }) {
   const auth = getAuth(app);
-  const user = auth.currentUser;
   const navigation = useNavigation();
 
   async function confirmVerificationCode() {
@@ -26,6 +25,9 @@ export default function VerifyCode({
         verificationCode
       );
       await signInWithCredential(auth, credential);
+
+      const user = auth.currentUser;
+
       if (user.displayName) {
         setIsLoading(false);
         navigation.navigate("Nav");

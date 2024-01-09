@@ -7,7 +7,6 @@ import SingleQuest from "./screens/SingleQuest";
 
 import SplashScreen from "./screens/SpashScreen";
 import CustomiseUser from "./screens/CustomiseUser";
-import Home from "./screens/Home";
 
 export default function App() {
   const Stack = createNativeStackNavigator();

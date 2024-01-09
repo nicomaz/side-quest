@@ -48,14 +48,19 @@ const UsernameInput = ({ userPiece }) => {
         </View>
         <TouchableOpacity
           autoFocus
-          className="mt-8 bg-[#D01A1E] py-4 rounded-full shadow px-4"
+          className={`mt-8 bg-[#D01A1E] rounded-full shadow ${
+            isLoading ? "h-14 w-[170px] items-center pt-2" : "py-4 px-4"
+          }`}
           onPress={saveUsername}
         >
-          <Text className="text-base font-bold text-center text-white">
-            Begin your quest!
-          </Text>
+          {!isLoading ? (
+            <Text className="text-base font-bold text-center text-white">
+              Begin your quest!
+            </Text>
+          ) : (
+            <Loading tintColour="white" />
+          )}
         </TouchableOpacity>
-        {isLoading && <Loading />}
       </View>
     </SafeAreaView>
   );
