@@ -143,7 +143,7 @@ const SingleQuest = ({ route }) => {
       {!showResults && (
         <TouchableOpacity
           style={styles.submitButton}
-          onPress={handleSubmit}
+          onPress={() => handleSubmit}
           disabled={showResults}
         >
           <Text style={styles.submitButtonText}>Submit</Text>
@@ -160,7 +160,7 @@ const SingleQuest = ({ route }) => {
                 ? styles.completeQuestButton
                 : styles.tryAgainButton
             }
-            onPress={
+            onPress={() =>
               score === filteredQuestionsArray.length
                 ? handleCompleteQuest
                 : getQuestions

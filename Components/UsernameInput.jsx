@@ -45,7 +45,7 @@ const UsernameInput = ({ userPiece }) => {
         <TouchableOpacity
           autoFocus
           className="mt-8 bg-[#D01A1E] py-4 rounded-full shadow px-4"
-          onPress={saveUsername}
+          onPress={() => saveUsername}
         >
           <Text className="text-base font-bold text-center text-white">
             Begin your quest!
