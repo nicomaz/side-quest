@@ -12,6 +12,10 @@ const CompleteCard = () => {
   const handleExit = () => {
     setDisplayModal(false)
   }
+  const resetUser = () => {
+    setDisplayModal(false)
+    //make api call to reset completed quests, current quest, locked quests
+  }
   return (
     <>
     <View className="bg-[#fff5ed] mx-1 px-2 rounded-xl mb-2 mt-6 p-3">
@@ -32,7 +36,7 @@ const CompleteCard = () => {
             <Text className="text-[#D01A1E] text-base mt-2 ml-2 font-bold">
               Are you sure you wish to restart? This action cannot be undone.
             </Text>
-            <TouchableOpacity className="mt-2 bg-[#D01A1E] p-1 py-4 rounded-full shadow w-32 self-center">
+            <TouchableOpacity onPress={resetUser} className="mt-2 bg-[#D01A1E] p-1 py-4 rounded-full shadow w-32 self-center">
               <Text className="text-base p-1 font-bold text-center text-white">Restart Quests</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={handleExit} className="mt-2 bg-[#D01A1E] p-1 py-4 rounded-full shadow w-32 self-center">
