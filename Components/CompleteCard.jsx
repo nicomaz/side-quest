@@ -1,43 +1,28 @@
-import { View, Text, Modal, TouchableOpacity, StyleSheet } from 'react-native'
+import { View, Text, Modal, TouchableOpacity, StyleSheet, Button } from 'react-native'
 import React from 'react'
+import { useState } from 'react'
 
 
 const CompleteCard = () => {
+  const [displayModal, setDisplayModal] = useState(false)
+
+const handleRestart = () => {
+  setDisplayModal(true)
+}
   return (
-    <View>
-        <Text>Congratulations! You have officially completed SideQuest! Your journey is at its end...or is it?</Text>
-        
+    <View className="bg-[#fff5ed] mx-1 px-2 rounded-xl mb-2 mt-6 p-3">
+        <Text className="text-[#D01A1E] text-base mt-2 ml-2 font-bold">Congratulations! You have officially completed SideQuest! Your journey is at its end...or is it?</Text>
+        <TouchableOpacity
+            className="mt-2 bg-[#D01A1E] p-1 py-4 rounded-full shadow w-32 self-center"
+            onPress={handleRestart}
+          >
+            <Text className="text-base p-1 font-bold text-center text-white">
+              Start a New Journey!
+            </Text>
+          </TouchableOpacity>
     </View>
   )
 }
 
-const styles = StyleSheet.create({
-    modalContainer: {
-      flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
-      backgroundColor: 'rgba(255, 255, 255, 0.6)', //the last number is for transparency incase you want to change it
-      padding: 20,
-    },
-    modalContent: {
-      backgroundColor: '#fff',
-      borderRadius: 10,
-      borderWidth: 2,
-      borderColor: '#000',
-      alignItems: 'center',
-      padding: 20,
-      width: '80%', 
-    },
-    closeAndContinueButton: {
-        backgroundColor: "green",
-        padding: 10,
-        marginVertical: 10,
-        borderRadius: 5,
-      },
-      closeAndContinueButtonText: {
-        color: "#fff",
-        fontSize: 20,
-      },
-  });
 
 export default CompleteCard
