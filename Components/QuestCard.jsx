@@ -7,17 +7,19 @@ const QuestCard = ({ quest, questions, lockedQuests }) => {
 
   const isLocked = lockedQuests.includes(quest.questId);
 
+  const handlePress = () => {
+    if (!isLocked) {
+      navigation.navigate("SingleQuest", {
+        questId: quest.questId,
+        questions,
+      });
+    }
+  };
+
   return (
     <TouchableOpacity
-    
       style={isLocked ? styles.lockedQuest : styles.quest}
-      onPress={() =>
-        navigation.navigate("SingleQuest", {
-          questId: quest.questId,
-          questions,
-        })
-      }
-
+      onPress={handlePress}
     >
       <Text style={styles.questTitle}>{quest.title}</Text>
     </TouchableOpacity>
