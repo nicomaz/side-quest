@@ -10,12 +10,12 @@ import { AntDesign } from "@expo/vector-icons";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { getCompletedQuests, getUser } from "../utils/api";
 
-export default function Profile() {
+export default function Profile({ route }) {
   const auth = getAuth(app);
   const navigation = useNavigation();
   const user = auth.currentUser;
   const [quests, setQuests] = useState(null);
-  //const { gameComplete } = route.params || {}
+  const { gameComplete } = route.params || {}
 
   const images = {
     "phone.png": require("../assets/phone.png"),
