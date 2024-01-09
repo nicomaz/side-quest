@@ -21,7 +21,6 @@ const Home = ({ route }) => {
 
   const auth = getAuth(app);
   const user = auth.currentUser;
-  
 
   const navigation = useNavigation();
 
