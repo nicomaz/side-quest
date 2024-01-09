@@ -1,17 +1,14 @@
 import { createDrawerNavigator } from "@react-navigation/drawer";
-import React from "react";
+import React, { useState } from "react";
 import QuestList from "./Components/QuestList";
 import Profile from "./screens/Profile";
 import Header from "./Components/Header";
 import Home from "./screens/Home";
-import { StatusBar } from "expo-status-bar";
 
 function DrawerNavigation() {
   const Drawer = createDrawerNavigator();
-
   return (
     <>
-      <StatusBar hidden={true} />
       <Drawer.Navigator
         screenOptions={{
           drawerStyle: { backgroundColor: "#D01A1E" },

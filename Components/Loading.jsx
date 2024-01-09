@@ -2,8 +2,7 @@ import { View, Text } from "react-native";
 import React from "react";
 import LottieView from "lottie-react-native";
 
-export default function Loading({tintColour}) {
-
+export default function Loading({ tintColour }) {
   return (
     <View className="mt-[-13]">
       <LottieView
@@ -15,7 +14,7 @@ export default function Loading({tintColour}) {
         autoPlay
         className="h-20"
       />
-      <Text className="mt-[-20] text-[#D01A1E] font-bold tracking-tighter">
+      <Text className="mt-[-20] text-[#E60533] font-bold tracking-tighter">
         One moment
       </Text>
     </View>

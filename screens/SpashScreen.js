@@ -10,8 +10,8 @@ SplashScreen.preventAutoHideAsync();
 
 export default function SideQuestSplashScreen() {
   const navigation = useNavigation();
-
   const [appIsReady, setAppIsReady] = useState(false);
+
   const auth = getAuth(app);
 
   useEffect(() => {
