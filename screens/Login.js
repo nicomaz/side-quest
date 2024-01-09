@@ -33,11 +33,12 @@ export default function Login() {
       setError(false);
       setIsLoading(false);
     } catch (err) {
-      console.alert("Invalid phone number, please try again");
+      console.error("Invalid phone number, please try again", err);
       setError(true);
       setIsLoading(false);
     }
   }
+  console.log("hello here")
 
   return (
     <SafeAreaView>

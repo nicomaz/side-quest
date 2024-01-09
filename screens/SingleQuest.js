@@ -78,13 +78,12 @@ const SingleQuest = ({ route }) => {
   };
 
   const handleCompleteQuest = () => {
-    if(quest) {
+    if (quest) {
       navigation.navigate("Home", { showModal: true, quest: quest });
     } else {
-      console.error('questId is not available to singlequest')
+      console.error("questId is not available to singlequest");
     }
-  }
-    
+  };
 
   useEffect(() => {
     getQuestions();

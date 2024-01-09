@@ -85,6 +85,7 @@ const Map = ({ setIsLoaded, isLoaded }) => {
   if (currentQuestClicked) {
     handleAnimateToRegion();
   }
+
   return (
     <View style={isLoaded ? { flex: 1 } : { display: "none" }}>
       {currentLocation ? (
