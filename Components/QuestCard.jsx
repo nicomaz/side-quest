@@ -7,7 +7,7 @@ const QuestCard = ({ quest, questions }) => {
   return (
     <TouchableOpacity
       style={styles.quest}
-      onPress={() => navigation.navigate("SingleQuest", { questId: quest.questId, questions })}
+      onPress={() => navigation.navigate("SingleQuest", { questId: quest.questId, questions, quest })}
     >
       <Text style={styles.questTitle}>{quest.title}</Text>
     </TouchableOpacity>
