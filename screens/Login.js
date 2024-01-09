@@ -90,7 +90,7 @@ export default function Login() {
               setIsLoading={setIsLoading}
             />
           )}
-          {isLoading && <Loading />}
+          <View className="mt-4">{isLoading && <Loading />}</View>
         </View>
       </KeyboardAwareScrollView>
     </SafeAreaView>
