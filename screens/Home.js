@@ -5,9 +5,6 @@ import { View, Text, TouchableOpacity } from "react-native";
 import CompleteQuestTriviaModal from "../Components/CompleteQuestTriviaModal";
 import { useNavigation } from "@react-navigation/native";
 import StartQuestButton from "../Components/StartQuestButton";
-import { LinearGradient } from "expo-linear-gradient";
-import Example from "../Components/BottomSheet";
-import { getUser } from "../utils/api";
 import { getAuth } from "firebase/auth";
 import { app } from "../firebaseConfig";
 
@@ -24,6 +21,7 @@ const Home = ({ route }) => {
 
   const auth = getAuth(app);
   const user = auth.currentUser;
+  
 
   const navigation = useNavigation();
 
