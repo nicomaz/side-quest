@@ -15,7 +15,7 @@ export default function Profile() {
   const navigation = useNavigation();
   const user = auth.currentUser;
   const [quests, setQuests] = useState(null);
-  const { gameComplete } = route.params || {}
+  //const { gameComplete } = route.params || {}
 
   const images = {
     "phone.png": require("../assets/phone.png"),

@@ -23,16 +23,13 @@ const SingleQuest = ({ route }) => {
   const [score, setScore] = useState(0);
   const [showResults, setShowResults] = useState(false);
   const [textInputKeys, setTextInputKeys] = useState([0, 1, 2]);
-  // const [questArr, setQuestArr] = useState([])
-  // getCompletedQuests(setQuestArr)
-  // console.log(questArr) neet to get user, then compare quest completion to 6 and navigate alternate route
+  const [quests, setQuests] = useState([])
   const [givenAnswers, setGivenAnswers] = useState(
     Array.from({ length: textInputKeys.length }, () => "")
   );
   const { questions } = route.params;
   const { questId } = route.params;
 
-  setQuestArr(user.completedQuests)
   const getQuestions = () => {
     setSelectedOptions({});
 
@@ -84,14 +81,16 @@ const SingleQuest = ({ route }) => {
   };
 
   const handleCompleteQuest = () => {
-    navigation.navigate("Home", { showModal: true });
+    if(quests.length >= 6) {
+      navigation.navigate('Profile', { gameComplete: true })
+    } else {
+      navigation.navigate("Home", { showModal: true })
+    }
   };
-  const handleCompleteAllQuests = () => {
-    navigation.navigate('Profile', { gameComplete: true })
-  }
 
   useEffect(() => {
     getQuestions();
+    getCompletedQuests(setQuests)
   }, []);
 
   return (
