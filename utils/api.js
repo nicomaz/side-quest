@@ -91,6 +91,7 @@ async function getCompletedQuests(setQuests) {
   setQuests(userCompletedQuests.flat());
 }
 
+
 async function resetUser() {
   
 }

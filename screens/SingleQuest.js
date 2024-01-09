@@ -7,11 +7,13 @@ import {
   StyleSheet,
   FlatList,
   TouchableOpacity,
-  Alert,
 } from "react-native";
 import MultipleChoice from "../Components/MultipleChoice";
 import TextEntry from "../Components/TextEntry";
 import { useNavigation } from "@react-navigation/native";
+import { getUser } from "../utils/api";
+import { doc, updateDoc, arrayUnion } from "firebase/firestore";
+import { db } from "../firebaseConfig";
 import { getCompletedQuests } from "../utils/api";
 
 
@@ -80,18 +82,28 @@ const SingleQuest = ({ route }) => {
     setShowResults(true);
   };
 
-  const handleCompleteQuest = () => {
-    if(quests.length >= 6) {
-      navigation.navigate('Profile')
-    } else 
-      if(quest) {
-      navigation.navigate("Home", { showModal: true, quest: quest })
+  const handleCompleteQuest = async () => {
+    if (quest) {
+      try {
+        const user = await getUser();
+        const userRef = doc(db, "users", user.mobileNumber);
+        await updateDoc(userRef, {
+          completedQuests: arrayUnion(user.currentQuest),
+        });
+        await updateDoc(userRef, {
+          currentQuest: (user.currentQuest+1),
+        });
+      } catch (err) {
+        console.error("error updating completed quests: ", err.message);
+      }
+      if(user.completedQuests.length >= 6) {
+        navigation.navigate('Profile')
+      }
+      navigation.navigate("Home", { showModal: true, quest: quest });
+    } else {
+      console.error("questId is not available to singlequest");
     }
-     else {
-      console.error('questId is not available to singlequest')
-    }
-  }
-    
+  };
 
   useEffect(() => {
     getQuestions();
