@@ -9,12 +9,15 @@ import ScrollableComponent from "../Components/ScrollableComponent";
 import { AntDesign } from "@expo/vector-icons";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { getCompletedQuests, getUser } from "../utils/api";
+import { FontAwesome5 } from '@expo/vector-icons';
 
 export default function Profile() {
   const auth = getAuth(app);
   const navigation = useNavigation();
   const user = auth.currentUser;
-  const [quests, setQuests] = useState(null);
+  const [quests, setQuests] = useState([]);
+
+  const completedQuests = 2;
 
   const images = {
     "phone.png": require("../assets/phone.png"),
@@ -50,34 +53,70 @@ export default function Profile() {
           </Text>
           <View className="flex flex-row justify-center pt-1">
             <View>
-              <Text>
-                <AntDesign name="star" size={14} color="gold"></AntDesign>
-              </Text>
+              {quests.length >= 1 ? (
+                <Text>
+                  <FontAwesome5 name="scroll" size={24} color="gold" />
+                </Text>
+              ) : (
+                <Text>
+                  <AntDesign name="star" size={14} color="white"></AntDesign>
+                </Text>
+              )}
             </View>
             <View>
-              <Text>
-                <AntDesign name="star" size={14} color="white"></AntDesign>
-              </Text>
+              {quests.length >= 2 ? (
+                <Text>
+                  <FontAwesome5 name="scroll" size={24} color="gold"></FontAwesome5>
+                </Text>
+              ) : (
+                <Text>
+                  <AntDesign name="star" size={14} color="white"></AntDesign>
+                </Text>
+              )}
             </View>
             <View>
-              <Text>
-                <AntDesign name="star" size={14} color="white"></AntDesign>
-              </Text>
+              {quests.length >= 3 ? (
+                <Text>
+                  <FontAwesome5 name="scroll" size={24} color="gold"></FontAwesome5>
+                </Text>
+              ) : (
+                <Text>
+                  <AntDesign name="star" size={14} color="white"></AntDesign>
+                </Text>
+              )}
             </View>
             <View>
-              <Text>
-                <AntDesign name="star" size={14} color="white"></AntDesign>
-              </Text>
+              {quests.length >= 4 ? (
+                <Text>
+                  <FontAwesome5 name="scroll" size={24} color="gold"></FontAwesome5>
+                </Text>
+              ) : (
+                <Text>
+                  <AntDesign name="star" size={14} color="white"></AntDesign>
+                </Text>
+              )}
             </View>
             <View>
-              <Text>
-                <AntDesign name="star" size={14} color="white"></AntDesign>
-              </Text>
+              {quests.length >= 5 ? (
+                <Text>
+                  <FontAwesome5 name="scroll" size={24} color="gold"></FontAwesome5>
+                </Text>
+              ) : (
+                <Text>
+                  <AntDesign name="star" size={14} color="white"></AntDesign>
+                </Text>
+              )}
             </View>
             <View>
-              <Text>
-                <AntDesign name="star" size={14} color="white"></AntDesign>
-              </Text>
+              {quests.length === 6 ? (
+                <Text>
+                  <FontAwesome5 name="scroll" size={24} color="gold"></FontAwesome5>
+                </Text>
+              ) : (
+                <Text>
+                  <AntDesign name="star" size={14} color="white"></AntDesign>
+                </Text>
+              )}
             </View>
           </View>
           <ScrollableComponent name={"Completed Quests"} quests={quests} />
@@ -94,3 +133,6 @@ export default function Profile() {
     </View>
   );
 }
+
+
+

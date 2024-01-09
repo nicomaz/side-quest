@@ -11,9 +11,11 @@ export default function Example({
   selectedMarker,
   setSelectedMarker,
   currentQuest,
+  setCurrentQuestClicked,
 }) {
   const [isLockedQuest, setIsLockedQuest] = useState(false);
-
+  const [isQuestionScreenDisplayed, setIsQuestionScreenDisplayed] =
+    useState(false);
   const refRBSheet = useRef();
 
   useEffect(() => {
@@ -21,6 +23,13 @@ export default function Example({
       refRBSheet.current.open();
     }
   }, [selectedMarker]);
+
+  useEffect(() => {
+    if (isQuestionScreenDisplayed) {
+      refRBSheet.current.close();
+      setIsQuestionScreenDisplayed(false);
+    }
+  }, [isQuestionScreenDisplayed]);
 
   function handleOnClose() {
     setSelectedMarker(null);
@@ -30,11 +39,18 @@ export default function Example({
     refRBSheet.current.open();
     setIsLockedQuest(locked);
   };
-
+  const handleCurrentQuestZoom = () => {
+    setCurrentQuestClicked(true);
+  };
   return (
     <View className="bg-[#D01A1E] w-screen py-2 px-1">
       <View className="flex flex-row justify-between mx-2 my-2">
-        <TouchableOpacity onPress={() => handleQuestTypeClick(false)}>
+        <TouchableOpacity
+          onPress={() => {
+            handleQuestTypeClick(false);
+            handleCurrentQuestZoom();
+          }}
+        >
           <Text className="text-white text-base">Current Quest</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => handleQuestTypeClick(true)}>
@@ -64,7 +80,10 @@ export default function Example({
         ) : isLockedQuest ? (
           <LockedQuestsComponent />
         ) : (
-          <CurrentQuestCard currentQuestId={currentQuest} />
+          <CurrentQuestCard
+            currentQuestId={currentQuest}
+            setIsQuestionScreenDisplayed={setIsQuestionScreenDisplayed}
+          />
         )}
       </RBSheet>
     </View>
