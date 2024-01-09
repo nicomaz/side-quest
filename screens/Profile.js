@@ -18,8 +18,6 @@ export default function Profile() {
   const user = auth.currentUser;
   const [quests, setQuests] = useState([]);
 
-  const completedQuests = 2;
-
   const images = {
     "phone.png": require("../assets/phone.png"),
     "teapot.png": require("../assets/teapot.png"),
