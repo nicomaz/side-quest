@@ -2,6 +2,7 @@ import { View, FlatList, StyleSheet } from "react-native";
 import React, { useState, useEffect } from "react";
 import QuestCard from "./QuestCard";
 import { getQuestQuestions, getQuests, getUser } from "../utils/api";
+import { getQuestQuestions, getQuests, getUser } from "../utils/api";
 
 const QuestList = () => {
   const [quests, setQuests] = useState([]);
@@ -18,6 +19,7 @@ const QuestList = () => {
     getQuestQuestions(setQuestions);
   }, []);
 
+  quests.sort((a, b) => a.questId - b.questId);
   quests.sort((a, b) => a.questId - b.questId);
 
   return (
