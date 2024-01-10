@@ -19,7 +19,7 @@ const QuestCard = ({ quest, questions, lockedQuests }) => {
   return (
     <TouchableOpacity
       style={isLocked ? styles.lockedQuest : styles.quest}
-      onPress={() => handlePress}
+      onPress={handlePress}
     >
       <Text style={styles.questTitle}>{quest.title}</Text>
     </TouchableOpacity>
