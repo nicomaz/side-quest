@@ -8,7 +8,6 @@ import { StatusBar } from "expo-status-bar";
 
 function DrawerNavigation() {
   const Drawer = createDrawerNavigator();
-  
 
   return (
     <>

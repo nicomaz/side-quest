@@ -1,20 +1,10 @@
-import {
-  View,
-  Text,
-  Modal,
-  TouchableOpacity,
-  StyleSheet,
-  Button,
-} from "react-native";
+import { View, Text, Modal, TouchableOpacity } from "react-native";
 import React from "react";
 import { useState } from "react";
 import { resetUser } from "../utils/api";
 
-
-
 const CompleteCard = () => {
   const [displayModal, setDisplayModal] = useState(false);
-  
 
   const handleRestart = () => {
     setDisplayModal(true);
@@ -23,9 +13,8 @@ const CompleteCard = () => {
     setDisplayModal(false);
   };
   const handleResetUser = async () => {
-    await resetUser()
+    await resetUser();
     setDisplayModal(false);
-    
   };
   return (
     <>
