@@ -82,7 +82,6 @@ export default function Login() {
               verificationId={verificationId}
               setVerificationCode={setVerificationCode}
               verificationCode={verificationCode}
-              setIsVerified={setIsVerified}
             />
           )}
         </View>

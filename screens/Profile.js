@@ -128,7 +128,7 @@ export default function Profile() {
           <ScrollableComponent name={"Completed Quests"} quests={quests} />
           <TouchableOpacity
             className="mt-2 bg-[#D01A1E] py-4 rounded-full shadow w-32 self-center shadow"
-            onPress={() => handleSignOut}
+            onPress={handleSignOut}
           >
             <Text className="text-base font-bold text-center text-white">
               Sign Out

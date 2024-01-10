@@ -1,29 +1,17 @@
 import React from "react";
 import Map from "../Components/MapComponent";
 import { useState, useEffect } from "react";
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text } from "react-native";
 import CompleteQuestTriviaModal from "../Components/CompleteQuestTriviaModal";
-import { useNavigation } from "@react-navigation/native";
 import StartQuestButton from "../Components/StartQuestButton";
-import { getAuth } from "firebase/auth";
-import { app } from "../firebaseConfig";
+import { getUser } from "../utils/api";
 
 const Home = ({ route }) => {
-  // maybe make a state for showModal as well?
-  let { showModal } = route.params || {};
+  let { showModal } = route.params || false;
   const { quest } = route.params || {};
+  const [user, setUser] = useState({ username: "" });
   const [completeQuestTriviaModalVisible, setCompleteQuestTriviaModalVisible] =
     useState(false);
-  const [selectedMarker, setSelectedMarker] = useState(null);
-  const [currentQuest, setCurrentQuest] = useState(null);
-  const [questDestination, setQuestDestination] = useState({
-    latitude: 51.5007,
-    longitude: -0.1246,
-  });
-
-  const auth = getAuth(app);
-  const user = auth.currentUser;
-
 
   const handleModalClose = () => {
     setCompleteQuestTriviaModalVisible(false);
@@ -39,30 +27,27 @@ const Home = ({ route }) => {
   };
 
   useEffect(() => {
-    async () => {
-      setCurrentQuest(user.currentQuest);
-      setQuestArr(user.completedQuests);
-      getSingularQuest(setCurrentQuest, currentQuest, setQuestDestination);
-    };
+    getUser().then((userData) => {
+      setUser(userData);
+    });
+  }, []);
+
+  useEffect(() => {
     getModalVisibility(showModal);
-  }, [selectedMarker, showModal]);
+  }, [showModal]);
 
   return (
     <>
       <View className="flex flex-row justify-between">
         <View className="flex flex-column">
           <Text className="ml-1 text-lg font-semibold">
-            Welcome {user.displayName}!
+            Welcome {user.username}!
           </Text>
           <Text> Ready to explore the city? </Text>
         </View>
         <StartQuestButton />
       </View>
-      <Map
-        setSelectedMarker={setSelectedMarker}
-        currentQuest={currentQuest}
-        questDestination={questDestination}
-      />
+      {user.currentQuest && <Map user={user} />}
       <CompleteQuestTriviaModal
         quest={quest}
         isVisible={completeQuestTriviaModalVisible}

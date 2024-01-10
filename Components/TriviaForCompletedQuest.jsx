@@ -1,8 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Image, StyleSheet } from 'react-native';
-import { getDoc, doc } from 'firebase/firestore';
-import { db } from '../firebaseConfig';
-
+import { View, Text, StyleSheet } from 'react-native';
 
 const TriviaForCompletedQuest = ({ quest }) => {
     const [trivia, setTrivia] = useState(null)

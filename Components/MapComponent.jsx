@@ -7,7 +7,7 @@ import Example from "./BottomSheet";
 import mapStyle from "../assets/MapStyle";
 import { getSingularQuest, getQuests, getUser } from "../utils/api";
 
-const Map = () => {
+const Map = ({user}) => {
   const [currentLocation, setCurrentLocation] = useState(null);
   const [questLocations, setQuestLocations] = useState([]);
   const [questDestination, setQuestDestination] = useState({
@@ -30,7 +30,6 @@ const Map = () => {
         }
 
         await getQuests(setQuestLocations);
-        const user = await getUser();
         setCurrentQuest(user.currentQuest);
         setQuestArr(user.completedQuests);
         getSingularQuest(setCurrentQuest, currentQuest, setQuestDestination);
