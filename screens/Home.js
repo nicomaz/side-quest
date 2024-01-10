@@ -11,6 +11,7 @@ const Home = ({ route }) => {
   const [isModalExited, setIsModalExited] = useState(false)
   const { quest } = route.params || {};
   const [user, setUser] = useState({ username: "" });
+  const [Rerender, setRerender] = useState(false);
   const [completeQuestTriviaModalVisible, setCompleteQuestTriviaModalVisible] =
     useState(false);
 
@@ -18,6 +19,7 @@ const Home = ({ route }) => {
   const handleModalClose = () => {
     setCompleteQuestTriviaModalVisible(false);
     showModal = false;
+    setRerender(true)
   };
 
   const getModalVisibility = (showModal) => {
@@ -32,7 +34,7 @@ const Home = ({ route }) => {
     getUser().then((userData) => {
       setUser(userData);
     });
-  }, []);
+  }, [Rerender]);
 
   useEffect(() => {
     getModalVisibility(showModal);
@@ -54,6 +56,7 @@ const Home = ({ route }) => {
         quest={quest}
         isVisible={completeQuestTriviaModalVisible}
         onClose={handleModalClose}
+        setRerender={setRerender}
         setIsModalExited={setIsModalExited}
       />
     </>

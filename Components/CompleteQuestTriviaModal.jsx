@@ -2,7 +2,7 @@ import { View, Text, Modal, TouchableOpacity, StyleSheet } from "react-native";
 import React from "react";
 import TriviaForCompletedQuest from "./TriviaForCompletedQuest";
 
-const CompleteQuestTriviaModal = ({ isVisible, onClose, quest, setIsModalExited }) => {
+const CompleteQuestTriviaModal = ({ isVisible, onClose, quest, setRerender, setIsModalExited }) => {
   return (
     <Modal
       animationType="slide"
@@ -17,6 +17,7 @@ const CompleteQuestTriviaModal = ({ isVisible, onClose, quest, setIsModalExited 
             style={styles.closeAndContinueButton}
             onPress={() => {
               onClose();
+              setRerender(true)
               setIsModalExited(true) // triggers a re-render when the modal is closed
             }}
           >
