@@ -17,6 +17,7 @@ import {
   arrayUnion,
   onSnapshot,
   getDoc,
+  arrayRemove,
 } from "firebase/firestore";
 import { app, db } from "../firebaseConfig";
 import { getCompletedQuests } from "../utils/api";
@@ -109,6 +110,11 @@ const SingleQuest = ({ route }) => {
         await updateDoc(userRef, {
           currentQuest: userDoc.data().currentQuest + 1,
         });
+        if (userDoc.data().lockedQuests.length > 0) {
+          await updateDoc(userRef, {
+            lockedQuests: arrayRemove(userDoc.data().lockedQuests[0]),
+          });
+        }
         userCompletedQuests();
       } catch (err) {
         console.error("error updating completed quests: ", err.message);
