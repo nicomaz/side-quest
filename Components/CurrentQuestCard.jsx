@@ -35,7 +35,7 @@ const CurrentQuestCard = ({ currentQuestId, setIsQuestionScreenDisplayed }) => {
           }
         >
           <View style={styles.quest}>
-            <Text style={styles.questTitle}>{currentQuest.title}</Text>
+            <Text style={styles.questTitle}>{Object.keys(currentQuest).length ? (currentQuest.title) : (<Text>You dont have any active quests. You may reset your progress from your profile page if you wish to play again!</Text>)}</Text>
             <Text style={styles.questDescription}>
               {currentQuest.description}
             </Text>
