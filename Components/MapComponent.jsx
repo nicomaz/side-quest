@@ -116,7 +116,7 @@ const Map = () => {
                   }}
                   title={questMarker.landmark}
                   pinColor={"navy"}
-                  onPress={handlePress}
+                  onPress={() => handlePress}
                 />
               );
             } else if (questArr.includes(questMarker.questId)) {
@@ -129,7 +129,7 @@ const Map = () => {
                   }}
                   title={questMarker.landmark}
                   pinColor={"gold"}
-                  onPress={handlePress}
+                  onPress={() => handlePress}
                 />
               );
             } else {
@@ -142,7 +142,7 @@ const Map = () => {
                   }}
                   title={questMarker.landmark}
                   pinColor={"red"}
-                  onPress={handlePress}
+                  onPress={() => handlePress}
                 />
               );
             }
