@@ -11,10 +11,16 @@ import {
 import MultipleChoice from "../Components/MultipleChoice";
 import TextEntry from "../Components/TextEntry";
 import { useNavigation } from "@react-navigation/native";
-import { getUser } from "../utils/api";
-import { doc, updateDoc, arrayUnion } from "firebase/firestore";
-import { db } from "../firebaseConfig";
+import {
+  doc,
+  updateDoc,
+  arrayUnion,
+  onSnapshot,
+  getDoc,
+} from "firebase/firestore";
+import { app, db } from "../firebaseConfig";
 import { getCompletedQuests } from "../utils/api";
+import { getAuth } from "firebase/auth";
 
 const SingleQuest = ({ route }) => {
   const navigation = useNavigation();
@@ -25,6 +31,7 @@ const SingleQuest = ({ route }) => {
   const [showResults, setShowResults] = useState(false);
   const [textInputKeys, setTextInputKeys] = useState([0, 1, 2]);
   const [quests, setQuests] = useState([]);
+  const [userData, setUserData] = useState({});
   const [givenAnswers, setGivenAnswers] = useState(
     Array.from({ length: textInputKeys.length }, () => "")
   );
@@ -47,14 +54,12 @@ const SingleQuest = ({ route }) => {
 
   const isAnswerCorrect = (question, index) => {
     const trimmedGivenAnswer = givenAnswers[index].trim();
-
     if (question.type === "multiple choice") {
       return (
         question.options[selectedOptions[index] - 1] === question.correctAnswer
       );
     } else if (question.type === "text input") {
       const trimmedCorrectAnswer = question.correctAnswer.trim();
-
       return (
         trimmedGivenAnswer.toLowerCase() === trimmedCorrectAnswer.toLowerCase()
       );
@@ -64,19 +69,16 @@ const SingleQuest = ({ route }) => {
         question.correctAnswer.toLowerCase()
       );
     }
-
     return false;
   };
 
   const handleSubmit = () => {
     let correctAnswers = 0;
-
     filteredQuestionsArray.forEach((question, index) => {
       if (isAnswerCorrect(question, index)) {
         correctAnswers++;
       }
     });
-
     setScore(correctAnswers);
     setShowResults(true);
   };
@@ -84,19 +86,30 @@ const SingleQuest = ({ route }) => {
   const handleCompleteQuest = async () => {
     if (quest) {
       try {
-        const user = await getUser();
-        if (user.completedQuests.length >= 6) {
-          navigation.navigate("Profile");
-        } else {
-          const userRef = doc(db, "users", user.mobileNumber);
-          await updateDoc(userRef, {
-            completedQuests: arrayUnion(user.currentQuest),
-          });
-          await updateDoc(userRef, {
-            currentQuest: user.currentQuest + 1,
-          });
-          navigation.navigate("Home", { showModal: true, quest: quest });
-        }
+        const auth = getAuth(app);
+        const user = auth.currentUser;
+        const userRef = doc(db, "users", user.phoneNumber);
+        const userDoc = await getDoc(userRef);
+        const userCompletedQuests = onSnapshot(
+          doc(db, "users", user.phoneNumber),
+          (doc) => {
+            setUserData(doc.data());
+            if (doc.data().completedQuests.length >= 6) {
+              navigation.navigate("Profile");
+            } else {
+              navigation.navigate("Home", { showModal: true, quest: quest });
+            }
+            console.log("doc ->>", doc.data());
+            return doc.data();
+          }
+        );
+        await updateDoc(userRef, {
+          completedQuests: arrayUnion(userDoc.data().currentQuest),
+        });
+        await updateDoc(userRef, {
+          currentQuest: userDoc.data().currentQuest + 1,
+        });
+        userCompletedQuests();
       } catch (err) {
         console.error("error updating completed quests: ", err.message);
       }
@@ -143,7 +156,7 @@ const SingleQuest = ({ route }) => {
       {!showResults && (
         <TouchableOpacity
           style={styles.submitButton}
-          onPress={() => handleSubmit}
+          onPress={handleSubmit}
           disabled={showResults}
         >
           <Text style={styles.submitButtonText}>Submit</Text>
@@ -160,7 +173,7 @@ const SingleQuest = ({ route }) => {
                 ? styles.completeQuestButton
                 : styles.tryAgainButton
             }
-            onPress={() =>
+            onPress={
               score === filteredQuestionsArray.length
                 ? handleCompleteQuest
                 : getQuestions
