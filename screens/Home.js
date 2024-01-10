@@ -8,10 +8,12 @@ import { getUser } from "../utils/api";
 
 const Home = ({ route }) => {
   let { showModal } = route.params || false;
+  const [isModalExited, setIsModalExited] = useState(false)
   const { quest } = route.params || {};
   const [user, setUser] = useState({ username: "" });
   const [completeQuestTriviaModalVisible, setCompleteQuestTriviaModalVisible] =
     useState(false);
+
 
   const handleModalClose = () => {
     setCompleteQuestTriviaModalVisible(false);
@@ -47,11 +49,12 @@ const Home = ({ route }) => {
         </View>
         <StartQuestButton />
       </View>
-      {user.currentQuest && <Map user={user} />}
+      {user.currentQuest && <Map user={user} isModalExited={isModalExited}/>}
       <CompleteQuestTriviaModal
         quest={quest}
         isVisible={completeQuestTriviaModalVisible}
         onClose={handleModalClose}
+        setIsModalExited={setIsModalExited}
       />
     </>
   );

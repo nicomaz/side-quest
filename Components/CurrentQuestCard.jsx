@@ -26,13 +26,14 @@ const CurrentQuestCard = ({ currentQuestId, setIsQuestionScreenDisplayed }) => {
         <Text style={styles.currentQuestLabel}>Current Quest</Text>
         <TouchableOpacity
           style={styles.questContainer}
-          onPress={() =>
+          onPress={() => {
             navigation.navigate("SingleQuest", {
               questId: currentQuestId,
               questions,
               quest: currentQuest,
-            })
-          }
+            });
+            setIsQuestionScreenDisplayed(true);
+          }}
         >
           <View style={styles.quest}>
             <Text style={styles.questTitle}>{currentQuest.title}</Text>
