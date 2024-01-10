@@ -15,7 +15,6 @@ export default function Login() {
   const [phoneNumber, setPhoneNumber] = useState();
   const [verificationId, setVerificationId] = useState();
   const [verificationCode, setVerificationCode] = useState();
-  const [isVerified, setIsVerified] = useState(false);
   const [error, setError] = useState(false);
   const auth = getAuth(app);
 

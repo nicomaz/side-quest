@@ -1,7 +1,7 @@
 import { Text, StyleSheet, TouchableOpacity } from "react-native";
 import React from "react";
 
-const LockedQuestCard = ({ quest, questions }) => {
+const LockedQuestCard = ({ quest }) => {
   return (
     <TouchableOpacity style={styles.lockedQuest}>
       <Text style={styles.questTitle}>{quest.title}</Text>
@@ -15,8 +15,8 @@ const styles = StyleSheet.create({
     height: 150,
     margin: 10,
     borderRadius: 10,
-    backgroundColor: "#d3d3d3", 
-    opacity: 0.5, 
+    backgroundColor: "#d3d3d3",
+    opacity: 0.5,
     shadowColor: "#000000",
     shadowOpacity: 0.3,
     shadowRadius: 5,
@@ -33,4 +33,3 @@ const styles = StyleSheet.create({
 });
 
 export default LockedQuestCard;
-
