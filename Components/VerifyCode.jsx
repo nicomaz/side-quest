@@ -12,7 +12,6 @@ export default function VerifyCode({
   setVerificationCode,
   verificationCode,
 }) {
-
   const auth = getAuth(app);
 
   async function confirmVerificationCode() {

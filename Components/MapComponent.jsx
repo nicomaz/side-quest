@@ -4,10 +4,10 @@ import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import * as Location from "expo-location";
 import MapViewDirections from "react-native-maps-directions";
 import mapStyle from "../assets/MapStyle";
-import { getSingularQuest, getQuests, getUser } from "../utils/api";
+import { getSingularQuest, getQuests } from "../utils/api";
 import BottomSheet from "./BottomSheet";
 
-const Map = ({user}) => {
+const Map = ({ user }) => {
   const [currentLocation, setCurrentLocation] = useState(null);
   const [questLocations, setQuestLocations] = useState([]);
   const [questDestination, setQuestDestination] = useState({
@@ -51,12 +51,10 @@ const Map = ({user}) => {
     })();
   }, [currentQuest]);
 
-
-
   useEffect(() => {
     if (currentQuestClicked) {
       handleAnimateToRegion();
-      
+
       setCurrentQuestClicked(false);
     }
   }, [currentQuestClicked]);
@@ -94,8 +92,8 @@ const Map = ({user}) => {
           style={styles.map}
           customMapStyle={mapStyle}
           initialRegion={{
-            latitude: 51.5072,
-            longitude: 0.1276,
+            latitude: currentLocation.coords.latitude,
+            longitude: currentLocation.coords.longitude,
             latitudeDelta: 0.0922,
             longitudeDelta: 0.0421,
           }}
