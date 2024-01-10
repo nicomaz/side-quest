@@ -43,7 +43,6 @@ export default function Profile() {
           <Image
             source={images[user.photoURL]}
             className="h-20 w-20 self-center mt-[-4]"
-            
           />
           <Text className="text-center text-2xl font-medium text-white">
             {user.displayName}
@@ -128,7 +127,7 @@ export default function Profile() {
           </View>
           <ScrollableComponent name={"Completed Quests"} quests={quests} />
           <TouchableOpacity
-            className="mt-2 bg-[#D01A1E] py-4 rounded-full shadow w-32 self-center shadow"
+            className="mt-2 bg-[#D01A1E] py-4 rounded-full w-32 self-center shadow"
             onPress={handleSignOut}
           >
             <Text className="text-base font-bold text-center text-white">
