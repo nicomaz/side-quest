@@ -2,20 +2,24 @@ import { View, FlatList, StyleSheet } from "react-native";
 import React, { useState, useEffect } from "react";
 import QuestCard from "./QuestCard";
 import { getQuestQuestions, getQuests, getUser } from "../utils/api";
+import { getQuestQuestions, getQuests, getUser } from "../utils/api";
 
 const QuestList = () => {
   const [quests, setQuests] = useState([]);
   const [questions, setQuestions] = useState([]);
   const [lockedQuests, setLockedQuests] = useState([]);
+  const [completedQuests, setCompletedQuests] = useState([]);
 
   useEffect(() => {
     getUser().then((user) => {
       setLockedQuests(user.lockedQuests);
+      setCompletedQuests(user.completedQuests);
     });
     getQuests(setQuests);
     getQuestQuestions(setQuestions);
   }, []);
 
+  quests.sort((a, b) => a.questId - b.questId);
   quests.sort((a, b) => a.questId - b.questId);
 
   return (
@@ -29,6 +33,7 @@ const QuestList = () => {
               quest={item}
               questions={questions}
               lockedQuests={lockedQuests}
+              completedQuests={completedQuests}
             />
           )}
         />
