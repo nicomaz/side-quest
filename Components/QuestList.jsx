@@ -7,10 +7,12 @@ const QuestList = () => {
   const [quests, setQuests] = useState([]);
   const [questions, setQuestions] = useState([]);
   const [lockedQuests, setLockedQuests] = useState([]);
+  const [completedQuests, setCompletedQuests] = useState([]);
 
   useEffect(() => {
     getUser().then((user) => {
       setLockedQuests(user.lockedQuests);
+      setCompletedQuests(user.completedQuests);
     });
     getQuests(setQuests);
     getQuestQuestions(setQuestions);
@@ -29,6 +31,7 @@ const QuestList = () => {
               quest={item}
               questions={questions}
               lockedQuests={lockedQuests}
+              completedQuests={completedQuests}
             />
           )}
         />
