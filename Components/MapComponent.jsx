@@ -5,7 +5,7 @@ import * as Location from "expo-location";
 import MapViewDirections from "react-native-maps-directions";
 import mapStyle from "../assets/MapStyle";
 import { getSingularQuest, getQuests, getUser } from "../utils/api";
-import Example from "./BottomSheet";
+import BottomSheet from "./BottomSheet";
 
 const Map = ({user}) => {
   const [currentLocation, setCurrentLocation] = useState(null);
@@ -169,7 +169,7 @@ const Map = ({user}) => {
           }}
         ></MapView>
       )}
-      <Example
+      <BottomSheet
         selectedMarker={selectedMarker}
         setSelectedMarker={setSelectedMarker}
         currentQuest={currentQuest}
