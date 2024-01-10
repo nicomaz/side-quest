@@ -3,7 +3,6 @@ import React from "react";
 import { getAuth } from "firebase/auth";
 import { app } from "../firebaseConfig";
 import { useNavigation } from "@react-navigation/native";
-import StartQuestButton from "./StartQuestButton";
 import { MaterialIcons } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native-gesture-handler";
 

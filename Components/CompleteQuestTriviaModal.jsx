@@ -18,7 +18,7 @@ const CompleteQuestTriviaModal = ({ isVisible, onClose, quest }) => {
             onPress={onClose}
           >
             <Text style={styles.closeAndContinueButtonText}>
-              Close modal and continute to nextquest all in one
+              Begin Next Quest
             </Text>
           </TouchableOpacity>
         </View>

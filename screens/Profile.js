@@ -1,6 +1,6 @@
 import { View, Text, Image } from "react-native";
 import React, { useEffect, useState } from "react";
-import { FlatList, TouchableOpacity } from "react-native-gesture-handler";
+import { TouchableOpacity } from "react-native-gesture-handler";
 import { getAuth, signOut } from "firebase/auth";
 import { app } from "../firebaseConfig";
 import { useNavigation } from "@react-navigation/native";
@@ -43,6 +43,7 @@ export default function Profile() {
           <Image
             source={images[user.photoURL]}
             className="h-20 w-20 self-center mt-[-4]"
+            
           />
           <Text className="text-center text-2xl font-medium text-white">
             {user.displayName}
