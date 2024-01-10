@@ -1,25 +1,26 @@
-import React from "react";
-import Map from "../Components/MapComponent";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { View, Text } from "react-native";
 import CompleteQuestTriviaModal from "../Components/CompleteQuestTriviaModal";
+import Map from "../Components/MapComponent";
 import StartQuestButton from "../Components/StartQuestButton";
 import { getUser } from "../utils/api";
+import { ModalContext } from "../modalContext";
+
+
 
 const Home = ({ route }) => {
-  let { showModal } = route.params || false;
-  const [isModalExited, setIsModalExited] = useState(false)
+  const [isModalExited, setIsModalExited] = useState(false);
   const { quest } = route.params || {};
   const [user, setUser] = useState({ username: "" });
-  const [Rerender, setRerender] = useState(false);
   const [completeQuestTriviaModalVisible, setCompleteQuestTriviaModalVisible] =
     useState(false);
-
+    const { setShowModal } = useContext(ModalContext);
+    const { showModal } = useContext(ModalContext);
 
   const handleModalClose = () => {
     setCompleteQuestTriviaModalVisible(false);
-    showModal = false;
-    setRerender(true)
+    setShowModal(false)
+    setIsModalExited(true);
   };
 
   const getModalVisibility = (showModal) => {
@@ -34,11 +35,18 @@ const Home = ({ route }) => {
     getUser().then((userData) => {
       setUser(userData);
     });
-  }, [Rerender]);
+  }, [isModalExited]);
 
   useEffect(() => {
     getModalVisibility(showModal);
+    setShowModal(true)
   }, [showModal]);
+
+   useEffect(() => {
+    setIsModalExited(false);
+    setShowModal(false)
+  }, [user]);
+
 
   return (
     <>
@@ -51,12 +59,11 @@ const Home = ({ route }) => {
         </View>
         <StartQuestButton />
       </View>
-      {user.currentQuest && <Map user={user} isModalExited={isModalExited}/>}
+      {user.currentQuest && <Map user={user} />}
       <CompleteQuestTriviaModal
         quest={quest}
         isVisible={completeQuestTriviaModalVisible}
         onClose={handleModalClose}
-        setRerender={setRerender}
         setIsModalExited={setIsModalExited}
       />
     </>

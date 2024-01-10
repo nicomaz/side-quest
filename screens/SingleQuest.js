@@ -1,6 +1,6 @@
 // SingleQuest.js
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
   View,
   Text,
@@ -22,6 +22,7 @@ import {
 import { app, db } from "../firebaseConfig";
 import { getCompletedQuests } from "../utils/api";
 import { getAuth } from "firebase/auth";
+import { ModalContext } from "../modalContext";
 
 const SingleQuest = ({ route }) => {
   const navigation = useNavigation();
@@ -39,6 +40,8 @@ const SingleQuest = ({ route }) => {
   const { questions } = route.params;
   const { questId } = route.params;
   const { quest } = route.params;
+
+  const { setShowModal } = useContext(ModalContext); 
 
   const getQuestions = () => {
     setSelectedOptions({});
@@ -126,8 +129,13 @@ const SingleQuest = ({ route }) => {
 
   useEffect(() => {
     getQuestions();
-    getCompletedQuests(setQuests);
+    
   }, []);
+
+  useEffect(() => {
+    getCompletedQuests(setQuests);
+    setShowModal(true)
+  }, [score]);
 
   return (
     <View style={styles.container}>

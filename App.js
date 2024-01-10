@@ -9,11 +9,13 @@ import SplashScreen from "./screens/SpashScreen";
 import CustomiseUser from "./screens/CustomiseUser";
 import Home from "./screens/Home";
 import { StatusBar } from "expo-status-bar";
+import { ModalProvider } from "./modalContext";
 
 export default function App() {
   const Stack = createNativeStackNavigator();
 
   return (
+    <ModalProvider>
     <NavigationContainer>
       <Stack.Navigator>
         <>
@@ -37,5 +39,6 @@ export default function App() {
         </>
       </Stack.Navigator>
     </NavigationContainer>
+    </ModalProvider>
   );
 }
