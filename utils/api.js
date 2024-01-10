@@ -5,6 +5,7 @@ import {
   getDocs,
   query,
   where,
+  updateDoc,
 } from "firebase/firestore";
 import { app, db } from "../firebaseConfig";
 import { getAuth } from "firebase/auth";
@@ -91,10 +92,29 @@ async function getCompletedQuests(setQuests) {
   setQuests(userCompletedQuests.flat());
 }
 
+const resetUser = async () => {
+  try {
+    const auth = getAuth(app);
+    const user = auth.currentUser;
 
-async function resetUser() {
-  
-}
+    if (!user) {
+      console.error("user not auth");
+      return;
+    }
+
+    const userRef = doc(db, "users", user.phoneNumber);
+
+    await updateDoc(userRef, {
+      currentQuest: 1,
+      lockedQuests: [2, 3, 4, 5, 6],
+      completedQuests: [],
+    });
+
+    console.log("user is reset");
+  } catch (error) {
+    console.error("error trying to reset user", error.message);
+  }
+};
 
 export {
   getSingularQuest,
@@ -102,4 +122,5 @@ export {
   getQuests,
   getQuestQuestions,
   getCompletedQuests,
+  resetUser,
 };

@@ -8,9 +8,13 @@ import {
 } from "react-native";
 import React from "react";
 import { useState } from "react";
+import { resetUser } from "../utils/api";
+
+
 
 const CompleteCard = () => {
   const [displayModal, setDisplayModal] = useState(false);
+  
 
   const handleRestart = () => {
     setDisplayModal(true);
@@ -18,9 +22,10 @@ const CompleteCard = () => {
   const handleExit = () => {
     setDisplayModal(false);
   };
-  const resetUser = () => {
+  const handleResetUser = async () => {
+    await resetUser()
     setDisplayModal(false);
-    //make api call to reset completed quests, current quest, locked quests
+    
   };
   return (
     <>
@@ -50,7 +55,7 @@ const CompleteCard = () => {
                 Are you sure you wish to restart? This action cannot be undone.
               </Text>
               <TouchableOpacity
-                onPress={resetUser}
+                onPress={handleResetUser}
                 className="mt-2 bg-[#D01A1E] p-1 py-4 rounded-full shadow w-32 self-center"
               >
                 <Text className="text-base p-1 font-bold text-center text-white">
