@@ -1,5 +1,5 @@
 import { createDrawerNavigator } from "@react-navigation/drawer";
-import React from "react";
+import React, { useEffect } from "react";
 import QuestList from "./Components/QuestList";
 import Profile from "./screens/Profile";
 import Header from "./Components/Header";
@@ -8,6 +8,7 @@ import { StatusBar } from "expo-status-bar";
 
 function DrawerNavigation() {
   const Drawer = createDrawerNavigator();
+  
 
   return (
     <>

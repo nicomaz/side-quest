@@ -10,7 +10,7 @@ const CompleteQuestTriviaModal = ({ isVisible, onClose, quest }) => {
       visible={isVisible}
       onRequestClose={onClose}
     >
-      <TriviaForCompletedQuest quest={quest} />
+      <TriviaForCompletedQuest quest={quest}/>
       <View style={styles.modalContainer}>
         <View style={styles.modalContent}>
           <TouchableOpacity

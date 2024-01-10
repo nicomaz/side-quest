@@ -5,35 +5,22 @@ import {
   getAuth,
   signInWithCredential,
 } from "firebase/auth";
-import { app, auth } from "../firebaseConfig";
-import { useNavigation } from "@react-navigation/native";
+import { app } from "../firebaseConfig";
 
 export default function VerifyCode({
   verificationId,
   setVerificationCode,
   verificationCode,
-  setIsVerified,
 }) {
+
   const auth = getAuth(app);
-  const user = auth.currentUser;
-  const navigation = useNavigation();
 
   async function confirmVerificationCode() {
-    try {
-      const credential = PhoneAuthProvider.credential(
-        verificationId,
-        verificationCode
-      );
-      await signInWithCredential(auth, credential);
-      setIsVerified(true);
-      if (user.displayName) {
-        navigation.navigate("Nav");
-      } else {
-        navigation.navigate("UserCustomisation");
-      }
-    } catch (err) {
-      console.log(err.message);
-    }
+    const credential = PhoneAuthProvider.credential(
+      verificationId,
+      verificationCode
+    );
+    await signInWithCredential(auth, credential);
   }
 
   return (
