@@ -100,7 +100,6 @@ const SingleQuest = ({ route }) => {
             } else {
               navigation.navigate("Home", { showModal: true, quest: quest });
             }
-            console.log("doc ->>", doc.data());
             return doc.data();
           }
         );

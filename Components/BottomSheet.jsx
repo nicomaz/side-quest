@@ -6,7 +6,7 @@ import CurrentQuestCard from "./CurrentQuestCard";
 import LockedQuestsComponent from "./LockedQuestComponent";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
-export default function Example({
+export default function BottomSheet({
   selectedMarker,
   setSelectedMarker,
   currentQuest,

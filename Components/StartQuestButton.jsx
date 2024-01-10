@@ -2,19 +2,21 @@ import { Text } from "react-native";
 import React, { useEffect, useState } from "react";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { useNavigation } from "@react-navigation/native";
-import { getQuestQuestions, getUser } from "../utils/api";
+import { getQuestQuestions, getSingularQuest, getUser } from "../utils/api";
 
 export default function StartQuestButton() {
   const [questId, setQuestId] = useState(null);
   const [questions, setQuestions] = useState(null);
+  const [quest, setQuest] = useState({});
   const navigation = useNavigation();
 
   useEffect(() => {
     getUser().then((user) => {
       setQuestId(user.currentQuest);
       getQuestQuestions(setQuestions);
+      getSingularQuest(setQuest, questId);
     });
-  }, []);
+  }, [questId]);
 
   return (
     <TouchableOpacity
@@ -23,6 +25,7 @@ export default function StartQuestButton() {
         navigation.navigate("SingleQuest", {
           questId,
           questions,
+          quest: quest,
         })
       }
     >

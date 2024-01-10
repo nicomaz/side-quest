@@ -3,9 +3,9 @@ import { View, StyleSheet } from "react-native";
 import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import * as Location from "expo-location";
 import MapViewDirections from "react-native-maps-directions";
-import Example from "./BottomSheet";
 import mapStyle from "../assets/MapStyle";
 import { getSingularQuest, getQuests, getUser } from "../utils/api";
+import BottomSheet from "./BottomSheet";
 
 const Map = ({user}) => {
   const [currentLocation, setCurrentLocation] = useState(null);
@@ -169,7 +169,7 @@ const Map = ({user}) => {
           }}
         ></MapView>
       )}
-      <Example
+      <BottomSheet
         selectedMarker={selectedMarker}
         setSelectedMarker={setSelectedMarker}
         currentQuest={currentQuest}
