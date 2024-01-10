@@ -2,6 +2,12 @@ import { View, Text, Image } from "react-native";
 import React, { useState } from "react";
 import { TouchableOpacity } from "react-native";
 
+const images = {
+  "teapot.png": require("../assets/teapot.png"),
+  "double-decker-bus.png": require("../assets/double-decker-bus.png"),
+  "phone.png": require("../assets/phone.png"),
+};
+
 export default function PickUserPhoto({ setUserPiece }) {
   const [isFocussed, setIsFocussed] = useState(null);
   const pieceImageSources = [
