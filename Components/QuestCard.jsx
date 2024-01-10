@@ -12,6 +12,7 @@ const QuestCard = ({ quest, questions, lockedQuests }) => {
       navigation.navigate("SingleQuest", {
         questId: quest.questId,
         questions,
+        quest: quest,
       });
     }
   };

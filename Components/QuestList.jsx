@@ -1,27 +1,22 @@
 import { View, FlatList, StyleSheet } from "react-native";
 import React, { useState, useEffect } from "react";
 import QuestCard from "./QuestCard";
-import {getQuestQuestions, getQuests, getUser } from "../utils/api";
-
+import { getQuestQuestions, getQuests, getUser } from "../utils/api";
 
 const QuestList = () => {
   const [quests, setQuests] = useState([]);
   const [questions, setQuestions] = useState([]);
-  const [lockedQuests, setLockedQuests] = useState([])
-
-
+  const [lockedQuests, setLockedQuests] = useState([]);
 
   useEffect(() => {
     getUser().then((user) => {
-   setLockedQuests(user.lockedQuests)
-    })
+      setLockedQuests(user.lockedQuests);
+    });
     getQuests(setQuests);
     getQuestQuestions(setQuestions);
- 
   }, []);
 
-
-  quests.sort((a, b) => a.questId - b.questId)
+  quests.sort((a, b) => a.questId - b.questId);
 
   return (
     <View style={styles.container}>
@@ -30,7 +25,11 @@ const QuestList = () => {
           data={quests}
           keyExtractor={(quest) => quest.questId}
           renderItem={({ item }) => (
-            <QuestCard quest={item} questions={questions} lockedQuests={lockedQuests} />
+            <QuestCard
+              quest={item}
+              questions={questions}
+              lockedQuests={lockedQuests}
+            />
           )}
         />
       </View>
@@ -57,8 +56,8 @@ const styles = StyleSheet.create({
     height: 150,
     margin: 10,
     borderRadius: 10,
-    backgroundColor: "#d3d3d3", 
-    opacity: 0.5, 
+    backgroundColor: "#d3d3d3",
+    opacity: 0.5,
     shadowColor: "#000000",
     shadowOpacity: 0.3,
     shadowRadius: 5,
