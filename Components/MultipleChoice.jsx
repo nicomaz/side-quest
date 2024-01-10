@@ -1,12 +1,9 @@
 import {
-  View,
   Text,
   StyleSheet,
-  FlatList,
   TouchableOpacity,
-  Alert,
 } from "react-native";
-import React, { useState, useEffect } from "react";
+import React from "react";
 
 const MultipleChoice = ({
   item,

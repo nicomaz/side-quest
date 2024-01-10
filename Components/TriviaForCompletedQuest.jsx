@@ -12,7 +12,7 @@ const TriviaForCompletedQuest = ({ quest }) => {
         <View style={styles.container}>
           {trivia ? (
             <>
-              <Text style={styles.title}>Trivia for Completed Quest</Text>
+              <Text style={styles.title}>Your quest is complete, you are rewarded with knowledge:</Text>
               <Text style={styles.triviaText}>{trivia}</Text>
             </>
           ) : (

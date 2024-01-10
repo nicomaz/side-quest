@@ -4,7 +4,6 @@ import React, { useEffect, useState } from "react";
 const TextEntry = ({
   item,
   index,
-  givenAnswer,
   givenAnswers,
   setGivenAnswers,
   showResults,

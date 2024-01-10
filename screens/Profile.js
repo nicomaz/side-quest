@@ -1,6 +1,6 @@
 import { View, Text, Image } from "react-native";
 import React, { useEffect, useState } from "react";
-import { FlatList, TouchableOpacity } from "react-native-gesture-handler";
+import { TouchableOpacity } from "react-native-gesture-handler";
 import { getAuth, signOut } from "firebase/auth";
 import { app } from "../firebaseConfig";
 import { useNavigation } from "@react-navigation/native";
@@ -127,7 +127,7 @@ export default function Profile() {
           </View>
           <ScrollableComponent name={"Completed Quests"} quests={quests} />
           <TouchableOpacity
-            className="mt-2 bg-[#D01A1E] py-4 rounded-full shadow w-32 self-center shadow"
+            className="mt-2 bg-[#D01A1E] py-4 rounded-full w-32 self-center shadow"
             onPress={handleSignOut}
           >
             <Text className="text-base font-bold text-center text-white">
