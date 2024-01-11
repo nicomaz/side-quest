@@ -21,8 +21,13 @@ function DrawerNavigation() {
           name="Home"
           component={Home}
           options={{
-            drawerActiveBackgroundColor: { backgroundColor: "#344c76" },
-            header: () => <Header />,
+            drawerActiveBackgroundColor: {
+              backgroundColor: "#344c76",
+            },
+            headerStyle: { backgroundColor: "#344c76", height: 110 },
+            headerTitle: "",
+            headerTintColor: "white",
+            headerRight: () => <Header />,
           }}
         />
         <Drawer.Screen
