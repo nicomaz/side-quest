@@ -31,11 +31,21 @@ const QuestCard = ({ quest, questions, lockedQuests, completedQuests }) => {
         {quest.title}
       </Text>
       {isCompleted ? (
-        <Text style={styles.completeText}>COMPLETED!</Text>
+        <>
+          <Text style={styles.completeText}>COMPLETED!</Text>
+          <Text style={styles.unlockedScoreText}>Score: 3/3</Text>
+        </>
       ) : (
         <></>
       )}
-      {isLocked ? <Text style={styles.lockedText}>LOCKED</Text> : <></>}
+      {isLocked ? (
+        <>
+          <Text style={styles.lockedText}>LOCKED</Text>
+          <Text style={styles.lockedScoreText}>Score: 0/3</Text>
+        </>
+      ) : (
+        <></>
+      )}
     </TouchableOpacity>
   );
 };
@@ -93,6 +103,16 @@ const styles = StyleSheet.create({
     fontSize: 15,
     textAlign: "center",
     color: "white",
+  },
+  unlockedScoreText: {
+    fontSize: 14,
+    textAlign: "center",
+    color: "white",
+  },
+  lockedScoreText: {
+    fontSize: 14,
+    textAlign: "center",
+    color: "black",
   },
   lockedText: {
     fontSize: 15,
