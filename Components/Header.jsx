@@ -1,21 +1,10 @@
 import { Text, SafeAreaView, View, Image } from "react-native";
 import React from "react";
-import { useNavigation } from "@react-navigation/native";
-import { MaterialIcons } from "@expo/vector-icons";
-import { TouchableOpacity } from "react-native-gesture-handler";
 
 const Header = () => {
-  const navigation = useNavigation();
-
   return (
     <SafeAreaView>
-      <View className="bg-[#344c76] py-2 px-4 flex flex-row justify-between">
-        <TouchableOpacity
-          className="mt-2"
-          onPress={() => navigation.toggleDrawer()}
-        >
-          <MaterialIcons name="menu" size={24} color="white" />
-        </TouchableOpacity>
+      <View className="flex flex-row justify-end mr-3">
         <View className="flex flex-row ">
           <View className="flex flex-column justify-center ">
             <Text className="font-semibold text-white text-base leading-[-2px] self-end">
