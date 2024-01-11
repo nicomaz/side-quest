@@ -1,4 +1,4 @@
-import { Text, StyleSheet, TouchableOpacity } from "react-native";
+import { Text, StyleSheet, TouchableOpacity, View } from "react-native";
 import React from "react";
 
 const MultipleChoice = ({
@@ -16,7 +16,7 @@ const MultipleChoice = ({
   };
 
   return (
-    <>
+    <View className="mx-5">
       <Text style={styles.question}>{item.text}</Text>
       <TouchableOpacity
         style={[
@@ -31,7 +31,9 @@ const MultipleChoice = ({
         onPress={() => handleOptionSelect(index, 1)}
         disabled={showResults}
       >
-        <Text>{item.options[0]}</Text>
+        <Text style={selectedOptions[index] === 1 && styles.selectedOptions}>
+          {item.options[0]}
+        </Text>
       </TouchableOpacity>
 
       <TouchableOpacity
@@ -47,7 +49,9 @@ const MultipleChoice = ({
         onPress={() => handleOptionSelect(index, 2)}
         disabled={showResults}
       >
-        <Text>{item.options[1]}</Text>
+        <Text style={selectedOptions[index] === 2 && styles.selectedOptions}>
+          {item.options[1]}
+        </Text>
       </TouchableOpacity>
       <TouchableOpacity
         style={[
@@ -62,7 +66,9 @@ const MultipleChoice = ({
         onPress={() => handleOptionSelect(index, 3)}
         disabled={showResults}
       >
-        <Text>{item.options[2]}</Text>
+        <Text style={selectedOptions[index] === 3 && styles.selectedOptions}>
+          {item.options[2]}
+        </Text>
       </TouchableOpacity>
       <TouchableOpacity
         style={[
@@ -77,9 +83,11 @@ const MultipleChoice = ({
         onPress={() => handleOptionSelect(index, 4)}
         disabled={showResults}
       >
-        <Text>{item.options[3]}</Text>
+        <Text style={selectedOptions[index] === 4 && styles.selectedOptions}>
+          {item.options[3]}
+        </Text>
       </TouchableOpacity>
-    </>
+    </View>
   );
 };
 
@@ -93,7 +101,8 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   selectedOptions: {
-    backgroundColor: "#949494",
+    backgroundColor: "#344c76",
+    color: "white",
   },
   correctOption: {
     backgroundColor: "green",

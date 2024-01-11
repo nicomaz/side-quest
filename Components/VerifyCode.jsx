@@ -6,6 +6,7 @@ import {
   signInWithCredential,
 } from "firebase/auth";
 import { app } from "../firebaseConfig";
+import { useNavigation } from "@react-navigation/native";
 
 export default function VerifyCode({
   verificationId,
@@ -13,8 +14,8 @@ export default function VerifyCode({
   verificationCode,
   setIsLoading,
 }) {
+  const navigation = useNavigation();
   const auth = getAuth(app);
-
   async function confirmVerificationCode() {
     try {
       setIsLoading(true);
@@ -25,25 +26,32 @@ export default function VerifyCode({
       await signInWithCredential(auth, credential);
 
       const user = auth.currentUser;
-      setIsLoading(false);
-    } catch (error) {
-      console.log(error);
+
+      if (user.displayName) {
+        setIsLoading(false);
+        navigation.navigate("Nav");
+      } else {
+        setIsLoading(false);
+        navigation.navigate("UserCustomisation");
+      }
+    } catch (err) {
+      console.log(err.message);
     }
   }
 
   return (
     <SafeAreaProvider>
       <SafeAreaView>
-        <View className="py-3 mx-auto items-center w-9/12 h-24 rounded-lg">
+        <View className="mt-1 py-3 mx-auto items-center w-9/12 h-24 rounded-lg">
           <Text className="text-xl font-medium mt-1">
-            Verification <Text className="text-[#D01A1E] font-bold">Code</Text>
+            Verification <Text className="text-[#344c76] font-bold">Code</Text>
           </Text>
           <Text className="text-[#706e69]">please check your messages</Text>
 
-          <View className="flex flex-row justify-between text-base bg-[#ffa6a8] focus:bg-[#f27e81] p-2">
+          <View className="flex flex-row justify-between text-base bg-[#a7c5fa] focus:bg-[#699fff] p-2">
             <TextInput
-              className="text-left text-base items-center justify-center pb-2 w-44"
-              placeholderTextColor="#8C8984"
+              className="text-left text-base items-center justify-center pb-2 w-[181px]"
+              placeholderTextColor="white"
               editable={!!verificationId}
               keyboardType="phone-pad"
               autoFocus
@@ -51,7 +59,7 @@ export default function VerifyCode({
               onChangeText={setVerificationCode}
             />
             <TouchableOpacity
-              className="items-center justify-center text-base text-center"
+              className="items-center justify-center text-base text-center rounded-full"
               disabled={!verificationId}
               onPress={() => confirmVerificationCode()}
             >

@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   quest: {
-    backgroundColor: "#de6429",
+    backgroundColor: "#344c76",
     padding: 20,
     borderRadius: 10,
     alignItems: "center",

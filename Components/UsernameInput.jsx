@@ -37,7 +37,7 @@ const UsernameInput = ({ userPiece }) => {
         <Text className="text-2xl font-medium text-center shadow tracking-widest mb-3">
           Your Username
         </Text>
-        <View className="flex flex-row text-base items-center justify-between p-2 mb-3 bg-[#ffa6a8] focus:bg-[#f27e81] w-64 mx-2 rounded-xl">
+        <View className="flex flex-row text-base items-center justify-between p-2 mb-3 bg-[#a7c5fa] focus:bg-[#699fff] w-64 mx-2 rounded-xl">
           <TextInput
             className="text-center text-base items-center justify-center pb-2"
             placeholder="Username here..."
@@ -48,7 +48,7 @@ const UsernameInput = ({ userPiece }) => {
         </View>
         <TouchableOpacity
           autoFocus
-          className={`mt-8 bg-[#D01A1E] rounded-full shadow ${
+          className={`mt-8 bg-[#344c76] rounded-full shadow ${
             isLoading ? "h-14 w-[170px] items-center pt-2" : "py-4 px-4"
           }`}
           onPress={saveUsername}

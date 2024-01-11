@@ -12,7 +12,7 @@ function DrawerNavigation() {
       <Drawer.Navigator
         initialRouteName="Home"
         screenOptions={{
-          drawerStyle: { backgroundColor: "#D01A1E" },
+          drawerStyle: { backgroundColor: "#344c76" },
           drawerType: "front",
           drawerLabelStyle: { color: "white" },
         }}
@@ -21,7 +21,7 @@ function DrawerNavigation() {
           name="Home"
           component={Home}
           options={{
-            drawerActiveBackgroundColor: { backgroundColor: "#D01A1E" },
+            drawerActiveBackgroundColor: { backgroundColor: "#344c76" },
             headerShadowVisible: false,
             header: () => <Header />,
           }}
@@ -31,7 +31,7 @@ function DrawerNavigation() {
           component={QuestList}
           options={{
             headerTintColor: "white",
-            headerStyle: { backgroundColor: "#D01A1E" },
+            headerStyle: { backgroundColor: "#344c76" },
           }}
         />
         <Drawer.Screen
@@ -39,7 +39,7 @@ function DrawerNavigation() {
           component={Profile}
           options={{
             headerTintColor: "white",
-            headerStyle: { backgroundColor: "#D01A1E" },
+            headerStyle: { backgroundColor: "#344c76" },
             headerShadowVisible: false,
           }}
         />

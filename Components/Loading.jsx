@@ -14,23 +14,9 @@ export default function Loading({ tintColour }) {
         autoPlay
         className="h-20"
       />
-      <Text className="mt-[-20] text-[#E60533] font-bold tracking-tighter">
+      <Text className="mt-[-20] text-[#344c76] font-bold tracking-tighter">
         One moment
       </Text>
     </View>
   );
 }
-
-// on component page setIsLoading => true
-// on component page isLoading ? render <Loading>
-// on component page when API call made, setIsLoading(false)
-// Loading no longer appears
-
-// Loading page (?) on login
-// Loading icon / modal <= focus
-
-// Every stage of logging in + sigining up
-// Loading the home page
-// Loading each quest list
-// Loading the questions
-// Loading profile

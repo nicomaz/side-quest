@@ -27,12 +27,13 @@ const Home = ({ route }) => {
       setCompleteQuestTriviaModalVisible(false);
     }
   };
-  console.log("hello");
+
   useEffect(() => {
     getUser().then((userData) => {
       setUser(userData);
+      setIsLoaded(true);
     });
-  }, []);
+  }, [isLoaded]);
 
   useEffect(() => {
     getModalVisibility(showModal);

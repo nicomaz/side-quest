@@ -38,7 +38,7 @@ export default function Profile() {
 
   return (
     <View className="h-screen">
-      <LinearGradient colors={["#D01A1E", "#ff7d80"]} className="h-screen">
+      <LinearGradient colors={["#344c76", "#74a4f7"]} className="h-screen">
         <SafeAreaView>
           <Image
             source={images[user.photoURL]}
@@ -141,7 +141,7 @@ export default function Profile() {
           <View>{quests.length === 6 ? <CompleteCard /> : <Text></Text>}</View>
           <ScrollableComponent name={"Completed Quests"} quests={quests} />
           <TouchableOpacity
-            className="mt-2 bg-[#D01A1E] py-4 rounded-full w-32 self-center shadow"
+            className="mt-2 bg-[#344c76] py-4 rounded-full w-32 self-center shadow"
             onPress={handleSignOut}
           >
             <Text className="text-base font-bold text-center text-white">

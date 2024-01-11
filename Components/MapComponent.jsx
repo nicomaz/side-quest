@@ -8,7 +8,7 @@ import { getSingularQuest, getQuests } from "../utils/api";
 import BottomSheet from "./BottomSheet";
 import { auth } from "../firebaseConfig";
 
-const Map = ({ setIsLoaded, isLoaded, user }) => {
+const Map = ({ user }) => {
   const [currentLocation, setCurrentLocation] = useState(null);
   const [questLocations, setQuestLocations] = useState([]);
   const [questDestination, setQuestDestination] = useState({
@@ -42,7 +42,6 @@ const Map = ({ setIsLoaded, isLoaded, user }) => {
           return;
         }
 
-        await getQuests(setQuestLocations);
         setCurrentQuest(user.currentQuest);
         setQuestArr(user.completedQuests);
         getSingularQuest(setCurrentQuest, currentQuest, setQuestDestination);
@@ -56,7 +55,6 @@ const Map = ({ setIsLoaded, isLoaded, user }) => {
             setCurrentLocation(userLocation);
           }
         );
-        setIsLoaded(true);
         return () => locationSubscription.remove();
       } catch (error) {
         console.error(error);
@@ -70,7 +68,7 @@ const Map = ({ setIsLoaded, isLoaded, user }) => {
 
       setCurrentQuestClicked(false);
     }
-  }, [currentQuestClicked]);
+  }, [currentQuestClicked, user]);
 
   const handlePress = (e) => {
     const pressedMarker = questLocations.find(
@@ -99,7 +97,7 @@ const Map = ({ setIsLoaded, isLoaded, user }) => {
   }
 
   return (
-    <View style={isLoaded ? { flex: 1 } : { display: "none" }}>
+    <View style={{ flex: 1 }}>
       {currentLocation ? (
         <MapView
           provider={PROVIDER_GOOGLE}

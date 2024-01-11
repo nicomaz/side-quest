@@ -20,13 +20,18 @@ const QuestCard = ({ quest, questions, lockedQuests, completedQuests }) => {
 
   return (
     <TouchableOpacity
+      className={`w-11/12 my-2 bg-[#344c76] h-32 py-12 ${
+        isCompleted ? "mt-[-10]" : "mt-1"
+      } `}
       style={[
         isLocked ? styles.lockedQuest : styles.quest,
         isCompleted ? styles.completedQuest : styles.quest,
       ]}
       onPress={handlePress}
     >
-      <Text style={styles.questTitle}>{quest.title}</Text>
+      <Text style={isLocked ? styles.lockedQuestTitle : styles.questTitle}>
+        {quest.title}
+      </Text>
       {isCompleted ? <Text style={styles.completeText}>COMPLETE!</Text> : <></>}
       {isLocked ? <Text style={styles.lockedText}>LOCKED</Text> : <></>}
     </TouchableOpacity>
@@ -37,11 +42,8 @@ export default QuestCard;
 
 const styles = StyleSheet.create({
   quest: {
-    width: 150,
     height: 150,
-    margin: 10,
     borderRadius: 10,
-    backgroundColor: "#FFFFFF",
     shadowColor: "#000000",
     shadowOpacity: 0.3,
     shadowRadius: 5,
@@ -50,9 +52,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
   },
   lockedQuest: {
-    width: 150,
     height: 150,
-    margin: 10,
     borderRadius: 10,
     backgroundColor: "#d3d3d3",
     opacity: 0.5,
@@ -64,9 +64,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
   },
   completedQuest: {
-    width: 150,
     height: 150,
-    margin: 10,
     borderRadius: 10,
     backgroundColor: "#4CBB17",
     opacity: 0.5,
@@ -81,12 +79,18 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "bold",
     textAlign: "center",
-    color: "#000000",
+    color: "white",
+  },
+  lockedQuestTitle: {
+    fontSize: 20,
+    fontWeight: "bold",
+    textAlign: "center",
+    color: "black",
   },
   completeText: {
     fontSize: 15,
     textAlign: "center",
-    color: "#000000",
+    color: "black",
   },
   lockedText: {
     fontSize: 15,

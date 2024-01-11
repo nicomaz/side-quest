@@ -20,7 +20,7 @@ export default function StartQuestButton() {
 
   return (
     <TouchableOpacity
-      className="bg-[#D01A1E] p-2 m-2 rounded-xl"
+      className="bg-[#344c76] p-2 m-2 rounded-xl"
       onPress={() =>
         navigation.navigate("SingleQuest", {
           questId,
