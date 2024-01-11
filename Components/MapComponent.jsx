@@ -42,9 +42,11 @@ const Map = ({ user }) => {
           return;
         }
 
+        await getQuests(setQuestLocations);
         setCurrentQuest(user.currentQuest);
         setQuestArr(user.completedQuests);
         getSingularQuest(setCurrentQuest, currentQuest, setQuestDestination);
+
         const locationSubscription = await Location.watchPositionAsync(
           {
             accuracy: Location.Accuracy.Highest,
@@ -68,7 +70,7 @@ const Map = ({ user }) => {
 
       setCurrentQuestClicked(false);
     }
-  }, [currentQuestClicked, user]);
+  }, [currentQuestClicked]);
 
   const handlePress = (e) => {
     const pressedMarker = questLocations.find(
@@ -95,7 +97,6 @@ const Map = ({ user }) => {
   if (currentQuestClicked) {
     handleAnimateToRegion();
   }
-
   return (
     <View style={{ flex: 1 }}>
       {currentLocation ? (
@@ -214,5 +215,4 @@ const styles = StyleSheet.create({
     height: 0,
   },
 });
-
 export default Map;
