@@ -22,7 +22,7 @@ export default function PickUserPhoto({ setUserPiece }) {
   }
 
   return (
-    <View className="mt-10 mb-2">
+    <View className="mt-12 mb-[-10]">
       <Text className="text-2xl mt-12 mb-3 tracking-widest font-medium text-center shadow">
         Choose your piece
       </Text>

@@ -63,7 +63,7 @@ export default function Login() {
             <TextInput
               className="text-center text-base items-center justify-center pb-2"
               placeholder="+441231231233"
-              placeholderTextColor="white"
+              placeholderTextColor="#676b99"
               autoCompleteType="tel"
               keyboardType="phone-pad"
               textContentType="telephoneNumber"

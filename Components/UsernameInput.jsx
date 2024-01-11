@@ -41,7 +41,7 @@ const UsernameInput = ({ userPiece }) => {
           <TextInput
             className="text-center text-base items-center justify-center pb-2"
             placeholder="Username here..."
-            placeholderTextColor="#8C8984"
+            placeholderTextColor="#676b99"
             defaultValue={username}
             onChangeText={(text) => setUsername(text)}
           />

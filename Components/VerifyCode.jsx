@@ -51,7 +51,7 @@ export default function VerifyCode({
           <View className="flex flex-row justify-between text-base bg-[#a7c5fa] focus:bg-[#699fff] p-2">
             <TextInput
               className="text-left text-base items-center justify-center pb-2 w-[181px]"
-              placeholderTextColor="white"
+              placeholderTextColor="#676b99"
               editable={!!verificationId}
               keyboardType="phone-pad"
               autoFocus
