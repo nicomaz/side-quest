@@ -31,7 +31,7 @@ const MultipleChoice = ({
         onPress={() => handleOptionSelect(index, 1)}
         disabled={showResults}
       >
-        <Text style={selectedOptions[index] === 1 && styles.selectedOptions}>
+        <Text>
           {item.options[0]}
         </Text>
       </TouchableOpacity>
@@ -49,7 +49,7 @@ const MultipleChoice = ({
         onPress={() => handleOptionSelect(index, 2)}
         disabled={showResults}
       >
-        <Text style={selectedOptions[index] === 2 && styles.selectedOptions}>
+        <Text>
           {item.options[1]}
         </Text>
       </TouchableOpacity>
@@ -66,7 +66,7 @@ const MultipleChoice = ({
         onPress={() => handleOptionSelect(index, 3)}
         disabled={showResults}
       >
-        <Text style={selectedOptions[index] === 3 && styles.selectedOptions}>
+        <Text>
           {item.options[2]}
         </Text>
       </TouchableOpacity>
@@ -83,7 +83,7 @@ const MultipleChoice = ({
         onPress={() => handleOptionSelect(index, 4)}
         disabled={showResults}
       >
-        <Text style={selectedOptions[index] === 4 && styles.selectedOptions}>
+        <Text>
           {item.options[3]}
         </Text>
       </TouchableOpacity>
