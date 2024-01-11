@@ -99,6 +99,8 @@ const styles = StyleSheet.create({
     padding: 10,
     marginVertical: 5,
     borderRadius: 5,
+    borderWidth: 1,
+    borderColor: "#6D93D6",
   },
   selectedOptions: {
     backgroundColor: "#6D93D6",
