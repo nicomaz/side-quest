@@ -31,7 +31,16 @@ export default function App() {
             component={Nav}
             options={{ headerShown: false }}
           />
-          <Stack.Screen name="SingleQuest" component={SingleQuest} />
+          <Stack.Screen
+            name="SingleQuest"
+            component={SingleQuest}
+            options={{
+              headerTintColor: "white",
+              headerStyle: { backgroundColor: "#344c76" },
+              headerShadowVisible: false,
+              headerTitle: "",
+            }}
+          />
         </>
       </Stack.Navigator>
     </NavigationContainer>

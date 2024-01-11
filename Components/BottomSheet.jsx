@@ -42,18 +42,18 @@ export default function BottomSheet({
     setCurrentQuestClicked(true);
   };
   return (
-    <View className="bg-[#D01A1E] w-screen py-2 px-1">
-      <View className="flex flex-row justify-between mx-2 my-2">
+    <View className="bg-[#344c76] w-screen py-2 px-1">
+      <View className="flex flex-row justify-between mx-2 my- py-1 px-2">
         <TouchableOpacity
           onPress={() => {
             handleQuestTypeClick(false);
             handleCurrentQuestZoom();
           }}
         >
-          <Text className="text-white text-base">Current Quest</Text>
+          <Text className="text-white text-lg font-bold">Current Quest</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => handleQuestTypeClick(true)}>
-          <Text className="text-white text-base">Locked Quests</Text>
+          <Text className="text-white text-lg font-bold">Locked Quests</Text>
         </TouchableOpacity>
       </View>
       <RBSheet
@@ -70,7 +70,7 @@ export default function BottomSheet({
             backgroundColor: "#000",
           },
           container: {
-            backgroundColor: "#D01A1E",
+            backgroundColor: "#344c76",
           },
         }}
       >

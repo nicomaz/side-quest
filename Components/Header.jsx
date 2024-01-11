@@ -9,7 +9,7 @@ const Header = () => {
 
   return (
     <SafeAreaView>
-      <View className="bg-[#D01A1E] py-2 px-4 flex flex-row justify-between">
+      <View className="bg-[#344c76] py-2 px-4 flex flex-row justify-between">
         <TouchableOpacity
           className="mt-2"
           onPress={() => navigation.toggleDrawer()}

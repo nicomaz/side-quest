@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
     justifyContent: "center",
     alignItems: "center",
-    marginTop: 50,
+    marginTop: 20,
     marginBottom: 50,
   },
   lockedQuest: {
