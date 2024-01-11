@@ -48,7 +48,7 @@ export default function VerifyCode({
           </Text>
           <Text className="text-[#706e69]">please check your messages</Text>
 
-          <View className="flex flex-row justify-between text-base bg-[#a7c5fa] focus:bg-[#699fff] p-2">
+          <View className="flex flex-row justify-between text-base bg-[#a7c5fa] focus:bg-[#699fff] p-2 rounded-lg">
             <TextInput
               className="text-left text-base items-center justify-center pb-2 w-[181px]"
               placeholderTextColor="#676b99"

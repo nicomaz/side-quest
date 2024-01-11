@@ -2,13 +2,16 @@ import { View, Text, Modal, TouchableOpacity, StyleSheet } from "react-native";
 import React from "react";
 import TriviaForCompletedQuest from "./TriviaForCompletedQuest";
 
-const CompleteQuestTriviaModal = ({ isVisible, onClose, quest }) => {
+const CompleteQuestTriviaModal = ({ isVisible, onClose, quest, onModalClose }) => {
   return (
     <Modal
       animationType="slide"
       transparent={true}
       visible={isVisible}
-      onRequestClose={onClose}
+      onRequestClose={async () => {
+        await onClose(); 
+        await onModalClose(); 
+      }}
     >
       <View className="h-screen">
         <View style={styles.modalContainer}>
