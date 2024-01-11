@@ -101,14 +101,14 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   selectedOptions: {
-    backgroundColor: "#344c76",
+    backgroundColor: "#6D93D6",
     color: "white",
   },
   correctOption: {
-    backgroundColor: "green",
+    backgroundColor: "#59BA59",
   },
   wrongOption: {
-    backgroundColor: "red",
+    backgroundColor: "#F56262",
   },
   question: {
     fontSize: 20,
