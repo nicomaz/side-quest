@@ -20,6 +20,7 @@ import {
 import { app, db } from "../firebaseConfig";
 import { getCompletedQuests } from "../utils/api";
 import { getAuth } from "firebase/auth";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 const SingleQuest = ({ route }) => {
   const navigation = useNavigation();
@@ -128,77 +129,83 @@ const SingleQuest = ({ route }) => {
   }, []);
 
   return (
-    <View style={styles.container}>
-      <FlatList
-        data={filteredQuestionsArray}
-        keyExtractor={(item2, index) => index.toString()}
-        renderItem={({ item, index }) => (
-          <View style={styles.questionContainer}>
-            {/* TODO - better conditional rendering based on question type */}
-            {item.type === "multiple choice" ? (
-              <MultipleChoice
-                item={item}
-                index={index}
-                selectedOptions={selectedOptions}
-                setSelectedOptions={setSelectedOptions}
-                showResults={showResults}
-              />
-            ) : (
-              <TextEntry
-                key={index}
-                item={item}
-                index={index}
-                givenAnswers={givenAnswers}
-                setGivenAnswers={setGivenAnswers}
-                showResults={showResults}
-                textInputKey={textInputKeys[index]}
-              />
-            )}
-          </View>
-        )}
-      />
-      {!showResults && (
-        <TouchableOpacity
-          className="bg-[#344c76] p-2 m-2 rounded-xl"
-          style={styles.submitButton}
-          onPress={handleSubmit}
-          disabled={showResults}
-        >
-          <Text
-            className="text-white font-bold"
-            style={styles.submitButtonText}
-          >
-            Submit
-          </Text>
-        </TouchableOpacity>
-      )}
-      {showResults && (
-        <View style={styles.result}>
-          <Text style={styles.resultText}>
-            You scored {score} out of {filteredQuestionsArray.length}
-          </Text>
+    <KeyboardAwareScrollView
+      resetScrollToCoords={{ x: 0, y: 0 }}
+      enableOnAndroid={true}
+      extraHeight={200}
+    >
+      <View style={styles.container}>
+        <FlatList
+          data={filteredQuestionsArray}
+          keyExtractor={(item2, index) => index.toString()}
+          renderItem={({ item, index }) => (
+            <View style={styles.questionContainer}>
+              {/* TODO - better conditional rendering based on question type */}
+              {item.type === "multiple choice" ? (
+                <MultipleChoice
+                  item={item}
+                  index={index}
+                  selectedOptions={selectedOptions}
+                  setSelectedOptions={setSelectedOptions}
+                  showResults={showResults}
+                />
+              ) : (
+                <TextEntry
+                  key={index}
+                  item={item}
+                  index={index}
+                  givenAnswers={givenAnswers}
+                  setGivenAnswers={setGivenAnswers}
+                  showResults={showResults}
+                  textInputKey={textInputKeys[index]}
+                />
+              )}
+            </View>
+          )}
+        />
+        {!showResults && (
           <TouchableOpacity
-            className="bg-[#344c76] p-2 m-2 rounded-xl"
-            style={
-              score === filteredQuestionsArray.length
-                ? styles.completeQuestButton
-                : styles.tryAgainButton
-            }
-            onPress={
-              score === filteredQuestionsArray.length
-                ? handleCompleteQuest
-                : getQuestions
-            }
+            className="bg-[#344c76] p-2 rounded-xl"
+            style={styles.submitButton}
+            onPress={handleSubmit}
+            disabled={showResults}
           >
-            <Text style={styles.tryAgainButtonText}>
-              {score === filteredQuestionsArray.length
-                ? "Complete Quest"
-                : "Try Again"}
+            <Text
+              className="text-white font-bold"
+              style={styles.submitButtonText}
+            >
+              Submit
             </Text>
           </TouchableOpacity>
-        </View>
-      )}
-    </View>
+        )}
+        {showResults && (
+          <View style={styles.result}>
+            <Text style={styles.resultText}>
+              You scored {score} out of {filteredQuestionsArray.length}
+            </Text>
+            <TouchableOpacity
+              className="bg-[#344c76] p-2 rounded-xl"
+              style={
+                score === filteredQuestionsArray.length
+                  ? styles.completeQuestButton
+                  : styles.tryAgainButton
+              }
+              onPress={
+                score === filteredQuestionsArray.length
+                  ? handleCompleteQuest
+                  : getQuestions
+              }
+            >
+              <Text style={styles.tryAgainButtonText}>
+                {score === filteredQuestionsArray.length
+                  ? "Complete Quest"
+                  : "Try Again"}
+              </Text>
+            </TouchableOpacity>
+          </View>
+        )}
+      </View>
+    </KeyboardAwareScrollView>
   );
 };
 
@@ -212,7 +219,7 @@ const styles = StyleSheet.create({
   questionContainer: {
     backgroundColor: "#F5F5F5",
     borderRadius: 10,
-    marginBottom: 20,
+    marginBottom: 10,
     padding: 20,
     shadowColor: "#000",
     shadowOffset: {

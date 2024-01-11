@@ -16,23 +16,21 @@ const Home = ({ route }) => {
   const [completeQuestTriviaModalVisible, setCompleteQuestTriviaModalVisible] =
     useState(false);
 
-    const [mapKey, setMapKey] = useState(Date.now())
+  const [mapKey, setMapKey] = useState(Date.now());
   const [isLoaded, setIsLoaded] = useState(false);
 
+  const handleModalClose = async () => {
+    setCompleteQuestTriviaModalVisible(false);
+    showModal = false;
 
-    const handleModalClose = async () => {
-      setCompleteQuestTriviaModalVisible(false);
-      showModal = false;
-    
-      try {
-        const userData = await getUser();
-        setUser(userData);
-        setMapKey(Date.now())
-      } catch (error) {
-        
-        console.error("Error fetching user data:", error);
-      }
-    };
+    try {
+      const userData = await getUser();
+      setUser(userData);
+      setMapKey(Date.now());
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+    }
+  };
 
   const getModalVisibility = (showModal) => {
     if (showModal) {
@@ -51,9 +49,6 @@ const Home = ({ route }) => {
 
   return (
     <>
-      <View className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-        {!isLoaded && <Loading />}
-      </View>
       {!isLoaded ? null : (
         <View className="flex flex-row justify-between">
           <View className="flex flex-column">
@@ -65,6 +60,9 @@ const Home = ({ route }) => {
           <StartQuestButton userData={userData} />
         </View>
       )}
+      <View className="absolute top-1/3 left-[37%] transform -translate-x-1/2 -translate-y-1/2 ml-0">
+        {!isLoaded && <Loading />}
+      </View>
       {isLoaded && <Map user={userData} />}
       <CompleteQuestTriviaModal
         quest={quest}
