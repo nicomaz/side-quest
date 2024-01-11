@@ -93,6 +93,7 @@ const SingleQuest = ({ route }) => {
           doc(db, "users", user.phoneNumber),
           (doc) => {
             setUserData(doc.data());
+
             if (doc.data().completedQuests.length >= 6) {
               navigation.navigate("Profile");
             } else {

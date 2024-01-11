@@ -5,12 +5,15 @@ import Profile from "./screens/Profile";
 import Header from "./Components/Header";
 import Home from "./screens/Home";
 import { StatusBar } from "expo-status-bar";
+import { UserProvider } from "./utils/UserContext";
 
 function DrawerNavigation() {
+  //hold state here - 
   const Drawer = createDrawerNavigator();
 
   return (
     <>
+    <UserProvider>
       <StatusBar hidden={true} />
       <Drawer.Navigator
         screenOptions={{
@@ -48,6 +51,7 @@ function DrawerNavigation() {
           />
         </>
       </Drawer.Navigator>
+    </UserProvider>
     </>
   );
 }
