@@ -38,7 +38,7 @@ export default function Login() {
       setIsLoading(false);
     }
   }
-  console.log("hello here")
+  console.log("hello here");
 
   return (
     <SafeAreaView>

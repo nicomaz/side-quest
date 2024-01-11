@@ -1,12 +1,5 @@
-import {
-  View,
-  Text,
-  StyleSheet,
-  FlatList,
-  TouchableOpacity,
-  Alert,
-} from "react-native";
-import React, { useState, useEffect } from "react";
+import { Text, StyleSheet, TouchableOpacity } from "react-native";
+import React from "react";
 
 const MultipleChoice = ({
   item,

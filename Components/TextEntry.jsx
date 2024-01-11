@@ -4,7 +4,6 @@ import React, { useEffect, useState } from "react";
 const TextEntry = ({
   item,
   index,
-  givenAnswer,
   givenAnswers,
   setGivenAnswers,
   showResults,
@@ -21,7 +20,6 @@ const TextEntry = ({
     updatedGivenAnswers[index] = input;
     setGivenAnswers(updatedGivenAnswers);
     setTextInputValue(input);
-    console.log(updatedGivenAnswers, 'my answersfrom textentry.jsx')
   };
 
   return (
@@ -31,10 +29,12 @@ const TextEntry = ({
         style={[
           styles.container,
           showResults &&
-            givenAnswers[index].toLowerCase().trim() === item.correctAnswer.toLowerCase() &&
+            givenAnswers[index].toLowerCase().trim() ===
+              item.correctAnswer.toLowerCase() &&
             styles.correctAnswer,
           showResults &&
-            givenAnswers[index].toLowerCase().trim() !== item.correctAnswer.toLowerCase() &&
+            givenAnswers[index].toLowerCase().trim() !==
+              item.correctAnswer.toLowerCase() &&
             styles.wrongAnswer,
         ]}
       >

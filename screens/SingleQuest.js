@@ -1,5 +1,3 @@
-// SingleQuest.js
-
 import React, { useState, useEffect } from "react";
 import {
   View,
@@ -7,11 +5,21 @@ import {
   StyleSheet,
   FlatList,
   TouchableOpacity,
-  Alert,
 } from "react-native";
 import MultipleChoice from "../Components/MultipleChoice";
 import TextEntry from "../Components/TextEntry";
 import { useNavigation } from "@react-navigation/native";
+import {
+  doc,
+  updateDoc,
+  arrayUnion,
+  onSnapshot,
+  getDoc,
+  arrayRemove,
+} from "firebase/firestore";
+import { app, db } from "../firebaseConfig";
+import { getCompletedQuests } from "../utils/api";
+import { getAuth } from "firebase/auth";
 
 const SingleQuest = ({ route }) => {
   const navigation = useNavigation();
@@ -21,6 +29,8 @@ const SingleQuest = ({ route }) => {
   const [score, setScore] = useState(0);
   const [showResults, setShowResults] = useState(false);
   const [textInputKeys, setTextInputKeys] = useState([0, 1, 2]);
+  const [quests, setQuests] = useState([]);
+  const [userData, setUserData] = useState({});
   const [givenAnswers, setGivenAnswers] = useState(
     Array.from({ length: textInputKeys.length }, () => "")
   );
@@ -43,14 +53,12 @@ const SingleQuest = ({ route }) => {
 
   const isAnswerCorrect = (question, index) => {
     const trimmedGivenAnswer = givenAnswers[index].trim();
-
     if (question.type === "multiple choice") {
       return (
         question.options[selectedOptions[index] - 1] === question.correctAnswer
       );
     } else if (question.type === "text input") {
       const trimmedCorrectAnswer = question.correctAnswer.trim();
-
       return (
         trimmedGivenAnswer.toLowerCase() === trimmedCorrectAnswer.toLowerCase()
       );
@@ -60,26 +68,54 @@ const SingleQuest = ({ route }) => {
         question.correctAnswer.toLowerCase()
       );
     }
-
     return false;
   };
 
   const handleSubmit = () => {
     let correctAnswers = 0;
-
     filteredQuestionsArray.forEach((question, index) => {
       if (isAnswerCorrect(question, index)) {
         correctAnswers++;
       }
     });
-
     setScore(correctAnswers);
     setShowResults(true);
   };
 
-  const handleCompleteQuest = () => {
+  const handleCompleteQuest = async () => {
     if (quest) {
-      navigation.navigate("Home", { showModal: true, quest: quest });
+      try {
+        const auth = getAuth(app);
+        const user = auth.currentUser;
+        const userRef = doc(db, "users", user.phoneNumber);
+        const userDoc = await getDoc(userRef);
+        const userCompletedQuests = onSnapshot(
+          doc(db, "users", user.phoneNumber),
+          (doc) => {
+            setUserData(doc.data());
+            if (doc.data().completedQuests.length >= 6) {
+              navigation.navigate("Profile");
+            } else {
+              navigation.navigate("Home", { showModal: true, quest: quest });
+            }
+            return doc.data();
+          }
+        );
+        await updateDoc(userRef, {
+          completedQuests: arrayUnion(userDoc.data().currentQuest),
+        });
+        await updateDoc(userRef, {
+          currentQuest: userDoc.data().currentQuest + 1,
+        });
+        if (userDoc.data().lockedQuests.length > 0) {
+          await updateDoc(userRef, {
+            lockedQuests: arrayRemove(userDoc.data().lockedQuests[0]),
+          });
+        }
+        userCompletedQuests();
+      } catch (err) {
+        console.error("error updating completed quests: ", err.message);
+      }
     } else {
       console.error("questId is not available to singlequest");
     }
@@ -87,6 +123,7 @@ const SingleQuest = ({ route }) => {
 
   useEffect(() => {
     getQuestions();
+    getCompletedQuests(setQuests);
   }, []);
 
   return (

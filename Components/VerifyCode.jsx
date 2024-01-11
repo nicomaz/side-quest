@@ -6,7 +6,6 @@ import {
   signInWithCredential,
 } from "firebase/auth";
 import { app } from "../firebaseConfig";
-import { useNavigation } from "@react-navigation/native";
 
 export default function VerifyCode({
   verificationId,
@@ -15,7 +14,6 @@ export default function VerifyCode({
   setIsLoading,
 }) {
   const auth = getAuth(app);
-  const navigation = useNavigation();
 
   async function confirmVerificationCode() {
     try {
@@ -27,16 +25,9 @@ export default function VerifyCode({
       await signInWithCredential(auth, credential);
 
       const user = auth.currentUser;
-
-      if (user.displayName) {
-        setIsLoading(false);
-        navigation.navigate("Nav");
-      } else {
-        setIsLoading(false);
-        navigation.navigate("UserCustomisation");
-      }
-    } catch (err) {
-      console.log(err.message);
+      setIsLoading(false);
+    } catch (error) {
+      console.log(error);
     }
   }
 

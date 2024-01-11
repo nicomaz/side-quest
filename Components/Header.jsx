@@ -1,15 +1,10 @@
-import { Text, StyleSheet, SafeAreaView, View, Image } from "react-native";
+import { Text, SafeAreaView, View, Image } from "react-native";
 import React from "react";
-import { getAuth } from "firebase/auth";
-import { app } from "../firebaseConfig";
 import { useNavigation } from "@react-navigation/native";
-import StartQuestButton from "./StartQuestButton";
 import { MaterialIcons } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
-const Header = (props) => {
-  const auth = getAuth(app);
-  const user = auth.currentUser;
+const Header = () => {
   const navigation = useNavigation();
 
   return (
@@ -36,18 +31,6 @@ const Header = (props) => {
             tintColor="white"
           />
         </View>
-
-        {/* <TouchableOpacity className="self-center">
-          <Text className="font-semibold text-white text-base">
-            Hello {user.displayName}
-          </Text>
-        </TouchableOpacity> */}
-
-        {/* <TouchableOpacity onPress={() => navigation.navigate("Profile")}>
-          <Text className="self-center text-right justify-end text-white text-lg font-bold">
-            {user.displayName}
-          </Text>
-        </TouchableOpacity> */}
       </View>
     </SafeAreaView>
   );

@@ -1,13 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
 import { View, Button, Text } from "react-native";
 import RBSheet from "react-native-raw-bottom-sheet";
-import QuestList from "./QuestList";
 import IndividualQuestCard from "./IndividualQuestCard";
 import CurrentQuestCard from "./CurrentQuestCard";
 import LockedQuestsComponent from "./LockedQuestComponent";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
-export default function Example({
+export default function BottomSheet({
   selectedMarker,
   setSelectedMarker,
   currentQuest,

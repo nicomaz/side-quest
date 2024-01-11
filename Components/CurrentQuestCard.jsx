@@ -10,7 +10,7 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import { getSingularQuest, getQuestQuestions } from "../utils/api";
 
-const CurrentQuestCard = ({ currentQuestId, setIsQuestionScreenDisplayed }) => {
+const CurrentQuestCard = ({ currentQuestId }) => {
   const [currentQuest, setCurrentQuest] = useState({});
   const [questions, setCurrentQuestQuestions] = useState([]);
 
@@ -21,30 +21,41 @@ const CurrentQuestCard = ({ currentQuestId, setIsQuestionScreenDisplayed }) => {
 
   const navigation = useNavigation();
   return (
-    <View style={styles.container}>
-      <Text style={styles.currentQuestLabel}>Current Quest</Text>
-      <TouchableOpacity
-        style={styles.questContainer}
-        onPress={() =>
-          navigation.navigate("SingleQuest", {
-            questId: currentQuestId,
-            questions,
-            quest: currentQuest
-          })
-        }
-      >
-        <View style={styles.quest}>
-          <Text style={styles.questTitle}>{currentQuest.title}</Text>
-          <Text style={styles.questDescription}>
-            {currentQuest.description}
-          </Text>
-          <Image
-            style={styles.questImage}
-            source={{ uri: currentQuest.imgUrl }}
-          />
-        </View>
-      </TouchableOpacity>
-    </View>
+    <ScrollView>
+      <View style={styles.container}>
+        <Text style={styles.currentQuestLabel}>Current Quest</Text>
+        <TouchableOpacity
+          style={styles.questContainer}
+          onPress={() =>
+            navigation.navigate("SingleQuest", {
+              questId: currentQuestId,
+              questions,
+              quest: currentQuest,
+            })
+          }
+        >
+          <View style={styles.quest}>
+            <Text style={styles.questTitle}>
+              {Object.keys(currentQuest).length ? (
+                currentQuest.title
+              ) : (
+                <Text>
+                  You dont have any active quests. You may reset your progress
+                  from your profile page if you wish to play again!
+                </Text>
+              )}
+            </Text>
+            <Text style={styles.questDescription}>
+              {currentQuest.description}
+            </Text>
+            <Image
+              style={styles.questImage}
+              source={{ uri: currentQuest.imgUrl }}
+            />
+          </View>
+        </TouchableOpacity>
+      </View>
+    </ScrollView>
   );
 };
 

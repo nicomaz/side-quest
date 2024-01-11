@@ -1,13 +1,14 @@
 import React, { useState, useEffect, useRef } from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Image } from "react-native";
 import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import * as Location from "expo-location";
 import MapViewDirections from "react-native-maps-directions";
-import Example from "./BottomSheet";
 import mapStyle from "../assets/MapStyle";
-import { getSingularQuest, getQuests, getUser } from "../utils/api";
+import { getSingularQuest, getQuests } from "../utils/api";
+import BottomSheet from "./BottomSheet";
+import { auth } from "../firebaseConfig";
 
-const Map = ({ setIsLoaded, isLoaded }) => {
+const Map = ({ setIsLoaded, isLoaded, user }) => {
   const [currentLocation, setCurrentLocation] = useState(null);
   const [questLocations, setQuestLocations] = useState([]);
   const [questDestination, setQuestDestination] = useState({
@@ -20,6 +21,18 @@ const Map = ({ setIsLoaded, isLoaded }) => {
   const [questArr, setQuestArr] = useState([]);
   const mapRef = useRef(null);
 
+  //////////////////////
+  const userPhotoURL = auth.currentUser.photoURL;
+
+  const userPhotoURLToImage = {
+    "teapot.png": require("../assets/teapot.png"),
+    "double-decker-bus.png": require("../assets/double-decker-bus.png"),
+    "phone.png": require("../assets/phone.png"),
+  };
+
+  const imageSource = userPhotoURLToImage[userPhotoURL];
+  //////////////////////
+
   useEffect(() => {
     (async () => {
       try {
@@ -30,7 +43,6 @@ const Map = ({ setIsLoaded, isLoaded }) => {
         }
 
         await getQuests(setQuestLocations);
-        const user = await getUser();
         setCurrentQuest(user.currentQuest);
         setQuestArr(user.completedQuests);
         getSingularQuest(setCurrentQuest, currentQuest, setQuestDestination);
@@ -104,6 +116,17 @@ const Map = ({ setIsLoaded, isLoaded }) => {
           showsMyLocationButton={true}
           ref={mapRef}
         >
+          <Marker
+            coordinate={{
+              latitude: currentLocation.coords.latitude,
+              longitude: currentLocation.coords.longitude,
+            }}
+            style={styles.invisibleUserLocation}
+            anchor={{ x: 0.5, y: 0.5 }}
+          >
+            <Image source={imageSource} style={{ width: 40, height: 40 }} />
+          </Marker>
+
           {questLocations.map((questMarker) => {
             if (currentQuest === questMarker.questId) {
               return (
@@ -115,7 +138,7 @@ const Map = ({ setIsLoaded, isLoaded }) => {
                   }}
                   title={questMarker.landmark}
                   pinColor={"navy"}
-                  onPress={handlePress}
+                  onPress={() => handlePress}
                 />
               );
             } else if (questArr.includes(questMarker.questId)) {
@@ -128,7 +151,7 @@ const Map = ({ setIsLoaded, isLoaded }) => {
                   }}
                   title={questMarker.landmark}
                   pinColor={"gold"}
-                  onPress={handlePress}
+                  onPress={() => handlePress}
                 />
               );
             } else {
@@ -141,7 +164,7 @@ const Map = ({ setIsLoaded, isLoaded }) => {
                   }}
                   title={questMarker.landmark}
                   pinColor={"red"}
-                  onPress={handlePress}
+                  onPress={() => handlePress}
                 />
               );
             }
@@ -169,7 +192,7 @@ const Map = ({ setIsLoaded, isLoaded }) => {
           }}
         ></MapView>
       )}
-      <Example
+      <BottomSheet
         selectedMarker={selectedMarker}
         setSelectedMarker={setSelectedMarker}
         currentQuest={currentQuest}
@@ -188,5 +211,10 @@ const styles = StyleSheet.create({
     height: "100%",
     width: "100%",
   },
+  invisibleUserLocation: {
+    width: 0,
+    height: 0,
+  },
 });
+
 export default Map;
