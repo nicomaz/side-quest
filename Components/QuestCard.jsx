@@ -2,11 +2,18 @@ import { Text, StyleSheet, TouchableOpacity } from "react-native";
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
 
-const QuestCard = ({ quest, questions, lockedQuests, completedQuests }) => {
+const QuestCard = ({
+  quest,
+  questions,
+  lockedQuests,
+  completedQuests,
+  currentQuest,
+}) => {
   const navigation = useNavigation();
 
   const isLocked = lockedQuests.includes(quest.questId);
   const isCompleted = completedQuests.includes(quest.questId);
+  const isCurrent = currentQuest === quest.questId;
 
   const handlePress = () => {
     if (!isLocked && !isCompleted) {
@@ -31,11 +38,25 @@ const QuestCard = ({ quest, questions, lockedQuests, completedQuests }) => {
         {quest.title}
       </Text>
       {isCompleted ? (
-        <Text style={styles.completeText}>COMPLETED!</Text>
+        <>
+          <Text style={styles.completeText}>COMPLETED!</Text>
+          <Text style={styles.unlockedScoreText}>Score: 3/3</Text>
+        </>
       ) : (
         <></>
       )}
-      {isLocked ? <Text style={styles.lockedText}>LOCKED</Text> : <></>}
+      {isCurrent ? (
+        <Text style={styles.unlockedScoreText}>Score: 0/3</Text>
+      ) : (
+        <></>
+      )}
+      {isLocked ? (
+        <>
+          <Text style={styles.lockedText}>LOCKED</Text>
+        </>
+      ) : (
+        <></>
+      )}
     </TouchableOpacity>
   );
 };
@@ -93,6 +114,16 @@ const styles = StyleSheet.create({
     fontSize: 15,
     textAlign: "center",
     color: "white",
+  },
+  unlockedScoreText: {
+    fontSize: 14,
+    textAlign: "center",
+    color: "white",
+  },
+  lockedScoreText: {
+    fontSize: 14,
+    textAlign: "center",
+    color: "black",
   },
   lockedText: {
     fontSize: 15,
