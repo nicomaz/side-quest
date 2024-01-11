@@ -20,9 +20,7 @@ const QuestCard = ({ quest, questions, lockedQuests, completedQuests }) => {
 
   return (
     <TouchableOpacity
-      className={`w-11/12 my-2 bg-[#344c76] h-32 py-12 ${
-        isCompleted ? "mt-[-10]" : "mt-1"
-      } `}
+      className={`w-11/12 my-2 bg-[#344c76] h-32 py-12 mt-1`}
       style={[
         isLocked ? styles.lockedQuest : styles.quest,
         isCompleted ? styles.completedQuest : styles.quest,
@@ -32,7 +30,11 @@ const QuestCard = ({ quest, questions, lockedQuests, completedQuests }) => {
       <Text style={isLocked ? styles.lockedQuestTitle : styles.questTitle}>
         {quest.title}
       </Text>
-      {isCompleted ? <Text style={styles.completeText}>COMPLETE!</Text> : <></>}
+      {isCompleted ? (
+        <Text style={styles.completeText}>COMPLETED!</Text>
+      ) : (
+        <></>
+      )}
       {isLocked ? <Text style={styles.lockedText}>LOCKED</Text> : <></>}
     </TouchableOpacity>
   );
@@ -66,7 +68,7 @@ const styles = StyleSheet.create({
   completedQuest: {
     height: 150,
     borderRadius: 10,
-    backgroundColor: "#4CBB17",
+    backgroundColor: "#267a00",
     opacity: 0.5,
     shadowColor: "#000000",
     shadowOpacity: 0.3,
@@ -90,7 +92,7 @@ const styles = StyleSheet.create({
   completeText: {
     fontSize: 15,
     textAlign: "center",
-    color: "black",
+    color: "white",
   },
   lockedText: {
     fontSize: 15,
