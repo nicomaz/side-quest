@@ -9,6 +9,7 @@ import BottomSheet from "./BottomSheet";
 import { auth } from "../firebaseConfig";
 
 const Map = ({ user }) => {
+
   const [currentLocation, setCurrentLocation] = useState(null);
   const [questLocations, setQuestLocations] = useState([]);
   const [questDestination, setQuestDestination] = useState({
