@@ -8,17 +8,18 @@ const QuestList = () => {
   const [questions, setQuestions] = useState([]);
   const [lockedQuests, setLockedQuests] = useState([]);
   const [completedQuests, setCompletedQuests] = useState([]);
+  const [currentQuest, setCurrentQuest] = useState(0);
 
   useEffect(() => {
     getUser().then((user) => {
       setLockedQuests(user.lockedQuests);
       setCompletedQuests(user.completedQuests);
+      setCurrentQuest(user.currentQuest);
     });
     getQuests(setQuests);
     getQuestQuestions(setQuestions);
   }, []);
 
-  quests.sort((a, b) => a.questId - b.questId);
   quests.sort((a, b) => a.questId - b.questId);
 
   return (
@@ -33,6 +34,7 @@ const QuestList = () => {
               questions={questions}
               lockedQuests={lockedQuests}
               completedQuests={completedQuests}
+              currentQuest={currentQuest}
             />
           )}
         />

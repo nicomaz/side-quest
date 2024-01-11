@@ -2,11 +2,18 @@ import { Text, StyleSheet, TouchableOpacity } from "react-native";
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
 
-const QuestCard = ({ quest, questions, lockedQuests, completedQuests }) => {
+const QuestCard = ({
+  quest,
+  questions,
+  lockedQuests,
+  completedQuests,
+  currentQuest,
+}) => {
   const navigation = useNavigation();
 
   const isLocked = lockedQuests.includes(quest.questId);
   const isCompleted = completedQuests.includes(quest.questId);
+  const isCurrent = currentQuest === quest.questId;
 
   const handlePress = () => {
     if (!isLocked && !isCompleted) {
@@ -38,10 +45,14 @@ const QuestCard = ({ quest, questions, lockedQuests, completedQuests }) => {
       ) : (
         <></>
       )}
+      {isCurrent ? (
+        <Text style={styles.unlockedScoreText}>Score: 0/3</Text>
+      ) : (
+        <></>
+      )}
       {isLocked ? (
         <>
           <Text style={styles.lockedText}>LOCKED</Text>
-          <Text style={styles.lockedScoreText}>Score: 0/3</Text>
         </>
       ) : (
         <></>
