@@ -24,7 +24,7 @@ const TextEntry = ({
 
   return (
     <View className="mx-5">
-      <Text style={styles.question} className="my-5">
+      <Text style={styles.question} className=" mt-1">
         {item.text}
       </Text>
       <View
