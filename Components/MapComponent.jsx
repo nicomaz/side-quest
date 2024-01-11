@@ -170,8 +170,8 @@ const Map = ({ user }) => {
           })}
           <MapViewDirections
             origin={{
-              latitude: -0.088556,
-              longitude: 51.509916,
+              latitude: currentLocation.coords.latitude,
+              longitude: currentLocation.coords.longitude,
             }}
             destination={questDestination}
             apikey="AIzaSyDfMw0j4oBjMtX2Ja5MMCAfYmdW1SAji0A"

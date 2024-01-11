@@ -12,12 +12,15 @@ import { getCompletedQuests, getUser } from "../utils/api";
 import { FontAwesome5 } from "@expo/vector-icons";
 import CompleteCard from "../Components/CompleteCard";
 import { UserContext } from "../utils/UserContext";
+import Loading from "../Components/Loading";
 
 export default function Profile() {
   const auth = getAuth(app);
+  const user = auth.currentUser;
   const navigation = useNavigation();
   const { userData } = useContext(UserContext);
-  //const user = auth.currentUser;
+  const [isLoading, setIsLoading] = useState(true);
+
   const [quests, setQuests] = useState([]);
   const images = {
     "phone.png": require("../assets/phone.png"),
@@ -26,8 +29,11 @@ export default function Profile() {
   };
 
   useEffect(() => {
-    getCompletedQuests(setQuests);
-  }, []);
+    if (userData) {
+      setIsLoading(false);
+      getCompletedQuests(setQuests);
+    }
+  }, [userData]);
 
   const handleSignOut = () => {
     signOut(auth)
@@ -41,10 +47,15 @@ export default function Profile() {
     <View className="h-screen">
       <LinearGradient colors={["#344c76", "#74a4f7"]} className="h-screen">
         <SafeAreaView>
-          <Image
-            source={images[userData.photoURL]}
-            className="h-20 w-20 self-center mt-[-4]"
-          />
+          {isLoading ? (
+            <Loading />
+          ) : (
+            <Image
+              source={images[user.photoURL]}
+              className="h-20 w-20 self-center mt-[-4]"
+            />
+          )}
+
           <Text className="text-center text-2xl font-medium text-white">
             {userData.username}
           </Text>
