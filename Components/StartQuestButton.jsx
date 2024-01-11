@@ -5,8 +5,8 @@ import { useNavigation } from "@react-navigation/native";
 import { getQuestQuestions, getSingularQuest, getUser } from "../utils/api";
 import { UserContext } from "../utils/UserContext";
 
-export default function StartQuestButton() {
-  const { userData } = useContext(UserContext);
+export default function StartQuestButton({userData}) {
+
   const [questId, setQuestId] = useState(null);
   const [questions, setQuestions] = useState(null);
   const [quest, setQuest] = useState({});

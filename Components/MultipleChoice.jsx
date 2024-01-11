@@ -83,9 +83,7 @@ const MultipleChoice = ({
         onPress={() => handleOptionSelect(index, 4)}
         disabled={showResults}
       >
-        <Text style={selectedOptions[index] === 4 && styles.selectedOptions}>
-          {item.options[3]}
-        </Text>
+        <Text>{item.options[3]}</Text>
       </TouchableOpacity>
     </View>
   );

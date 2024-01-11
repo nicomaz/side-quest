@@ -8,9 +8,10 @@ export const UserContext = createContext();
 export const UserProvider = ({ children }) => {
   const [userData, setUserData] = useState();
 
+  const auth = getAuth(app);
+  const user = auth.currentUser;
+
   useEffect(() => {
-    const auth = getAuth(app);
-    const user = auth.currentUser;
     const fetchUser = onSnapshot(doc(db, "users", user.phoneNumber), (doc) => {
       setUserData(doc.data());
     });

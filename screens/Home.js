@@ -42,15 +42,19 @@ const Home = ({ route }) => {
       <View className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
         {!isLoaded && <Loading />}
       </View>
-      <View className="flex flex-row justify-between">
-        <View className="flex flex-column">
-          <Text className="ml-1 text-lg font-semibold">
-            Welcome {userData.username}!
-          </Text>
-          <Text> Ready to explore the city? </Text>
+      {!isLoaded ? (
+        <Loading />
+      ) : (
+        <View className="flex flex-row justify-between">
+          <View className="flex flex-column">
+            <Text className="ml-1 text-lg font-semibold">
+              Welcome {userData.username}!
+            </Text>
+            <Text> Ready to explore the city? </Text>
+          </View>
+          <StartQuestButton userData={userData} />
         </View>
-        <StartQuestButton />
-      </View>
+      )}
       {isLoaded && <Map user={userData} />}
       <CompleteQuestTriviaModal
         quest={quest}
