@@ -177,6 +177,7 @@ const SingleQuest = ({ route }) => {
             You scored {score} out of {filteredQuestionsArray.length}
           </Text>
           <TouchableOpacity
+            className="bg-[#344c76] p-2 m-2 rounded-xl"
             style={
               score === filteredQuestionsArray.length
                 ? styles.completeQuestButton

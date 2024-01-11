@@ -22,7 +22,6 @@ function DrawerNavigation() {
           component={Home}
           options={{
             drawerActiveBackgroundColor: { backgroundColor: "#344c76" },
-            headerShadowVisible: false,
             header: () => <Header />,
           }}
         />
