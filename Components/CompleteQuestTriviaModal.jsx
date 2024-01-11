@@ -13,17 +13,20 @@ const CompleteQuestTriviaModal = ({ isVisible, onClose, quest, onModalClose }) =
         await onModalClose(); 
       }}
     >
-      <TriviaForCompletedQuest quest={quest}/>
-      <View style={styles.modalContainer}>
-        <View style={styles.modalContent}>
-          <TouchableOpacity
-            style={styles.closeAndContinueButton}
-            onPress={onClose}
-          >
-            <Text style={styles.closeAndContinueButtonText}>
-              Begin Next Quest
-            </Text>
-          </TouchableOpacity>
+      <View className="h-screen">
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent} className="p-5">
+            <TriviaForCompletedQuest quest={quest} />
+            <TouchableOpacity
+              className="bg-[#344c76] p-2 m-2 rounded-xl"
+              style={styles.closeAndContinueButton}
+              onPress={onClose}
+            >
+              <Text style={styles.closeAndContinueButtonText}>
+                Begin Next Quest
+              </Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
     </Modal>
@@ -48,7 +51,6 @@ const styles = StyleSheet.create({
     width: "80%",
   },
   closeAndContinueButton: {
-    backgroundColor: "green",
     padding: 10,
     marginVertical: 10,
     borderRadius: 5,

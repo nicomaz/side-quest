@@ -23,7 +23,6 @@ const CurrentQuestCard = ({ currentQuestId }) => {
   return (
     <ScrollView>
       <View style={styles.container}>
-        <Text style={styles.currentQuestLabel}>Current Quest</Text>
         <TouchableOpacity
           style={styles.questContainer}
           onPress={() =>
@@ -34,24 +33,28 @@ const CurrentQuestCard = ({ currentQuestId }) => {
             })
           }
         >
-          <View style={styles.quest}>
-            <Text style={styles.questTitle}>
-              {Object.keys(currentQuest).length ? (
-                currentQuest.title
-              ) : (
-                <Text>
-                  You dont have any active quests. You may reset your progress
-                  from your profile page if you wish to play again!
+          <View style={styles.quest} className="px-1 my-3 flex flex-row">
+            <View className="flex flex-row">
+              <Image
+                style={styles.questImage}
+                source={{ uri: currentQuest.imgUrl }}
+              />
+              <View className="flex flex-column flex-shrink pl-3">
+                <Text style={styles.questTitle}>
+                  {Object.keys(currentQuest).length ? (
+                    currentQuest.title
+                  ) : (
+                    <Text>
+                      You dont have any active quests. You may reset your
+                      progress from your profile page if you wish to play again!
+                    </Text>
+                  )}
                 </Text>
-              )}
-            </Text>
-            <Text style={styles.questDescription}>
-              {currentQuest.description}
-            </Text>
-            <Image
-              style={styles.questImage}
-              source={{ uri: currentQuest.imgUrl }}
-            />
+                <Text style={styles.questDescription}>
+                  {currentQuest.shortDescription}
+                </Text>
+              </View>
+            </View>
           </View>
         </TouchableOpacity>
       </View>
@@ -64,37 +67,32 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     padding: 10,
   },
-  container: {
-    padding: 10,
-  },
+  container: { marginTop: 10 },
   questContainer: {
-    backgroundColor: "#de6429",
+    backgroundColor: "white",
     borderRadius: 10,
     overflow: "hidden",
   },
   quest: {
-    padding: 20,
+    padding: 10,
     alignItems: "center",
   },
-  currentQuestLabel: {
-    color: "black",
-    fontSize: 15,
-    marginBottom: 5,
-  },
   questTitle: {
-    fontSize: 15,
+    fontSize: 23,
     fontWeight: "bold",
-    color: "#fff",
+    color: "#344c76",
     marginBottom: 10,
   },
   questDescription: {
-    color: "#fff",
+    color: "#344c76",
     marginBottom: 15,
+    fontWeight: "semibold",
   },
   questImage: {
     width: 200,
     height: 150,
     borderRadius: 8,
+    marginTop: 10,
   },
 });
 

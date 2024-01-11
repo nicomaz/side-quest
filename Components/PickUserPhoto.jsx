@@ -22,7 +22,7 @@ export default function PickUserPhoto({ setUserPiece }) {
   }
 
   return (
-    <View className="mt-10 mb-6">
+    <View className="mt-12 mb-[-10]">
       <Text className="text-2xl mt-12 mb-3 tracking-widest font-medium text-center shadow">
         Choose your piece
       </Text>
@@ -31,7 +31,7 @@ export default function PickUserPhoto({ setUserPiece }) {
         <TouchableOpacity
           onPress={() => handleFocus(0)}
           className={`border-black border-0 p-2 ${
-            isFocussed == 0 && "border-2 border-[#f27e81] rounded-xl"
+            isFocussed == 0 && "border-2 border-[#699fff] rounded-xl"
           }`}
         >
           <Image
@@ -42,7 +42,7 @@ export default function PickUserPhoto({ setUserPiece }) {
         <TouchableOpacity
           onPress={() => handleFocus(1)}
           className={`border-black border-0 p-2 ${
-            isFocussed == 1 && "border-2 border-[#f27e81] rounded-xl"
+            isFocussed == 1 && "border-2 border-[#699fff] rounded-xl"
           }`}
         >
           <Image
@@ -53,7 +53,7 @@ export default function PickUserPhoto({ setUserPiece }) {
         <TouchableOpacity
           onPress={() => handleFocus(2)}
           className={`border-black border-0 p-2 ${
-            isFocussed == 2 && "border-2 border-[#f27e81] rounded-xl"
+            isFocussed == 2 && "border-2 border-[#699fff] rounded-xl"
           }`}
         >
           <Image

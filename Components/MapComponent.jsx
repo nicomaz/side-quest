@@ -1,16 +1,14 @@
 import React, { useState, useEffect, useRef } from "react";
 import { View, StyleSheet, Image } from "react-native";
-import MapView, { Marker, PROVIDER_GOOGLE} from "react-native-maps";
+import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import * as Location from "expo-location";
 import MapViewDirections from "react-native-maps-directions";
 import mapStyle from "../assets/MapStyle";
 import { getSingularQuest, getQuests } from "../utils/api";
 import BottomSheet from "./BottomSheet";
-import {auth} from '../firebaseConfig'
-
+import { auth } from "../firebaseConfig";
 
 const Map = ({ user }) => {
-  console.log(user)
 
   const [currentLocation, setCurrentLocation] = useState(null);
   const [questLocations, setQuestLocations] = useState([]);
@@ -24,7 +22,6 @@ const Map = ({ user }) => {
   const [questArr, setQuestArr] = useState([]);
   const mapRef = useRef(null);
 
-
   //////////////////////
   const userPhotoURL = auth.currentUser.photoURL;
 
@@ -32,11 +29,10 @@ const Map = ({ user }) => {
     "teapot.png": require("../assets/teapot.png"),
     "double-decker-bus.png": require("../assets/double-decker-bus.png"),
     "phone.png": require("../assets/phone.png"),
-    
   };
-  
+
   const imageSource = userPhotoURLToImage[userPhotoURL];
-//////////////////////
+  //////////////////////
 
   useEffect(() => {
     (async () => {
@@ -128,11 +124,7 @@ const Map = ({ user }) => {
             style={styles.invisibleUserLocation}
             anchor={{ x: 0.5, y: 0.5 }}
           >
-            <Image
-            
-            source={imageSource}
-              style={{ width: 40, height: 40 }}
-            />
+            <Image source={imageSource} style={{ width: 40, height: 40 }} />
           </Marker>
 
           {questLocations.map((questMarker) => {
