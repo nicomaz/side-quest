@@ -1,6 +1,4 @@
-// SingleQuest.js
-
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -22,7 +20,6 @@ import {
 import { app, db } from "../firebaseConfig";
 import { getCompletedQuests } from "../utils/api";
 import { getAuth } from "firebase/auth";
-import { ModalContext } from "../modalContext";
 
 const SingleQuest = ({ route }) => {
   const navigation = useNavigation();
@@ -40,8 +37,12 @@ const SingleQuest = ({ route }) => {
   const { questions } = route.params;
   const { questId } = route.params;
   const { quest } = route.params;
+  const { setShowModal } = route.params || {};
 
-  const { setShowModal } = useContext(ModalContext); 
+  useEffect(() => {
+    console.log(route.params);
+  }, [route.params]);
+  
 
   const getQuestions = () => {
     setSelectedOptions({});
@@ -101,9 +102,9 @@ const SingleQuest = ({ route }) => {
             if (doc.data().completedQuests.length >= 6) {
               navigation.navigate("Profile");
             } else {
-              navigation.navigate("Home", { showModal: true, quest: quest });
+              navigation.navigate("Home", { quest: quest });
+              route.params?.setShowModal(true);
             }
-            console.log("doc ->>", doc.data());
             return doc.data();
           }
         );
@@ -129,13 +130,8 @@ const SingleQuest = ({ route }) => {
 
   useEffect(() => {
     getQuestions();
-    
-  }, []);
-
-  useEffect(() => {
     getCompletedQuests(setQuests);
-    setShowModal(true)
-  }, [score]);
+  }, []);
 
   return (
     <View style={styles.container}>

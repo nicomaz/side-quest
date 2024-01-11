@@ -7,7 +7,7 @@ import Example from "./BottomSheet";
 import mapStyle from "../assets/MapStyle";
 import { getSingularQuest, getQuests, getUser } from "../utils/api";
 
-const Map = ({user, isModalExited}) => {
+const Map = ({user, isModalExited, setShowModal}) => {
   const [currentLocation, setCurrentLocation] = useState(null);
   const [questLocations, setQuestLocations] = useState([]);
   const [questDestination, setQuestDestination] = useState({
@@ -56,10 +56,10 @@ const Map = ({user, isModalExited}) => {
   useEffect(() => {
     if (currentQuestClicked || isModalExited) {
       handleAnimateToRegion();
-      
       setCurrentQuestClicked(false);
     }
   }, [currentQuestClicked, isModalExited]);
+
 
   const handlePress = (e) => {
     const pressedMarker = questLocations.find(
@@ -174,6 +174,7 @@ const Map = ({user, isModalExited}) => {
         setSelectedMarker={setSelectedMarker}
         currentQuest={currentQuest}
         setCurrentQuestClicked={setCurrentQuestClicked}
+        setShowModal={setShowModal}
       />
     </View>
   );

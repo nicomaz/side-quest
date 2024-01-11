@@ -6,9 +6,9 @@ import Header from "./Components/Header";
 import Home from "./screens/Home";
 import { StatusBar } from "expo-status-bar";
 
+
 function DrawerNavigation() {
   const Drawer = createDrawerNavigator();
-  
 
   return (
     <>

@@ -10,14 +10,16 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import { getSingularQuest, getQuestQuestions } from "../utils/api";
 
-const CurrentQuestCard = ({ currentQuestId, setIsQuestionScreenDisplayed }) => {
+const CurrentQuestCard = ({ currentQuestId, setIsQuestionScreenDisplayed, setShowModal}) => {
   const [currentQuest, setCurrentQuest] = useState({});
   const [questions, setCurrentQuestQuestions] = useState([]);
 
   useEffect(() => {
     getSingularQuest(setCurrentQuest, currentQuestId);
     getQuestQuestions(setCurrentQuestQuestions);
-  }, [currentQuestId]);
+  }, [currentQuestId]);  
+
+  console.log(currentQuest, 'cq')
 
   const navigation = useNavigation();
   return (
@@ -31,6 +33,7 @@ const CurrentQuestCard = ({ currentQuestId, setIsQuestionScreenDisplayed }) => {
               questId: currentQuestId,
               questions,
               quest: currentQuest,
+              setShowModal: setShowModal,
             });
             setIsQuestionScreenDisplayed(true);
           }}

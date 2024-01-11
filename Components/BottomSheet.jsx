@@ -12,6 +12,7 @@ export default function Example({
   setSelectedMarker,
   currentQuest,
   setCurrentQuestClicked,
+  setShowModal,
 }) {
   const [isLockedQuest, setIsLockedQuest] = useState(false);
   const [isQuestionScreenDisplayed, setIsQuestionScreenDisplayed] =
@@ -83,6 +84,7 @@ export default function Example({
           <CurrentQuestCard
             currentQuestId={currentQuest}
             setIsQuestionScreenDisplayed={setIsQuestionScreenDisplayed}
+            setShowModal={setShowModal}
           />
         )}
       </RBSheet>

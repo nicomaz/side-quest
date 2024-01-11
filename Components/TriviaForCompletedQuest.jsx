@@ -3,7 +3,7 @@ import { View, Text, StyleSheet } from 'react-native';
 
 const TriviaForCompletedQuest = ({ quest }) => {
     const [trivia, setTrivia] = useState(null)
-
+console.log(quest)
     useEffect(() => {
       setTrivia(quest.trivia)
     }, [quest])
