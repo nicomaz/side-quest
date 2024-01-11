@@ -42,9 +42,7 @@ const Home = ({ route }) => {
       <View className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
         {!isLoaded && <Loading />}
       </View>
-      {!isLoaded ? (
-        <Loading />
-      ) : (
+      {!isLoaded ? null : (
         <View className="flex flex-row justify-between">
           <View className="flex flex-column">
             <Text className="ml-1 text-lg font-semibold">
