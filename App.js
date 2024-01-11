@@ -32,7 +32,7 @@ export default function App() {
           <Stack.Screen
             name="Nav"
             component={Nav}
-            options={{ headerShown: false }}
+            options={{ headerShown: false, headerShadowVisible: false }}
           />
           <Stack.Screen
             name="SingleQuest"

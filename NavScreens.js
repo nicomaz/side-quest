@@ -38,6 +38,7 @@ function DrawerNavigation() {
             options={{
               headerTintColor: "white",
               headerStyle: { backgroundColor: "#344c76" },
+              headerShadowVisible: false,
             }}
           />
           <Drawer.Screen

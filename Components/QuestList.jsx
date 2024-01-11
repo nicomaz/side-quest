@@ -2,6 +2,7 @@ import { View, FlatList, StyleSheet } from "react-native";
 import React, { useState, useEffect } from "react";
 import QuestCard from "./QuestCard";
 import { getQuestQuestions, getQuests, getUser } from "../utils/api";
+import { LinearGradient } from "expo-linear-gradient";
 
 const QuestList = () => {
   const [quests, setQuests] = useState([]);
@@ -23,23 +24,25 @@ const QuestList = () => {
   quests.sort((a, b) => a.questId - b.questId);
 
   return (
-    <View style={styles.container}>
-      <View style={styles.questContainer}>
-        <FlatList
-          data={quests}
-          keyExtractor={(quest) => quest.questId}
-          renderItem={({ item }) => (
-            <QuestCard
-              quest={item}
-              questions={questions}
-              lockedQuests={lockedQuests}
-              completedQuests={completedQuests}
-              currentQuest={currentQuest}
-            />
-          )}
-        />
+    <LinearGradient colors={["#344c76", "#74a4f7"]} className="h-screen">
+      <View style={styles.container}>
+        <View style={styles.questContainer}>
+          <FlatList
+            data={quests}
+            keyExtractor={(quest) => quest.questId}
+            renderItem={({ item }) => (
+              <QuestCard
+                quest={item}
+                questions={questions}
+                lockedQuests={lockedQuests}
+                completedQuests={completedQuests}
+                currentQuest={currentQuest}
+              />
+            )}
+          />
+        </View>
       </View>
-    </View>
+    </LinearGradient>
   );
 };
 
