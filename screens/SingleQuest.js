@@ -129,11 +129,7 @@ const SingleQuest = ({ route }) => {
   }, []);
 
   return (
-    <KeyboardAwareScrollView
-      resetScrollToCoords={{ x: 0, y: 0 }}
-      enableOnAndroid={true}
-      extraHeight={200}
-    >
+    <KeyboardAwareScrollView enableOnAndroid={true} extraHeight={200}>
       <View style={styles.container}>
         <FlatList
           data={filteredQuestionsArray}
