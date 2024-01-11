@@ -40,7 +40,7 @@ const CompleteCard = () => {
             className="flex-1 justify-center items-center"
           >
             <View className="bg-[#415177] mx-1 px-2 rounded-xl mb-2 mt-40 p-3">
-              <Text className="text-[#344c76] text-base mt-2 ml-2 font-bold">
+              <Text className="text-[red] text-base mt-2 ml-2 font-bold">
                 Are you sure you wish to restart? This action cannot be undone.
               </Text>
               <TouchableOpacity
