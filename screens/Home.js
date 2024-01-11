@@ -11,7 +11,7 @@ import { UserContext } from "../utils/UserContext";
 const Home = ({ route }) => {
   let { showModal } = route.params || false;
   const { quest } = route.params || {};
-  const { userData, setUserData } = useContext(UserContext);
+  const { userData } = useContext(UserContext);
 
   const [completeQuestTriviaModalVisible, setCompleteQuestTriviaModalVisible] =
     useState(false);
