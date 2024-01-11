@@ -1,4 +1,11 @@
-import { View, TextInput, Text, TouchableOpacity } from "react-native";
+import {
+  View,
+  TextInput,
+  Text,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+  Keyboard,
+} from "react-native";
 import React, { useState } from "react";
 import { auth, db } from "../firebaseConfig";
 import { setDoc, doc } from "firebase/firestore";
@@ -33,35 +40,37 @@ const UsernameInput = ({ userPiece }) => {
 
   return (
     <SafeAreaView>
-      <View className="items-center justify-center">
-        <Text className="text-2xl font-medium text-center shadow tracking-widest mb-3">
-          Your Username
-        </Text>
-        <View className="flex flex-row text-base items-center justify-between p-2 mb-3 bg-[#a7c5fa] focus:bg-[#699fff] w-64 mx-2 rounded-xl">
-          <TextInput
-            className="text-center text-base items-center justify-center pb-2"
-            placeholder="Username here..."
-            placeholderTextColor="#676b99"
-            defaultValue={username}
-            onChangeText={(text) => setUsername(text)}
-          />
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+        <View className="items-center justify-center">
+          <Text className="text-2xl font-medium text-center shadow tracking-widest mb-3">
+            Your Username
+          </Text>
+          <View className="flex flex-row text-base items-center justify-between p-2 mb-3 bg-[#a7c5fa] focus:bg-[#699fff] w-64 mx-2 rounded-xl">
+            <TextInput
+              className="text-center text-base items-center justify-center pb-2"
+              placeholder="Username here..."
+              placeholderTextColor="#676b99"
+              defaultValue={username}
+              onChangeText={(text) => setUsername(text)}
+            />
+          </View>
+          <TouchableOpacity
+            autoFocus
+            className={`mt-8 bg-[#344c76] rounded-full shadow ${
+              isLoading ? "h-14 w-[170px] items-center pt-2" : "py-4 px-4"
+            }`}
+            onPress={saveUsername}
+          >
+            {!isLoading ? (
+              <Text className="text-base font-bold text-center text-white">
+                Begin your quest!
+              </Text>
+            ) : (
+              <Loading tintColour="white" />
+            )}
+          </TouchableOpacity>
         </View>
-        <TouchableOpacity
-          autoFocus
-          className={`mt-8 bg-[#344c76] rounded-full shadow ${
-            isLoading ? "h-14 w-[170px] items-center pt-2" : "py-4 px-4"
-          }`}
-          onPress={saveUsername}
-        >
-          {!isLoading ? (
-            <Text className="text-base font-bold text-center text-white">
-              Begin your quest!
-            </Text>
-          ) : (
-            <Loading tintColour="white" />
-          )}
-        </TouchableOpacity>
-      </View>
+      </TouchableWithoutFeedback>
     </SafeAreaView>
   );
 };
