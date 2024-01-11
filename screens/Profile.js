@@ -14,10 +14,9 @@ import CompleteCard from "../Components/CompleteCard";
 import { UserContext } from "../utils/UserContext";
 
 export default function Profile() {
-  
   const auth = getAuth(app);
   const navigation = useNavigation();
-  const { user } = useContext(UserContext)
+  const { userData } = useContext(UserContext);
   //const user = auth.currentUser;
   const [quests, setQuests] = useState([]);
   const images = {
@@ -25,7 +24,6 @@ export default function Profile() {
     "teapot.png": require("../assets/teapot.png"),
     "double-decker-bus.png": require("../assets/double-decker-bus.png"),
   };
-  console.log(user, "====")
 
   useEffect(() => {
     getCompletedQuests(setQuests);
@@ -44,18 +42,18 @@ export default function Profile() {
       <LinearGradient colors={["#344c76", "#74a4f7"]} className="h-screen">
         <SafeAreaView>
           <Image
-            source={images[user.photoURL]}
+            source={images[userData.photoURL]}
             className="h-20 w-20 self-center mt-[-4]"
           />
           <Text className="text-center text-2xl font-medium text-white">
-            {user.username}
+            {userData.username}
           </Text>
           <Text className="text-center text-sm font-medium text-gray-100">
-            {user.mobileNumber}
+            {userData.mobileNumber}
           </Text>
           <View className="flex flex-row justify-center pt-1">
             <View>
-              {user.completedQuests.length >= 1 ? (
+              {userData.completedQuests.length >= 1 ? (
                 <Text>
                   <FontAwesome5 name="scroll" size={24} color="gold" />
                 </Text>
@@ -66,7 +64,7 @@ export default function Profile() {
               )}
             </View>
             <View>
-              {user.completedQuests.length >= 2 ? (
+              {userData.completedQuests.length >= 2 ? (
                 <Text>
                   <FontAwesome5
                     name="scroll"
@@ -81,7 +79,7 @@ export default function Profile() {
               )}
             </View>
             <View>
-              {user.completedQuests.length >= 3 ? (
+              {userData.completedQuests.length >= 3 ? (
                 <Text>
                   <FontAwesome5
                     name="scroll"
@@ -96,7 +94,7 @@ export default function Profile() {
               )}
             </View>
             <View>
-              {user.completedQuests.length >= 4 ? (
+              {userData.completedQuests.length >= 4 ? (
                 <Text>
                   <FontAwesome5
                     name="scroll"
@@ -111,7 +109,7 @@ export default function Profile() {
               )}
             </View>
             <View>
-              {user.completedQuests.length >= 5 ? (
+              {userData.completedQuests.length >= 5 ? (
                 <Text>
                   <FontAwesome5
                     name="scroll"
@@ -126,7 +124,7 @@ export default function Profile() {
               )}
             </View>
             <View>
-              {user.completedQuests.length === 6 ? (
+              {userData.completedQuests.length === 6 ? (
                 <Text>
                   <FontAwesome5
                     name="scroll"
@@ -142,7 +140,7 @@ export default function Profile() {
             </View>
           </View>
           <View>
-            {user.completedQuests.length === 6 ? (
+            {userData.completedQuests.length === 6 ? (
               <CompleteCard />
             ) : (
               <Text></Text>

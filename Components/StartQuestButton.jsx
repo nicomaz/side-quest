@@ -1,21 +1,21 @@
 import { Text } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { useNavigation } from "@react-navigation/native";
 import { getQuestQuestions, getSingularQuest, getUser } from "../utils/api";
+import { UserContext } from "../utils/UserContext";
 
 export default function StartQuestButton() {
+  const { userData } = useContext(UserContext);
   const [questId, setQuestId] = useState(null);
   const [questions, setQuestions] = useState(null);
   const [quest, setQuest] = useState({});
   const navigation = useNavigation();
 
   useEffect(() => {
-    getUser().then((user) => {
-      setQuestId(user.currentQuest);
-      getQuestQuestions(setQuestions);
-      getSingularQuest(setQuest, questId);
-    });
+    setQuestId(userData.currentQuest);
+    getQuestQuestions(setQuestions);
+    getSingularQuest(setQuest, questId);
   }, [questId]);
 
   return (
