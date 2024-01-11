@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import Map from "../Components/MapComponent";
 import { useState, useEffect } from "react";
 import { View, Text } from "react-native";
@@ -6,11 +6,13 @@ import CompleteQuestTriviaModal from "../Components/CompleteQuestTriviaModal";
 import StartQuestButton from "../Components/StartQuestButton";
 import { getUser } from "../utils/api";
 import Loading from "../Components/Loading";
+import { UserContext } from "../utils/UserContext";
 
 const Home = ({ route }) => {
   let { showModal } = route.params || false;
   const { quest } = route.params || {};
-  const [user, setUser] = useState({ username: "" });
+  const { userData } = useContext(UserContext);
+
   const [completeQuestTriviaModalVisible, setCompleteQuestTriviaModalVisible] =
     useState(false);
 
@@ -41,33 +43,29 @@ const Home = ({ route }) => {
   };
 
   useEffect(() => {
-    getUser().then((userData) => {
-      setUser(userData);
+    if (userData) {
       setIsLoaded(true);
-    });
-  }, [isLoaded]);
-
-  useEffect(() => {
+    }
     getModalVisibility(showModal);
-  }, [showModal]);
+  }, [userData]);
 
   return (
     <>
       <View className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
         {!isLoaded && <Loading />}
       </View>
-      <View
-        className={`${isLoaded ? "flex flex-row justify-between" : "hidden"}`}
-      >
-        <View className="flex flex-column">
-          <Text className="ml-1 text-lg font-semibold">
-            Welcome {user.username}!
-          </Text>
-          <Text> Ready to explore the city? </Text>
+      {!isLoaded ? null : (
+        <View className="flex flex-row justify-between">
+          <View className="flex flex-column">
+            <Text className="ml-1 text-lg font-semibold">
+              Welcome {userData.username}!
+            </Text>
+            <Text> Ready to explore the city? </Text>
+          </View>
+          <StartQuestButton userData={userData} />
         </View>
-        <StartQuestButton />
-      </View>
-      {user.currentQuest && <Map key={mapKey} user={user} />}
+      )}
+      {isLoaded && <Map user={userData} />}
       <CompleteQuestTriviaModal
         quest={quest}
         isVisible={completeQuestTriviaModalVisible}

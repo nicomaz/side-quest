@@ -63,7 +63,7 @@ const Map = ({ user }) => {
         console.error(error);
       }
     })();
-  }, [currentQuest]);
+  }, [currentQuest, user]);
 
   useEffect(() => {
     if (currentQuestClicked) {

@@ -1,5 +1,5 @@
 import { View, Text, Image } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { getAuth, signOut } from "firebase/auth";
 import { app } from "../firebaseConfig";
@@ -11,13 +11,17 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { getCompletedQuests, getUser } from "../utils/api";
 import { FontAwesome5 } from "@expo/vector-icons";
 import CompleteCard from "../Components/CompleteCard";
+import { UserContext } from "../utils/UserContext";
+import Loading from "../Components/Loading";
 
 export default function Profile() {
   const auth = getAuth(app);
-  const navigation = useNavigation();
   const user = auth.currentUser;
-  const [quests, setQuests] = useState([]);
+  const navigation = useNavigation();
+  const { userData } = useContext(UserContext);
+  const [isLoading, setIsLoading] = useState(true);
 
+  const [quests, setQuests] = useState([]);
   const images = {
     "phone.png": require("../assets/phone.png"),
     "teapot.png": require("../assets/teapot.png"),
@@ -25,8 +29,11 @@ export default function Profile() {
   };
 
   useEffect(() => {
-    getCompletedQuests(setQuests);
-  }, []);
+    if (userData) {
+      setIsLoading(false);
+      getCompletedQuests(setQuests);
+    }
+  }, [userData]);
 
   const handleSignOut = () => {
     signOut(auth)
@@ -40,19 +47,24 @@ export default function Profile() {
     <View className="h-screen">
       <LinearGradient colors={["#344c76", "#74a4f7"]} className="h-screen">
         <SafeAreaView>
-          <Image
-            source={images[user.photoURL]}
-            className="h-20 w-20 self-center mt-[-4]"
-          />
+          {isLoading ? (
+            <Loading />
+          ) : (
+            <Image
+              source={images[user.photoURL]}
+              className="h-20 w-20 self-center mt-[-4]"
+            />
+          )}
+
           <Text className="text-center text-2xl font-medium text-white">
-            {user.displayName}
+            {userData.username}
           </Text>
           <Text className="text-center text-sm font-medium text-gray-100">
-            {user.phoneNumber}
+            {userData.mobileNumber}
           </Text>
           <View className="flex flex-row justify-center pt-1">
             <View>
-              {quests.length >= 1 ? (
+              {userData.completedQuests.length >= 1 ? (
                 <Text>
                   <FontAwesome5 name="scroll" size={24} color="gold" />
                 </Text>
@@ -63,7 +75,7 @@ export default function Profile() {
               )}
             </View>
             <View>
-              {quests.length >= 2 ? (
+              {userData.completedQuests.length >= 2 ? (
                 <Text>
                   <FontAwesome5
                     name="scroll"
@@ -78,7 +90,7 @@ export default function Profile() {
               )}
             </View>
             <View>
-              {quests.length >= 3 ? (
+              {userData.completedQuests.length >= 3 ? (
                 <Text>
                   <FontAwesome5
                     name="scroll"
@@ -93,7 +105,7 @@ export default function Profile() {
               )}
             </View>
             <View>
-              {quests.length >= 4 ? (
+              {userData.completedQuests.length >= 4 ? (
                 <Text>
                   <FontAwesome5
                     name="scroll"
@@ -108,7 +120,7 @@ export default function Profile() {
               )}
             </View>
             <View>
-              {quests.length >= 5 ? (
+              {userData.completedQuests.length >= 5 ? (
                 <Text>
                   <FontAwesome5
                     name="scroll"
@@ -123,7 +135,7 @@ export default function Profile() {
               )}
             </View>
             <View>
-              {quests.length === 6 ? (
+              {userData.completedQuests.length === 6 ? (
                 <Text>
                   <FontAwesome5
                     name="scroll"
@@ -138,7 +150,13 @@ export default function Profile() {
               )}
             </View>
           </View>
-          <View>{quests.length === 6 ? <CompleteCard /> : <Text></Text>}</View>
+          <View>
+            {userData.completedQuests.length === 6 ? (
+              <CompleteCard />
+            ) : (
+              <Text></Text>
+            )}
+          </View>
           <ScrollableComponent name={"Completed Quests"} quests={quests} />
           <TouchableOpacity
             className="mt-2 bg-[#344c76] py-4 rounded-full w-32 self-center shadow"
