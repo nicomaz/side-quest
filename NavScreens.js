@@ -1,55 +1,55 @@
 import { createDrawerNavigator } from "@react-navigation/drawer";
-import React from "react";
+import React, { useState } from "react";
 import QuestList from "./Components/QuestList";
 import Profile from "./screens/Profile";
 import Header from "./Components/Header";
 import Home from "./screens/Home";
-import { StatusBar } from "expo-status-bar";
 import { UserProvider } from "./utils/UserContext";
 
 function DrawerNavigation() {
   //hold state here - 
   const Drawer = createDrawerNavigator();
-
   return (
     <>
     <UserProvider>
-      <StatusBar hidden={true} />
       <Drawer.Navigator
+        initialRouteName="Home"
         screenOptions={{
-          drawerStyle: { backgroundColor: "#D01A1E" },
+          drawerStyle: { backgroundColor: "#344c76" },
           drawerType: "front",
           drawerLabelStyle: { color: "white" },
         }}
       >
-        <>
-          <Drawer.Screen
-            name="Home"
-            component={Home}
-            options={{
-              drawerActiveBackgroundColor: { backgroundColor: "#D01A1E" },
-              headerShadowVisible: false,
-              header: () => <Header />,
-            }}
-          />
-          <Drawer.Screen
-            name="Profile"
-            component={Profile}
-            options={{
-              headerTintColor: "white",
-              headerStyle: { backgroundColor: "#D01A1E" },
-              headerShadowVisible: false,
-            }}
-          />
-          <Drawer.Screen
-            name="Quests"
-            component={QuestList}
-            options={{
-              headerTintColor: "white",
-              headerStyle: { backgroundColor: "#D01A1E" },
-            }}
-          />
-        </>
+        <Drawer.Screen
+          name="Home"
+          component={Home}
+          options={{
+            drawerActiveBackgroundColor: {
+              backgroundColor: "#344c76",
+            },
+            headerStyle: { backgroundColor: "#344c76", height: 110 },
+            headerTitle: "",
+            headerTintColor: "white",
+            headerRight: () => <Header />,
+          }}
+        />
+        <Drawer.Screen
+          name="Quests"
+          component={QuestList}
+          options={{
+            headerTintColor: "white",
+            headerStyle: { backgroundColor: "#344c76" },
+          }}
+        />
+        <Drawer.Screen
+          name="Profile"
+          component={Profile}
+          options={{
+            headerTintColor: "white",
+            headerStyle: { backgroundColor: "#344c76" },
+            headerShadowVisible: false,
+          }}
+        />
       </Drawer.Navigator>
     </UserProvider>
     </>

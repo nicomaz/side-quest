@@ -6,7 +6,7 @@ import SmallQuestCard from "./SmallQuestCard";
 export default function ScrollableComponent({ name, quests }) {
   return (
     <View className="bg-[#fff5ed] mx-1 px-2 rounded-xl mb-2 mt-6">
-      <Text className="text-[#D01A1E] text-base mt-2 ml-2 font-bold">
+      <Text className="text-[#344c76] text-base mt-2 ml-2 font-bold">
         {name}
       </Text>
       {!quests || !quests.length ? (

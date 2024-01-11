@@ -10,14 +10,14 @@ SplashScreen.preventAutoHideAsync();
 
 export default function SideQuestSplashScreen() {
   const navigation = useNavigation();
-
   const [appIsReady, setAppIsReady] = useState(false);
+  const [isLoaded, setIsLoading] = useState(false);
   const auth = getAuth(app);
 
   useEffect(() => {
     async function prepare() {
       try {
-        await onAuthStateChanged(auth, (user) => {
+        onAuthStateChanged(auth, (user) => {
           if (user && user.displayName) {
             navigation.navigate("Nav");
           } else {

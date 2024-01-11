@@ -9,7 +9,7 @@ import ScrollableComponent from "../Components/ScrollableComponent";
 import { AntDesign } from "@expo/vector-icons";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { getCompletedQuests, getUser } from "../utils/api";
-import { FontAwesome5 } from '@expo/vector-icons';
+import { FontAwesome5 } from "@expo/vector-icons";
 import CompleteCard from "../Components/CompleteCard";
 import { UserContext } from "../utils/UserContext";
 
@@ -41,7 +41,7 @@ export default function Profile() {
 
   return (
     <View className="h-screen">
-      <LinearGradient colors={["#D01A1E", "#ff7d80"]} className="h-screen">
+      <LinearGradient colors={["#344c76", "#74a4f7"]} className="h-screen">
         <SafeAreaView>
           <Image
             source={images[user.photoURL]}
@@ -68,7 +68,11 @@ export default function Profile() {
             <View>
               {user.completedQuests.length >= 2 ? (
                 <Text>
-                  <FontAwesome5 name="scroll" size={24} color="gold"></FontAwesome5>
+                  <FontAwesome5
+                    name="scroll"
+                    size={24}
+                    color="gold"
+                  ></FontAwesome5>
                 </Text>
               ) : (
                 <Text>
@@ -79,7 +83,11 @@ export default function Profile() {
             <View>
               {user.completedQuests.length >= 3 ? (
                 <Text>
-                  <FontAwesome5 name="scroll" size={24} color="gold"></FontAwesome5>
+                  <FontAwesome5
+                    name="scroll"
+                    size={24}
+                    color="gold"
+                  ></FontAwesome5>
                 </Text>
               ) : (
                 <Text>
@@ -90,7 +98,11 @@ export default function Profile() {
             <View>
               {user.completedQuests.length >= 4 ? (
                 <Text>
-                  <FontAwesome5 name="scroll" size={24} color="gold"></FontAwesome5>
+                  <FontAwesome5
+                    name="scroll"
+                    size={24}
+                    color="gold"
+                  ></FontAwesome5>
                 </Text>
               ) : (
                 <Text>
@@ -101,7 +113,11 @@ export default function Profile() {
             <View>
               {user.completedQuests.length >= 5 ? (
                 <Text>
-                  <FontAwesome5 name="scroll" size={24} color="gold"></FontAwesome5>
+                  <FontAwesome5
+                    name="scroll"
+                    size={24}
+                    color="gold"
+                  ></FontAwesome5>
                 </Text>
               ) : (
                 <Text>
@@ -112,7 +128,11 @@ export default function Profile() {
             <View>
               {user.completedQuests.length === 6 ? (
                 <Text>
-                  <FontAwesome5 name="scroll" size={24} color="gold"></FontAwesome5>
+                  <FontAwesome5
+                    name="scroll"
+                    size={24}
+                    color="gold"
+                  ></FontAwesome5>
                 </Text>
               ) : (
                 <Text>
@@ -130,7 +150,7 @@ export default function Profile() {
           </View>
           <ScrollableComponent name={"Completed Quests"} quests={quests} />
           <TouchableOpacity
-            className="mt-2 bg-[#D01A1E] py-4 rounded-full w-32 self-center shadow"
+            className="mt-2 bg-[#344c76] py-4 rounded-full w-32 self-center shadow"
             onPress={handleSignOut}
           >
             <Text className="text-base font-bold text-center text-white">
@@ -142,6 +162,3 @@ export default function Profile() {
     </View>
   );
 }
-
-
-

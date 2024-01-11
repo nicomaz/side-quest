@@ -159,11 +159,17 @@ const SingleQuest = ({ route }) => {
       />
       {!showResults && (
         <TouchableOpacity
+          className="bg-[#344c76] p-2 m-2 rounded-xl"
           style={styles.submitButton}
           onPress={handleSubmit}
           disabled={showResults}
         >
-          <Text style={styles.submitButtonText}>Submit</Text>
+          <Text
+            className="text-white font-bold"
+            style={styles.submitButtonText}
+          >
+            Submit
+          </Text>
         </TouchableOpacity>
       )}
       {showResults && (
@@ -172,6 +178,7 @@ const SingleQuest = ({ route }) => {
             You scored {score} out of {filteredQuestionsArray.length}
           </Text>
           <TouchableOpacity
+            className="bg-[#344c76] p-2 m-2 rounded-xl"
             style={
               score === filteredQuestionsArray.length
                 ? styles.completeQuestButton
@@ -217,7 +224,7 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   submitButton: {
-    backgroundColor: "blue",
+    backgroundColor: "#344c76",
     padding: 10,
     marginVertical: 10,
     borderRadius: 5,
