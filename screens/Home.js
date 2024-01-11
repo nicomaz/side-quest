@@ -12,11 +12,21 @@ const Home = ({ route }) => {
   const [user, setUser] = useState({ username: "" });
   const [completeQuestTriviaModalVisible, setCompleteQuestTriviaModalVisible] =
     useState(false);
+    const [mapKey, setMapKey] = useState(Date.now())
 
-  const handleModalClose = () => {
-    setCompleteQuestTriviaModalVisible(false);
-    showModal = false;
-  };
+    const handleModalClose = async () => {
+      setCompleteQuestTriviaModalVisible(false);
+      showModal = false;
+    
+      try {
+        const userData = await getUser();
+        setUser(userData);
+        setMapKey(Date.now())
+      } catch (error) {
+        
+        console.error("Error fetching user data:", error);
+      }
+    };
 
   const getModalVisibility = (showModal) => {
     if (showModal) {
@@ -47,7 +57,7 @@ const Home = ({ route }) => {
         </View>
         <StartQuestButton />
       </View>
-      {user.currentQuest && <Map user={user} />}
+      {user.currentQuest && <Map key={mapKey} user={user} />}
       <CompleteQuestTriviaModal
         quest={quest}
         isVisible={completeQuestTriviaModalVisible}

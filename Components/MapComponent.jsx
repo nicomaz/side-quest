@@ -10,6 +10,7 @@ import {auth} from '../firebaseConfig'
 
 
 const Map = ({ user }) => {
+  console.log(user)
 
   const [currentLocation, setCurrentLocation] = useState(null);
   const [questLocations, setQuestLocations] = useState([]);
